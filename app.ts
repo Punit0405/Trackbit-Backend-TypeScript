@@ -1,8 +1,9 @@
 import express from "express";
 import "dotenv/config";
-import Routes from "./Routes/route";
+import userRouter from './Routes/userRoutes'
 import Dbconnection from "./DBConnection/connect";
-const routes = new Routes().router;
+
+const userRoutes= new userRouter().router;
 const db = new Dbconnection();
 
 class App {
@@ -19,7 +20,7 @@ class App {
     this.app.use(express.urlencoded({ extended: false }));
   }
   private routes(): void {
-    this.app.use("/api", routes);
+    this.app.use("/api/v1/user",userRoutes);
   }
 }
 
