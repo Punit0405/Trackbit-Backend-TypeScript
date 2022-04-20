@@ -1,20 +1,7 @@
 import { Schema,Types ,model} from 'mongoose';
-
-interface HabitInterface {
-    title:string,
-    description:string,
-    password:string,
-    userId:Types.ObjectId,
-    habitType:boolean,
-    duration:number,
-    tags:[string],
-    reminder:Date,
-    createdAt:Date
-
-    
+import HabitInterface from '../interfaces/HabitInterface';
 
 
-}
 const habitSchema = new Schema<HabitInterface>({
     title:{
         type:String,

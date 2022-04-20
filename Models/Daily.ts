@@ -1,20 +1,7 @@
 import { Schema,Types ,model} from 'mongoose';
-
-interface DailyInterface {
-    title:string,
-    description:string,
-    userId:Types.ObjectId,
-    checkLists:[string],
-    startDate:Date,
-    days:string,
-    tags:[string],
-    reminder:Date,
-    createdAt:Date
-
-    
+import DailyInterface from '../interfaces/DailyInterface';
 
 
-}
 const dailySchema = new Schema<DailyInterface>({
     title:{
         type:String,
@@ -28,7 +15,7 @@ const dailySchema = new Schema<DailyInterface>({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
-    checkLists:{
+    checklists:{
         type:[String]
     },
     startDate:{

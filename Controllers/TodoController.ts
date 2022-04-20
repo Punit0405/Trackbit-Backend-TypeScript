@@ -61,7 +61,7 @@ class TodoClass{
                    todo.description=description;
                }
                if(checklists){
-                   todo.checkLists=checklists
+                   todo.checklists=checklists
                }
                if(dueDate){
                    todo.dueDate=dueDate

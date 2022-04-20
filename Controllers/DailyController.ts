@@ -62,7 +62,7 @@ class DailyClass{
                    daily.description=description;
                }
                if(checklists){
-                   daily.checkLists=checklists
+                   daily.checklists=checklists
                }
                if(startDate){
                    daily.startDate=startDate
