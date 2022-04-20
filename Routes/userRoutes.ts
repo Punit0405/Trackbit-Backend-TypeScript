@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import UserClass from "../Controllers/UserController";
 import isLoggedin from "../Middlewares/isLoggedin";
+import UserValidator from "../Validations/userValidator";
+
 
 const UserController = new UserClass();
+const userValidator = new UserValidator();
 class UserRoutes {
   public router: express.Router;
   constructor() {
@@ -10,7 +13,7 @@ class UserRoutes {
     this.routes();
   }
   private routes() {
-    this.router.route("/userregister").post(UserController.userRegister);
+    this.router.route("/userregister").post(userValidator.validateUser,UserController.userRegister);
     //Route for Email Verficaiton
     this.router.route("/verifyuser/:token").get(UserController.verifyUser);
 

@@ -141,7 +141,7 @@ class UserClass {
   };
 
   public userLogin = async (req: RequestUser, res: Response) => {
-    // console.log("req")
+
     try {
       const { userEmail, userPassword } = req.body;
       if (!userEmail) {
