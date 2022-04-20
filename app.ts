@@ -2,8 +2,10 @@ import express from "express";
 import "dotenv/config";
 import userRouter from './Routes/userRoutes'
 import Dbconnection from "./DBConnection/connect";
+import TodoRouter from "./Routes/todoRoutes";
 
 const userRoutes= new userRouter().router;
+const todoRoutes =new TodoRouter().router;
 const db = new Dbconnection();
 
 class App {
@@ -21,6 +23,7 @@ class App {
   }
   private routes(): void {
     this.app.use("/api/v1/user",userRoutes);
+    this.app.use("/api/v1/todo",todoRoutes)
   }
 }
 
