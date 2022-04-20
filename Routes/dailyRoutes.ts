@@ -19,7 +19,9 @@ class DailyRouter {
       .post(isLoggedin, validator.validateDaily, DailyController.addDaily);
 
     //Route for Fetching daily
-    this.router.route("/fetchdaily").get(isLoggedin, DailyController.fetchDailys);
+    this.router
+      .route("/fetchdaily")
+      .get(isLoggedin, DailyController.fetchDailys);
 
     //Route for Updating daily
     this.router
