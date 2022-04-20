@@ -1,0 +1,60 @@
+import { Schema,Types ,model} from 'mongoose';
+
+interface DailyInterface {
+    title:string,
+    description:string,
+    userId:Types.ObjectId,
+    checkLists:[string],
+    startDate:Date,
+    days:string,
+    tags:[string],
+    reminder:Date,
+    createdAt:Date
+
+    
+
+
+}
+const dailySchema = new Schema<DailyInterface>({
+    title:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    userId:{
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    },
+    checkLists:{
+        type:[String]
+    },
+    startDate:{
+        type:Date,
+        required:true,
+        
+    },
+    days:{
+        type:String,
+        default:'EveryDay'
+
+
+    },
+    tags:{
+       type:[String]
+    },
+    reminder:{
+        type:Date,
+
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now
+    }
+});
+
+const Daily = model<DailyInterface>("Daily",dailySchema);
+
+export default Daily;
