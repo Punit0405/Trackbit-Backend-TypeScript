@@ -6,6 +6,10 @@ import habitRouter from './Routes/habitRoutes'
 
 const userRoutes= new userRouter().router;
 const habitRoutes = new habitRouter().router;
+import TodoRouter from "./Routes/todoRoutes";
+
+
+const todoRoutes =new TodoRouter().router;
 const db = new Dbconnection();
 
 class App {
@@ -24,6 +28,7 @@ class App {
   private routes(): void {
     this.app.use("/api/v1/user",userRoutes);
     this.app.use("/api/v1/habit",habitRoutes);
+    this.app.use("/api/v1/todo",todoRoutes)
   }
 }
 
