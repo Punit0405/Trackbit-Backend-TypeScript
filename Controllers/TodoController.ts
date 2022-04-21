@@ -1,5 +1,7 @@
 import Todo from '../Models/Todo';
 import {Response} from 'express';
+import User from '../Models/User';
+import TodoInterface from '../interfaces/TodoInterface';
 import RequestUser from '../Middlewares/RequestInterface';
 class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
@@ -30,11 +32,34 @@ class TodoClass{
     }
     public fetchTodos =async (req:RequestUser,res:Response)=>{
         try {
-            const todos = await Todo.find({userId:req.user.id}).select("-userId");
+            let todos = await Todo.find({userId:req.user.id}).select("-userId");
+            
+            let challangeTodos:any[]=[];
+            const loggedinUser = await User.findById(req.user.id)
+            .populate({
+                path:'appliedChallanges',
+                populate:[{
+                path:'habits',model:'Habit'
+            },{path:'todos',model:'Todo'},{path:'dailies',model:'Daily'}]});
+            if(!loggedinUser){
+                return res.status(401).json({status:false,data:"Loggedin User Not exists"})
+            }
+            loggedinUser.appliedChallanges.map((challange:any)=>{
+              challange.todos.map((todo:TodoInterface)=>{
+                challangeTodos.push(todo)
+              })
+                      
+            });
+            
+            todos=todos.concat(challangeTodos);
+
+        
+            
             return res.status(200).json({status:true,data:todos})
     
             
         } catch (error) {
+            console.log(error)
             return res.status(500).json({status:false,data:"Some Internal Server Occured"})
         }
     

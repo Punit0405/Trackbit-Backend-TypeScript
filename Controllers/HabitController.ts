@@ -1,6 +1,9 @@
 import Habit from '../Models/Habit';
+import User from '../Models/User';
 import {Response} from 'express';
 import RequestUser from '../Middlewares/RequestInterface';
+import HabitInterface from '../interfaces/HabitInterface';
+import ChallangeInterface from '../interfaces/ChallangeInterface';
 class HabitClass{
     public addHabit =async(req:RequestUser,res:Response)=>{    
         try {
@@ -30,11 +33,34 @@ class HabitClass{
     }
     public fetchHabits =async (req:RequestUser,res:Response)=>{
         try {
-            const habits = await Habit.find({userId:req.user.id}).select("-userId");
+            let habits = await Habit.find({userId:req.user.id}).select("-userId");
+            
+            let challangeHabits:any[]=[];
+            const loggedinUser = await User.findById(req.user.id)
+            .populate({
+                path:'appliedChallanges',
+                populate:[{
+                path:'habits',model:'Habit'
+            },{path:'todos',model:'Todo'},{path:'dailies',model:'Daily'}]});
+            if(!loggedinUser){
+                return res.status(401).json({status:false,data:"Loggedin User Not exists"})
+            }
+            loggedinUser.appliedChallanges.map((challange:any)=>{
+              challange.habits.map((habit:HabitInterface)=>{
+                challangeHabits.push(habit)
+              })
+                      
+            });
+            
+            habits=habits.concat(challangeHabits);
+
+        
+            
             return res.status(200).json({status:true,data:habits})
     
             
         } catch (error) {
+            console.log(error)
             return res.status(500).json({status:false,data:"Some Internal Server Occured"})
         }
     

@@ -46,7 +46,7 @@ const userSchema = new Schema<UserInterface>({
      },
      appliedChallanges:{
          type:[Schema.Types.ObjectId],
-         ref:'challange'
+         ref:'Challange'
      },
      photoUrl:{
          type:String

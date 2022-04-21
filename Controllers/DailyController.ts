@@ -1,5 +1,7 @@
 import Daily from '../Models/Daily';
 import {Response} from 'express';
+import User from '../Models/User';
+import DailyInterface from '../interfaces/DailyInterface';
 import RequestUser from '../Middlewares/RequestInterface';
 class DailyClass{
     public addDaily =async(req:RequestUser,res:Response)=>{    
@@ -31,11 +33,34 @@ class DailyClass{
     }
     public fetchDailys =async (req:RequestUser,res:Response)=>{
         try {
-            const dailys = await Daily.find({userId:req.user.id}).select("-userId");
-            return res.status(200).json({status:true,data:dailys})
+            let dailies = await Daily.find({userId:req.user.id}).select("-userId");
+            
+            let challangeDailys:any[]=[];
+            const loggedinUser = await User.findById(req.user.id)
+            .populate({
+                path:'appliedChallanges',
+                populate:[{
+                path:'habits',model:'Habit'
+            },{path:'dailies',model:'Daily'},{path:'dailies',model:'Daily'}]});
+            if(!loggedinUser){
+                return res.status(401).json({status:false,data:"Loggedin User Not exists"})
+            }
+            loggedinUser.appliedChallanges.map((challange:any)=>{
+              challange.dailies.map((daily:DailyInterface)=>{
+                challangeDailys.push(daily)
+              })
+                      
+            });
+            
+            dailies=dailies.concat(challangeDailys);
+
+        
+            
+            return res.status(200).json({status:true,data:dailies})
     
             
         } catch (error) {
+            console.log(error)
             return res.status(500).json({status:false,data:"Some Internal Server Occured"})
         }
     

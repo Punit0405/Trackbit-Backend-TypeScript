@@ -17,6 +17,13 @@ class ChallangeRouter {
     this.router
       .route("/addchallange")
       .post(isLoggedin, validator.validateChallange, ChallangeController.addChallange);
+    //Route for fetching Challange
+    this.router.route("/fetchchallange").get(isLoggedin, ChallangeController.fetchChallanges);
+    //Route for joining Challange
+    this.router.route("/joinChallange/:challangeId").get(isLoggedin, ChallangeController.joinChallange);
+    this.router.route("/leaveChallange/:challangeId").get(isLoggedin, ChallangeController.leaveChallange);
+    
+  
 
   }
 }
