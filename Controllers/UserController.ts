@@ -69,7 +69,7 @@ class UserClass {
         };
         mailer.sendMail(mailOptions, function (error: any, info: any) {
           if (error) {
-          
+            console.log(error)
             return res.status(501).json({
               success: false,
               data: "Internal Error Occured Please Try After Sometime",
