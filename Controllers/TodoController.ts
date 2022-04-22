@@ -59,7 +59,7 @@ class TodoClass{
     
             
         } catch (error) {
-            console.log(error)
+            
             return res.status(500).json({status:false,data:"Some Internal Server Occured"})
         }
     
@@ -121,7 +121,7 @@ class TodoClass{
             return res.status(200).json({status:true,data:todo});
             
         } catch (error) {
-            console.log(error)
+  
             return res.status(500).json({status:false,data:"Some Internal Error Occured"})
         }
     }

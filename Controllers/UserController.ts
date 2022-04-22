@@ -66,7 +66,7 @@ class UserClass {
         };
         mailer.sendMail(mailOptions, function (error: any, info: any) {
           if (error) {
-            console.log(error);
+          
             return res.status(501).json({
               success: false,
               data: "Internal Error Occured Please Try After Sometime",
@@ -133,7 +133,7 @@ class UserClass {
           .json({ status: false, data: "Link Expired ! Please Re-Register" });
       }
     } catch (error: any) {
-      console.log(error);
+
       return res
         .status(500)
         .json({ success: false, data: "Some Internal Error Occured" });
@@ -182,7 +182,7 @@ class UserClass {
           .json({ status: false, data: "Invalid Credentials" });
       }
     } catch (error: any) {
-      console.log(error)
+     
       return res
         .status(501)
         .json({ status: false, data: "Some Internal Error Occured" });

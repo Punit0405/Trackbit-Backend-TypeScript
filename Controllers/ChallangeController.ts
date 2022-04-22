@@ -430,7 +430,6 @@ class ChallangeClass {
        return res.status(200).json({status:true,data:challange.participants})
       
     } catch (error) {
-      console.log(error)
       return res.status(500).json({status:false,data:'Some Internal Error Occured'})
       
     }
