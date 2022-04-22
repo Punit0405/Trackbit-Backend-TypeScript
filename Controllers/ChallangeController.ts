@@ -434,7 +434,7 @@ class ChallangeClass {
       
     }
     
-  }
+  };
   public fetchChallangeForall = async(req:RequestUser,res:Response)=>{
     try {
       const challanges = await Challange.find()
@@ -452,6 +452,6 @@ class ChallangeClass {
       return res.status(500).json({status:false,data:"Some Internal Error Occured"})
     }
     
-  }
+  };
 }
 export default ChallangeClass;
