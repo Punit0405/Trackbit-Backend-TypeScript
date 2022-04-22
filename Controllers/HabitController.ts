@@ -3,7 +3,6 @@ import User from '../Models/User';
 import {Response} from 'express';
 import RequestUser from '../Middlewares/RequestInterface';
 import HabitInterface from '../interfaces/HabitInterface';
-import ChallangeInterface from '../interfaces/ChallangeInterface';
 class HabitClass{
     public addHabit =async(req:RequestUser,res:Response)=>{    
         try {

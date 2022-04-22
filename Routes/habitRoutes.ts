@@ -30,6 +30,8 @@ class HabitRouter {
     this.router
       .route("/deleteHabit/:id")
       .delete(isLoggedin, HabitController.deleteHabit);
+
+      
   }
 }
 export default HabitRouter;

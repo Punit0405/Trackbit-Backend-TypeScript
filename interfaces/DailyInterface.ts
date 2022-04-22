@@ -3,6 +3,7 @@ interface DailyInterface {
     title:string,
     description:string,
     userId:Types.ObjectId,
+    challagneId:Types.ObjectId,
     checklists:[string],
     startDate:Date,
     days:string,

@@ -3,6 +3,7 @@ interface TodoInterface {
     title:string,
     description:string,
     userId:Types.ObjectId,
+    challagneId:Types.ObjectId,
     checklists:[string],
     dueDate:Date
     tags:[string],
