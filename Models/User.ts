@@ -30,6 +30,10 @@ const userSchema = new Schema<UserInterface>({
          type:Number,
          default:1
      },
+     email_verified:{
+         type:Boolean,
+         default:false
+     },
      health:{
          type:Number,
          default:50

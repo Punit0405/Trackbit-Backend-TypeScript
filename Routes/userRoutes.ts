@@ -16,7 +16,7 @@ class UserRoutes {
     this.router.route("/userregister").post(userValidator.validateUser,UserController.userRegister);
     //Route for Email Verficaiton
     this.router.route("/verifyuser/:token").get(UserController.verifyUser);
-
+    this.router.route('/resendemail').post(UserController.sendVerifyLink)
     //Route for User Login Through Email And Password
     this.router.route("/userlogin").post(UserController.userLogin);
 

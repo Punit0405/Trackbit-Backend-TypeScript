@@ -45,14 +45,17 @@ class UserClass {
       }
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
-      let newUser = {
+ 
+      const dbUser = new User({
         name: name,
         email: email,
         password: hashPassword,
-      };
+
+      })
+      
       try {
         let token = await jwt.sign(
-          newUser,
+          {email:email},
           process.env.JWT_USER_REGISTER_SECRET_KEY as string,
           { expiresIn: "10m" }
         );
@@ -73,14 +76,13 @@ class UserClass {
             });
           } else {
             console.log("success");
-            return res.status(200).json({
+            res.status(200).json({
               success: true,
               data: "Please Verify Your Email To Login",
             });
           }
         });
-
-        return res.status(200).json({ status: true, data: token });
+        return await dbUser.save();
       } catch (error: any) {
         console.log(error.message);
         return res.status(501).json({
@@ -115,18 +117,21 @@ class UserClass {
           email: payload.email,
           password: payload.password,
         };
-        let databaseCheck = await User.find({ email: user.email });
-        if (databaseCheck.length !== 0) {
+        let databaseCheck = await User.findOne({ email: user.email });
+        if(!databaseCheck){
+          return res.status(400).json({status:false,data:'User Not Registered,Please Register'})
+        }
+        if (databaseCheck.email_verified) {
           return res.status(401).json({
             status: false,
             data: "Email is Already Verified , Please Continue To Login",
           });
         }
-        let verifiedUser = new User(user);
-        await verifiedUser.save();
-        return res
-          .status(200)
-          .send("You Are Verified Please Continue to Login");
+        databaseCheck.email_verified=true;
+         res
+        .status(200)
+        .json({status:true,data:'Email Verified , Continue to login'});
+        return await databaseCheck.save();
       } catch (error: any) {
         return res
           .status(400)
@@ -139,6 +144,63 @@ class UserClass {
         .json({ success: false, data: "Some Internal Error Occured" });
     }
   };
+  public sendVerifyLink = async(req:RequestUser,res:Response)=>{
+    try {
+      const {email}= req.body;
+      if(!email){
+        return res.status(404).json({status:false,data:'Please Provide Email Id'});
+      }
+      const user=await User.findOne({email:email});
+      if(!user){
+        return res.status(404).json({status:false,data:"User not exists,Please Register first"})
+      }
+      if(user.email_verified){
+        return res.status(400).json({status:false,data:'Email is already verified'})
+
+      }
+        try {
+          let token = await jwt.sign(
+            {email:email},
+            process.env.JWT_USER_REGISTER_SECRET_KEY as string,
+            { expiresIn: "10m" }
+          );
+  
+          const mailOptions = {
+            from: "tewani0405@gmail.com",
+            to: email,
+            subject: "TrackBit User Verification Email",
+            html: `<h2>Click Here To Verify</h2> <br><a href="http://localhost:5000/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
+            <h1 style="text-align:center">From,Track Bit</h1>`,
+          };
+          mailer.sendMail(mailOptions, function (error: any, info: any) {
+            if (error) {
+            
+              return res.status(501).json({
+                success: false,
+                data: "Internal Error Occured Please Try After Sometime",
+              });
+            } else { 
+              console.log("success");
+              res.status(200).json({
+                success: true,
+                data: "Email sent successfully, Please Verify within 10 minutes.",
+              });
+            }
+          });
+        } catch (error: any) {
+          console.log(error.message);
+          return res.status(501).json({
+            succss: false,
+            data: "Internal Server Error,Try After Some Time",
+          });
+        }
+      
+
+      
+    } catch (error) {
+      return res.status(500).json({status:false,data:"Some Internal Error Occured"})
+    }
+  }
 
   public userLogin = async (req: RequestUser, res: Response) => {
 
@@ -160,8 +222,12 @@ class UserClass {
           .status(404)
           .json({ status: false, data: "Invalid Credentials" });
       }
+     
 
       if (await bcrypt.compare(userPassword, user.password)) {
+        if(!user.email_verified){
+          return res.status(400).json({status:false,data:"Email is not verified, Please Verify"})
+        }
         let loginData = {
           id: user._id,
           email: user.email,

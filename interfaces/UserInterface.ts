@@ -7,6 +7,7 @@ interface UserInterface {
     experience:number,
     level:number,
     health:number,
+    email_verified:Boolean,
     healthResetCount:number,
     idToken:string,
     accessToken:string,

@@ -3,14 +3,19 @@ import { ConnectionOptions } from "tls";
 
 class DBConnection{
     constructor(){
-        mongoose.connect(process.env.DATABASE_URI as string, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-          } as ConnectionOptions).then(()=>{
-              console.log("Connected to Trackbit Database")
-          }).catch((error)=>{
-              console.log(error)
-          })
+        try {
+            mongoose.connect(process.env.DATABASE_URI as string, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+              } as ConnectionOptions).then(()=>{
+                  console.log("Connected to Trackbit Database")
+              }).catch((error)=>{
+                  console.log(error)
+              })
+        } catch (error) {
+            console.log(error)
+        }
+      
      
     }
 }
