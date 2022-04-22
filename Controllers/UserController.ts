@@ -64,7 +64,7 @@ class UserClass {
           from: "tewani0405@gmail.com",
           to: email,
           subject: "TrackBit User Verification Email",
-          html: `<h2>Click Here To Verify</h2> <br><a href="http://localhost:5000/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
+          html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.HOST}/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
           <h1 style="text-align:center">From,Track Bit</h1>`,
         };
         mailer.sendMail(mailOptions, function (error: any, info: any) {
@@ -169,7 +169,7 @@ class UserClass {
             from: "tewani0405@gmail.com",
             to: email,
             subject: "TrackBit User Verification Email",
-            html: `<h2>Click Here To Verify</h2> <br><a href="http://localhost:5000/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
+            html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.HOST}/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
             <h1 style="text-align:center">From,Track Bit</h1>`,
           };
           mailer.sendMail(mailOptions, function (error: any, info: any) {
