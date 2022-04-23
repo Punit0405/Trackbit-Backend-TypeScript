@@ -6,10 +6,12 @@ import habitRouter from "./Routes/habitRoutes";
 import ChallangeRouter from "./Routes/challangeRoutes";
 import DailyRouter from "./Routes/dailyRoutes";
 import TodoRouter from "./Routes/todoRoutes";
+import homeRoutes from "./Routes/route";
+
 
 const userRoutes = new userRouter().router;
 const habitRoutes = new habitRouter().router;
-
+const checkRoutes = new homeRoutes().router
 const todoRoutes = new TodoRouter().router;
 
 const dailyRoutes = new DailyRouter().router;
@@ -34,7 +36,9 @@ class App {
     this.app.use("/api/v1/habit", habitRoutes);
     this.app.use("/api/v1/todo", todoRoutes);
     this.app.use("/api/v1/daily", dailyRoutes);
-    this.app.use("/api/v1/challange",challangeRoutes)
+    this.app.use("/api/v1/challange",challangeRoutes);
+    this.app.use("/",checkRoutes)
+    
   }
 }
 

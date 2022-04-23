@@ -64,7 +64,7 @@ class UserClass {
           from: "tewani0405@gmail.com",
           to: email,
           subject: "TrackBit User Verification Email",
-          html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.HOST}/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
+          html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.AWSHOST}/api/v1/user/verifyuser/${token}">${process.env.AWSHOST}/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
           <h1 style="text-align:center">From,Track Bit</h1>`,
         };
         mailer.sendMail(mailOptions, function (error: any, info: any) {
@@ -76,15 +76,16 @@ class UserClass {
             });
           } else {
             console.log("success");
-            res.status(200).json({
-              success: true,
-              data: "Please Verify Your Email To Login",
-            });
+           
           }
+        });
+        res.status(200).json({
+          success: true,
+          data: "Please Verify Your Email To Login",
         });
         return await dbUser.save();
       } catch (error: any) {
-        console.log(error.message);
+        console.log(error);
         return res.status(501).json({
           succss: false,
           data: "Internal Server Error,Try After Some Time",
@@ -169,23 +170,25 @@ class UserClass {
             from: "tewani0405@gmail.com",
             to: email,
             subject: "TrackBit User Verification Email",
-            html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.HOST}/api/v1/user/verifyuser/${token}">http://localhost:5000/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
+            html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.AWSHOST}/api/v1/user/verifyuser/${token}">${process.env.AWSHOST}/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
             <h1 style="text-align:center">From,Track Bit</h1>`,
           };
           mailer.sendMail(mailOptions, function (error: any, info: any) {
             if (error) {
-            
+              console.log(error)
               return res.status(501).json({
                 success: false,
                 data: "Internal Error Occured Please Try After Sometime",
               });
             } else { 
               console.log("success");
-              res.status(200).json({
-                success: true,
-                data: "Email sent successfully, Please Verify within 10 minutes.",
-              });
+              
             }
+            
+          });
+          return res.status(200).json({
+            success: true,
+            data: "Email sent successfully, Please Verify within 10 minutes.",
           });
         } catch (error: any) {
           console.log(error.message);
