@@ -1,3 +1,4 @@
+import os from 'os'
 import express, { Request, Response } from "express";
 import RequestUser from "../Middlewares/RequestInterface";
 
@@ -13,6 +14,9 @@ class Routes {
            return res.json({status:true,data:"TrackBit Server is Always Spinning For You! Thanks And Continue Routing !"})
        })
        this.router.route('*').get((req,res,next) =>{
+        var hostname = os.hostname();
+        console.log(hostname)
+           
            return res.status(400).json({status:false,data:"Make Sure Route is Correct"})
        })
     }
