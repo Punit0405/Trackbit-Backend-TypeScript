@@ -20,7 +20,7 @@ class TodoClass{
                 
     
             })
-            res.status(200).json({status:200,data:"Todo Added Sucessfully"})
+            res.status(200).json({status:true,data:"Todo Added Sucessfully"})
             return await newTodo.save()
             
             

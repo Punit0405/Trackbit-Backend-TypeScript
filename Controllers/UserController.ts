@@ -454,17 +454,18 @@ class UserClass {
       populate: [
         {
           path: "habits",
-          select:'title,description',
-          model: "Habit",
+          model: "Habit", 
+          select:'title description tags'
+          
         },
-        { path: "dailies",select:'title,description', model: "Daily" },
-        { path: "dailies",select:'title,description', model: "Daily" },
+        { path: "dailies", select:'title description tags',model: "Daily" },
+        { path: "todos", select:'title description tags',model: "Todo" },
       ],
     });
      if(!loggedinUser){
        return res.status(404).json({status:false,data:"User Doen't Exists More"})
      }
-     return res.status(200).json({status:false,data:loggedinUser.appliedChallanges})
+     return res.status(200).json({status:true,data:loggedinUser.appliedChallanges})
      
    } catch (error) {
      return res.status(500).json({status:false,data:"Some Internal Error Occured"})

@@ -17,7 +17,7 @@ class HabitClass {
         tags: tags,
         userId: req.user.id,
       });
-      res.status(200).json({ status: 200, data: "Habit Added Sucessfully" });
+      res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
       return await newHabit.save();
     } catch (error) {
       return res

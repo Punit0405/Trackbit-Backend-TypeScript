@@ -25,7 +25,7 @@ class DailyClass {
         startDate: startDate,
         tags: tags,
       });
-      res.status(200).json({ status: 200, data: "Daily Added Sucessfully" });
+      res.status(200).json({ status: true, data: "Daily Added Sucessfully" });
       return await newDaily.save();
     } catch (error) {
       return res
