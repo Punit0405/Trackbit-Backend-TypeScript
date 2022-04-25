@@ -3,6 +3,7 @@ import { Response } from "express";
 import User from "../Models/User";
 import DailyInterface from "../interfaces/DailyInterface";
 import RequestUser from "../Middlewares/RequestInterface";
+import parameterValidator from "../Validations/parameterValidator";
 class DailyClass {
   public addDaily = async (req: RequestUser, res: Response) => {
     try {
@@ -71,6 +72,15 @@ class DailyClass {
   public updateDaily = async (req: RequestUser, res: Response) => {
     try {
       const { id } = req.params;
+      if(!id){
+
+        return res.status(404).json({status:false,data:"Please provide habit id"})
+      }
+      if (!parameterValidator(id)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid habit id" });
+      }
       const {
         title,
         description,
@@ -126,6 +136,15 @@ class DailyClass {
   public deleteDaily = async (req: RequestUser, res: Response) => {
     try {
       const { id } = req.params;
+      if(!id){
+
+        return res.status(404).json({status:false,data:"Please provide habit id"})
+      }
+      if (!parameterValidator(id)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid habit id" });
+      }
       const daily = await Daily.findById(id);
       if (!daily) {
         return res.status(404).json({ status: false, data: "Daily Not Found" });

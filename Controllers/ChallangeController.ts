@@ -236,6 +236,10 @@ class ChallangeClass {
           .status(404)
           .json({ status: false, data: "Please Provide Challange Id" });
       }
+      if(!id){
+
+        return res.status(404).json({status:false,data:"Please provide habit id"})
+      }
       if (!parameterValidator(id)) {
         return res
           .status(400)

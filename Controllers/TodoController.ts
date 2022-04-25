@@ -3,6 +3,7 @@ import {Response} from 'express';
 import User from '../Models/User';
 import TodoInterface from '../interfaces/TodoInterface';
 import RequestUser from '../Middlewares/RequestInterface';
+import parameterValidator from '../Validations/parameterValidator';
 class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
         try {
@@ -67,6 +68,15 @@ class TodoClass{
     public updateTodo = async(req:RequestUser,res:Response)=>{
         try {
                const {id}= req.params;
+               if(!id){
+
+                return res.status(404).json({status:false,data:"Please provide habit id"})
+              }
+              if (!parameterValidator(id)) {
+                return res
+                  .status(400)
+                  .json({ status: false, data: "Please Enter a valid habit id" });
+              }
                const {title,description,checklists,dueDate,tags,reminder} = req.body;
                const todo = await Todo.findById(id);
                if(!todo){
@@ -110,6 +120,15 @@ class TodoClass{
     public deleteTodo = async(req:RequestUser,res:Response)=>{
         try {
             const {id}=req.params;
+            if(!id){
+
+                return res.status(404).json({status:false,data:"Please provide habit id"})
+              }
+              if (!parameterValidator(id)) {
+                return res
+                  .status(400)
+                  .json({ status: false, data: "Please Enter a valid habit id" });
+              }
             const todo= await Todo.findById(id);
             if(!todo){
                 return res.status(404).json({status:false,data:"Todo Not Found"})
