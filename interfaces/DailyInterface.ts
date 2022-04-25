@@ -9,10 +9,7 @@ interface DailyInterface {
     days:string,
     tags:[string],
     reminder:Date,
-    createdAt:Date
-
-    
-
+    createdAt:Date  
 
 }
-export default DailyInterface
+export default DailyInterface;

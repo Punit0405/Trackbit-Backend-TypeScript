@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Challange from "../Models/Challange";
 import Habit from "../Models/Habit";
 import User from "../Models/User";
@@ -8,11 +9,8 @@ import RequestUser from "../Middlewares/RequestInterface";
 import HabitInterface from "../interfaces/HabitInterface";
 import TodoInterface from "../interfaces/TodoInterface";
 import DailyInterface from "../interfaces/DailyInterface";
-import HabitController from "./HabitController";
-import mongoose from "mongoose";
 import parameterValidator from "../Validations/parameterValidator";
 
-const habitController = new HabitController();
 class ChallangeClass {
   public addChallange = async (req: RequestUser, res: Response) => {
     try {
@@ -110,6 +108,11 @@ class ChallangeClass {
           .status(400)
           .json({ status: false, data: "Please Provide Challange" });
       }
+      if (!parameterValidator(challangeId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
+      }
       const challange = await Challange.findById(challangeId);
       if (!challange) {
         return res
@@ -139,6 +142,16 @@ class ChallangeClass {
   public leaveChallange = async (req: RequestUser, res: Response) => {
     try {
       const challageId = req.params.challangeId;
+      if (!challageId) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Please provide valid challange id" });
+      }
+      if (!parameterValidator(challageId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
+      }
       let challange = await Challange.findById(challageId);
       if (!challange) {
         return res
@@ -171,6 +184,17 @@ class ChallangeClass {
     try {
       let { id } = req.params;
       id = id.trim();
+      if (!id) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Please provide valid challange id" });
+      }
+      if (!parameterValidator(id)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
+      }
+
       const { title, description } = req.body;
       const challange = await Challange.findById(id);
       if (!challange) {
@@ -205,12 +229,23 @@ class ChallangeClass {
     try {
       let { id } = req.params;
       let { challageId } = req.body;
-      id=id.trim();
-      challageId=challageId.trim()
+      id = id.trim();
+      challageId = challageId.trim();
       if (!challageId) {
         return res
           .status(404)
           .json({ status: false, data: "Please Provide Challange Id" });
+      }
+      if (!parameterValidator(id)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid habit id" });
+      }
+
+      if (!parameterValidator(challageId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
       }
       const challange = await Challange.findById(challageId);
       if (!challange) {
@@ -223,12 +258,15 @@ class ChallangeClass {
           .status(401)
           .json({ status: false, data: "You doesn't own this challange" });
       }
-      if(!challange.habits.includes(id as unknown as mongoose.Types.ObjectId)){
-        return res.status(404).json({status:false,data:"Habit not found for this challange"})
+      if (
+        !challange.habits.includes(id as unknown as mongoose.Types.ObjectId)
+      ) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Habit not found for this challange" });
       }
 
       try {
-       
         const { title, description, habitType, duration, tags, reminder } =
           req.body;
         const habit = await Habit.findById(id);
@@ -237,7 +275,6 @@ class ChallangeClass {
             .status(404)
             .json({ status: false, data: "Habit not found" });
         }
-        
 
         if (title) {
           habit.title = title;
@@ -270,16 +307,27 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Error Occured" });
     }
   };
-  public updateChallangeTodo = async(req:RequestUser,res:Response)=>{
+  public updateChallangeTodo = async (req: RequestUser, res: Response) => {
     try {
       let { id } = req.params;
       let { challageId } = req.body;
-      id=id.trim();
-      challageId=challageId.trim()
+      id = id.trim();
+      challageId = challageId.trim();
       if (!challageId) {
         return res
           .status(404)
           .json({ status: false, data: "Please Provide Challange Id" });
+      }
+      if (!parameterValidator(id)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid todo id" });
+      }
+
+      if (!parameterValidator(challageId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
       }
       const challange = await Challange.findById(challageId);
       if (!challange) {
@@ -292,12 +340,13 @@ class ChallangeClass {
           .status(401)
           .json({ status: false, data: "You doesn't own this challange" });
       }
-      if(!challange.todos.includes(id as unknown as mongoose.Types.ObjectId)){
-        return res.status(404).json({status:false,data:"Todo not found for this challange"})
+      if (!challange.todos.includes(id as unknown as mongoose.Types.ObjectId)) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Todo not found for this challange" });
       }
 
       try {
-       
         const { title, description, checklists, dueDate, tags, reminder } =
           req.body;
         const todo = await Todo.findById(id);
@@ -306,7 +355,6 @@ class ChallangeClass {
             .status(404)
             .json({ status: false, data: "Todo not found" });
         }
-        
 
         if (title) {
           todo.title = title;
@@ -338,18 +386,28 @@ class ChallangeClass {
         .status(500)
         .json({ status: false, data: "Some Internal Error Occured" });
     }
-
   };
-  public updateChallangeDaily =async(req:RequestUser,res:Response)=>{
+  public updateChallangeDaily = async (req: RequestUser, res: Response) => {
     try {
       let { id } = req.params;
       let { challageId } = req.body;
-      id=id.trim();
-      challageId=challageId.trim()
+      id = id.trim();
+      challageId = challageId.trim();
       if (!challageId) {
         return res
           .status(404)
           .json({ status: false, data: "Please Provide Challange Id" });
+      }
+      if (!parameterValidator(id)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid daily id" });
+      }
+
+      if (!parameterValidator(challageId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
       }
       const challange = await Challange.findById(challageId);
       if (!challange) {
@@ -362,43 +420,51 @@ class ChallangeClass {
           .status(401)
           .json({ status: false, data: "You doesn't own this challange" });
       }
-      if(!challange.dailies.includes(id as unknown as mongoose.Types.ObjectId)){
-        return res.status(404).json({status:false,data:"Daily not found for this challange"})
+      if (
+        !challange.dailies.includes(id as unknown as mongoose.Types.ObjectId)
+      ) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Daily not found for this challange" });
       }
 
       try {
-       
-        const { title, description, checklists, startDate, days, tags, reminder } =
-          req.body;
+        const {
+          title,
+          description,
+          checklists,
+          startDate,
+          days,
+          tags,
+          reminder,
+        } = req.body;
         const daily = await Daily.findById(id);
         if (!daily) {
           return res
             .status(404)
             .json({ status: false, data: "Daily not found" });
         }
-        
 
-        if(title){
-            daily.title =  title;
+        if (title) {
+          daily.title = title;
         }
-        if(description){
-            daily.description=description;
+        if (description) {
+          daily.description = description;
         }
-        if(checklists){
-            daily.checklists=checklists
+        if (checklists) {
+          daily.checklists = checklists;
         }
-        if(startDate){
-            daily.startDate=startDate
+        if (startDate) {
+          daily.startDate = startDate;
         }
-        if(days){
-            daily.days=days
+        if (days) {
+          daily.days = days;
         }
-        if(tags){
-            daily.tags=tags
-
+        if (tags) {
+          daily.tags = tags;
         }
-        if(reminder){
-            daily.reminder=reminder
+        if (reminder) {
+          daily.reminder = reminder;
         }
         await daily.save();
         return res.status(200).json({ status: true, data: daily });
@@ -412,34 +478,41 @@ class ChallangeClass {
         .status(500)
         .json({ status: false, data: "Some Internal Error Occured" });
     }
-
   };
-  public showParticipants =async (req:RequestUser,res:Response) => {
+  public showParticipants = async (req: RequestUser, res: Response) => {
     try {
-       let {challangeId} = req.params;
-       challangeId=challangeId.trim();
-       if(!parameterValidator(challangeId)){
-          return res.status(400).json({status:false,data:"Please Enter a valid challange id"})
-       }
-       const challange = await Challange.findById(challangeId).populate({path:"participants",model:"User",select:['email','_id','name']});
-       if(!challange){
-         return res.status(404).json({status:false,data:'Challange not found'});
-
-       }
-       if (challange.userId.toString() !== req.user.id.toString()) {
+      let { challangeId } = req.params;
+      challangeId = challangeId.trim();
+      if (!parameterValidator(challangeId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
+      }
+      const challange = await Challange.findById(challangeId).populate({
+        path: "participants",
+        model: "User",
+        select: ["email", "_id", "name"],
+      });
+      if (!challange) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Challange not found" });
+      }
+      if (challange.userId.toString() !== req.user.id.toString()) {
         return res
           .status(401)
           .json({ status: false, data: "You doesn't own this challange" });
       }
-       return res.status(200).json({status:true,data:challange.participants})
-      
+      return res
+        .status(200)
+        .json({ status: true, data: challange.participants });
     } catch (error) {
-      return res.status(500).json({status:false,data:'Some Internal Error Occured'})
-      
+      return res
+        .status(500)
+        .json({ status: false, data: "Some Internal Error Occured" });
     }
-    
   };
-  public fetchChallangeForall = async(req:RequestUser,res:Response)=>{
+  public fetchChallangeForall = async (req: RequestUser, res: Response) => {
     try {
       const challanges = await Challange.find()
         .populate({ path: "habits" })
@@ -450,55 +523,61 @@ class ChallangeClass {
           .status(404)
           .json({ status: true, data: "No Challange Posted yet" });
       }
-      return res.status(200).json({status:true,data:challanges})
-      
+      return res.status(200).json({ status: true, data: challanges });
     } catch (error) {
-      return res.status(500).json({status:false,data:"Some Internal Error Occured"})
+      return res
+        .status(500)
+        .json({ status: false, data: "Some Internal Error Occured" });
     }
-    
   };
-  public deleteChallange = async(req:RequestUser,res:Response)=>{
+  public deleteChallange = async (req: RequestUser, res: Response) => {
     try {
-      let {challangeId} = req.params;
-      challangeId=challangeId.trim();
-      if(!parameterValidator(challangeId)){
-         return res.status(400).json({status:false,data:"Please Enter a valid challange id"})
+      let { challangeId } = req.params;
+      challangeId = challangeId.trim();
+      if (!parameterValidator(challangeId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid challange id" });
       }
-      const challange = await Challange.findById(challangeId).populate({path:"participants",model:"User",select:['email','_id','name']});
-      if(!challange){
-        return res.status(404).json({status:false,data:'Challange not found'});
-
+      const challange = await Challange.findById(challangeId).populate({
+        path: "participants",
+        model: "User",
+        select: ["email", "_id", "name"],
+      });
+      if (!challange) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Challange not found" });
       }
       if (challange.userId.toString() !== req.user.id.toString()) {
-       return res
-         .status(401)
-         .json({ status: false, data: "You doesn't own this challange" });
-     }
-       await User.findByIdAndUpdate(req.user.id, {
-         $pull: { appliedChallanges: challangeId },
-       });
-       challange.habits.forEach(async(habit)=>{
-           await Habit.findByIdAndDelete(habit)
-       });
-       challange.todos.forEach(async(todo)=>{
-         await Todo.findByIdAndDelete(todo);
-       });
-       challange.dailies.forEach(async(daily)=>{
-         await Daily.findByIdAndDelete(daily);
-       });
+        return res
+          .status(401)
+          .json({ status: false, data: "You doesn't own this challange" });
+      }
+      await User.findByIdAndUpdate(req.user.id, {
+        $pull: { appliedChallanges: challangeId },
+      });
+      challange.habits.forEach(async (habit) => {
+        await Habit.findByIdAndDelete(habit);
+      });
+      challange.todos.forEach(async (todo) => {
+        await Todo.findByIdAndDelete(todo);
+      });
+      challange.dailies.forEach(async (daily) => {
+        await Daily.findByIdAndDelete(daily);
+      });
 
-       challange.delete();
-       return res.status(200).json({status:true,data:"Challange Deleted Successfully"})
+      challange.delete();
+      return res
+        .status(200)
+        .json({ status: true, data: "Challange Deleted Successfully" });
 
       //  await Challange.findByIdAndDelete(challangeId);
-
-      
-     
-   } catch (error) {
-     return res.status(500).json({status:false,data:'Some Internal Error Occured'})
-     
-   }
-      
-  }
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ status: false, data: "Some Internal Error Occured" });
+    }
+  };
 }
 export default ChallangeClass;
