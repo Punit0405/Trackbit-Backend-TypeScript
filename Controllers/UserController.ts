@@ -431,6 +431,45 @@ class UserClass {
         
     }
 }
+
+ public fetchUser = async(req:RequestUser,res:Response)=>{
+   try {
+      let loggedinUser = await User.findById(req.user.id).select(['-password','-appliedChallanges','-createdAt','-email_verified']);
+      if(!loggedinUser){
+        return res.status(200).json({status:false,data:"No User Exists"});
+
+      }
+      return res.status(500).json({status:true,data:loggedinUser})
+
+     
+   } catch (error) {
+     console.log(error)
+     return res.status(200).json({status:false,data:"Some Internal Server Error Occured"})
+   }
+ }
+ public fetchAppliedChallanges = async(req:RequestUser,res:Response)=>{
+   try {
+    const loggedinUser = await User.findById(req.user.id).populate({
+      path: "appliedChallanges",
+      populate: [
+        {
+          path: "habits",
+          select:'title,description',
+          model: "Habit",
+        },
+        { path: "dailies",select:'title,description', model: "Daily" },
+        { path: "dailies",select:'title,description', model: "Daily" },
+      ],
+    });
+     if(!loggedinUser){
+       return res.status(404).json({status:false,data:"User Doen't Exists More"})
+     }
+     return res.status(200).json({status:false,data:loggedinUser.appliedChallanges})
+     
+   } catch (error) {
+     return res.status(500).json({status:false,data:"Some Internal Error Occured"})
+   }
+ }
 }
 
 export default UserClass;

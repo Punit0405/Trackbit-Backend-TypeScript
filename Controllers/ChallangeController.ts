@@ -125,6 +125,9 @@ class ChallangeClass {
           .status(401)
           .json({ status: false, data: "Unauthorised User" });
       }
+      if(loggedinUser.appliedChallanges.includes(challangeId as unknown as mongoose.Types.ObjectId ) && challange.participants.includes(req.user.id as unknown as mongoose.Types.ObjectId)){
+        return res.status(400).json({status:false,data:'You are already joined the challange'})
+      }
       loggedinUser.appliedChallanges.push(challange._id);
       res.status(200).json({
         status: true,

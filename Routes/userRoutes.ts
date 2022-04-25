@@ -28,6 +28,11 @@ class UserRoutes {
       .route("/usergooglelogout")
       .get(isLoggedin, UserController.userGoogleLogout);
 
+
+    // Route for User Information
+    this.router.route('/fetchuser').get(isLoggedin,UserController.fetchUser);
+    this.router.route('/fetchappliedchallanges').get(isLoggedin,UserController.fetchAppliedChallanges);
+
     // Route For Increasing User Experience
     this.router
       .route("/increaseUserExperience")
