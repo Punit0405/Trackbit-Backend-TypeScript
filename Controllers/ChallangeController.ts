@@ -10,6 +10,7 @@ import TodoInterface from "../interfaces/TodoInterface";
 import DailyInterface from "../interfaces/DailyInterface";
 import HabitController from "./HabitController";
 import mongoose from "mongoose";
+import parameterValidator from "../Validations/parameterValidator";
 
 const habitController = new HabitController();
 class ChallangeClass {
@@ -417,9 +418,12 @@ class ChallangeClass {
     try {
        let {challangeId} = req.params;
        challangeId=challangeId.trim();
+       if(!parameterValidator(challangeId)){
+          return res.status(400).json({status:false,data:"Please Enter a valid challange id"})
+       }
        const challange = await Challange.findById(challangeId).populate({path:"participants",model:"User",select:['email','_id','name']});
        if(!challange){
-         return res.status(404).json({status:false,data:'Challang not found'});
+         return res.status(404).json({status:false,data:'Challange not found'});
 
        }
        if (challange.userId.toString() !== req.user.id.toString()) {
@@ -453,5 +457,48 @@ class ChallangeClass {
     }
     
   };
+  public deleteChallange = async(req:RequestUser,res:Response)=>{
+    try {
+      let {challangeId} = req.params;
+      challangeId=challangeId.trim();
+      if(!parameterValidator(challangeId)){
+         return res.status(400).json({status:false,data:"Please Enter a valid challange id"})
+      }
+      const challange = await Challange.findById(challangeId).populate({path:"participants",model:"User",select:['email','_id','name']});
+      if(!challange){
+        return res.status(404).json({status:false,data:'Challange not found'});
+
+      }
+      if (challange.userId.toString() !== req.user.id.toString()) {
+       return res
+         .status(401)
+         .json({ status: false, data: "You doesn't own this challange" });
+     }
+       await User.findByIdAndUpdate(req.user.id, {
+         $pull: { appliedChallanges: challangeId },
+       });
+       challange.habits.forEach(async(habit)=>{
+           await Habit.findByIdAndDelete(habit)
+       });
+       challange.todos.forEach(async(todo)=>{
+         await Todo.findByIdAndDelete(todo);
+       });
+       challange.dailies.forEach(async(daily)=>{
+         await Daily.findByIdAndDelete(daily);
+       });
+
+       challange.delete();
+       return res.status(200).json({status:true,data:"Challange Deleted Successfully"})
+
+      //  await Challange.findByIdAndDelete(challangeId);
+
+      
+     
+   } catch (error) {
+     return res.status(500).json({status:false,data:'Some Internal Error Occured'})
+     
+   }
+      
+  }
 }
 export default ChallangeClass;

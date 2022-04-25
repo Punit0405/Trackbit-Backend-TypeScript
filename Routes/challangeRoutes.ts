@@ -61,6 +61,7 @@ class ChallangeRouter {
       .get(isLoggedin, ChallangeController.showParticipants);
 
     this.router.route('/fetchallchallanges').get(isLoggedin,ChallangeController.fetchChallangeForall)
+    this.router.route('/deletechallange/:challangeId').delete(isLoggedin,ChallangeController.deleteChallange)
   }
 }
 export default ChallangeRouter;
