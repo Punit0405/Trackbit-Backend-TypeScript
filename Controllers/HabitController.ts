@@ -7,7 +7,7 @@ import parameterValidator from "../Validations/parameterValidator";
 class HabitClass {
     public addHabit = async (req: RequestUser, res: Response) => {
         try {
-            const { title, description, habitType, duration, tags, reminder } =
+            const { title, description, habitType, duration, tags } =
         req.body;
             const newHabit = new Habit({
                 title: title,

@@ -14,7 +14,7 @@ class DailyClass {
                 startDate,
                 days,
                 tags,
-                reminder,
+                
             } = req.body;
             const newDaily = new Daily({
                 title: title,

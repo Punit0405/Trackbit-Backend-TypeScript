@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import DailyClass from "../Controllers/DailyController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import DailyValidator from "../Validations/dailyValidator";

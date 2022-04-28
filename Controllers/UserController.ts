@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import {  Response } from "express";
 import User from "../Models/User";
 import bcrypt from "bcryptjs";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import mailer from "./Mailer";
 import client from "./GoogleAuthClient";
 import { TokenPayload } from "google-auth-library";
@@ -67,7 +67,7 @@ class UserClass {
                     html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.AWSHOST}/api/v1/user/verifyuser/${token}">${process.env.AWSHOST}/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
           <h1 style="text-align:center">From,Track Bit</h1>`,
                 };
-                mailer.sendMail(mailOptions, function (error: any, info: any) {
+                mailer.sendMail(mailOptions, function (error: any) {
                     if (error) {
                         console.log(error);
                         return res.status(501).json({
@@ -173,7 +173,7 @@ class UserClass {
                     html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.AWSHOST}/api/v1/user/verifyuser/${token}">${process.env.AWSHOST}/api/v1/verifyuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
             <h1 style="text-align:center">From,Track Bit</h1>`,
                 };
-                mailer.sendMail(mailOptions, function (error: any, info: any) {
+                mailer.sendMail(mailOptions, function (error: any) {
                     if (error) {
                         console.log(error);
                         return res.status(501).json({

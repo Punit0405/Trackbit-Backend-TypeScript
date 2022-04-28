@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import HabitClass from "../Controllers/HabitController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import HabitValidator from "../Validations/habitValidator";

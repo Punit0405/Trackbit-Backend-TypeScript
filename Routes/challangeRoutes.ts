@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express  from "express";
 import ChallangeClass from "../Controllers/ChallangeController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import ChallangeValidator from "../Validations/challangeValidator";

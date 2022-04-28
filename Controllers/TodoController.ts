@@ -8,7 +8,7 @@ class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
         try {
             
-            const {title,description,checklists,dueDate,tags,reminder} = req.body;
+            const {title,description,checklists,dueDate,tags} = req.body;
             const newTodo=new Todo({
                 title:title,
                 description:description,

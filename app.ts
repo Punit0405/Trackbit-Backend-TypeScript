@@ -16,7 +16,7 @@ const todoRoutes = new TodoRouter().router;
 
 const dailyRoutes = new DailyRouter().router;
 const challangeRoutes=new ChallangeRouter().router;
-const db = new Dbconnection();
+new Dbconnection();
 
 class App {
     public app: express.Application;
