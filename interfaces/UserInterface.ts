@@ -1,4 +1,4 @@
-import {Types} from 'mongoose';
+import {Types} from "mongoose";
 interface UserInterface {
     name:string,
     email:string,
@@ -7,7 +7,7 @@ interface UserInterface {
     experience:number,
     level:number,
     health:number,
-    email_verified:Boolean,
+    email_verified:boolean,
     healthResetCount:number,
     idToken:string,
     accessToken:string,

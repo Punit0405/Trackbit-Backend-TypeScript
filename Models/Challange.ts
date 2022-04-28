@@ -1,5 +1,5 @@
-import { Schema,Types ,model} from 'mongoose';
-import ChallangeInterface from '../interfaces/ChallangeInterface';
+import { Schema,Types ,model} from "mongoose";
+import ChallangeInterface from "../interfaces/ChallangeInterface";
 
 
 const challangeSchema = new Schema<ChallangeInterface>({
@@ -13,7 +13,7 @@ const challangeSchema = new Schema<ChallangeInterface>({
     },
     userId:{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:"User"
     },
     createdAt:{
         type:Date,
@@ -29,11 +29,11 @@ const challangeSchema = new Schema<ChallangeInterface>({
     },
     habits:{
         type:[Schema.Types.ObjectId],
-        ref:'Habit'
+        ref:"Habit"
     },
     participants:{
         type:[Schema.Types.ObjectId],
-        ref:'User'
+        ref:"User"
     },
     experience:{
         type:Number,

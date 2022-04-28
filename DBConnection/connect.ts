@@ -7,13 +7,13 @@ class DBConnection{
             mongoose.connect(process.env.DATABASE_URI as string, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-              } as ConnectionOptions).then(()=>{
-                  console.log("Connected to Trackbit Database")
-              }).catch((error)=>{
-                  console.log(error)
-              })
+            } as ConnectionOptions).then(()=>{
+                console.log("Connected to Trackbit Database");
+            }).catch((error)=>{
+                console.log(error);
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
       
      

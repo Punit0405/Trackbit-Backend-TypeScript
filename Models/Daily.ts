@@ -1,5 +1,5 @@
-import { Schema,Types ,model} from 'mongoose';
-import DailyInterface from '../interfaces/DailyInterface';
+import { Schema,Types ,model} from "mongoose";
+import DailyInterface from "../interfaces/DailyInterface";
 
 
 const dailySchema = new Schema<DailyInterface>({
@@ -13,11 +13,11 @@ const dailySchema = new Schema<DailyInterface>({
     },
     userId:{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:"User"
     },
     challagneId:{
         type:Schema.Types.ObjectId,
-        ref:'Challange'
+        ref:"Challange"
     },
     checklists:{
         type:[String]
@@ -29,12 +29,12 @@ const dailySchema = new Schema<DailyInterface>({
     },
     days:{
         type:String,
-        default:'EveryDay'
+        default:"EveryDay"
 
 
     },
     tags:{
-       type:[String]
+        type:[String]
     },
     reminder:{
         type:Date,

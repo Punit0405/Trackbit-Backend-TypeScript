@@ -1,5 +1,5 @@
-import { Schema,Types ,model} from 'mongoose';
-import TodoInterface from '../interfaces/TodoInterface';
+import { Schema,Types ,model} from "mongoose";
+import TodoInterface from "../interfaces/TodoInterface";
 
 
 const todoSchema = new Schema<TodoInterface>({
@@ -13,11 +13,11 @@ const todoSchema = new Schema<TodoInterface>({
     },
     userId:{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:"User"
     },
     challagneId:{
         type:Schema.Types.ObjectId,
-        ref:'Challange'
+        ref:"Challange"
     },
     checklists:{
         type:[String]
@@ -28,7 +28,7 @@ const todoSchema = new Schema<TodoInterface>({
         
     },
     tags:{
-       type:[String]
+        type:[String]
     },
     reminder:{
         type:Date,

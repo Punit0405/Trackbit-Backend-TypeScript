@@ -1,4 +1,4 @@
-import {Types} from 'mongoose';
+import {Types} from "mongoose";
 interface TodoInterface {
     title:string,
     description:string,
