@@ -7,7 +7,7 @@ interface HabitInterface {
     habitType:boolean,
     duration:boolean[],
     tags:[string],
-    reminder:Date,
+    reminder:string,
     createdAt:Date
 
     

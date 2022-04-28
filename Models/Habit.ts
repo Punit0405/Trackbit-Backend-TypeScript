@@ -32,7 +32,7 @@ const habitSchema = new Schema<HabitInterface>({
        type:[String]
     },
     reminder:{
-        type:Date,
+        type:String,
 
     },
     createdAt:{
