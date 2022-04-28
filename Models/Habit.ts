@@ -24,9 +24,9 @@ const habitSchema = new Schema<HabitInterface>({
         required:true
     },
     duration:{
-        type:Number,
+        type:[Boolean],
         required:true,
-        default:21
+        default:[true,false,false]
     },
     tags:{
        type:[String]

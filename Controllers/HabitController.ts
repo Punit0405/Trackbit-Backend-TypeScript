@@ -9,6 +9,7 @@ class HabitClass {
     try {
       const { title, description, habitType, duration, tags, reminder } =
         req.body;
+        console.log(req.body,"Add Habit");
       const newHabit = new Habit({
         title: title,
         description: description,
@@ -78,6 +79,7 @@ class HabitClass {
 
       const { title, description, habitType, duration, tags, reminder } =
         req.body;
+        console.log(req.body,"Add Habit");
       const habit = await Habit.findById(id);
       if (!habit) {
         return res.status(404).json({ status: false, data: "Habit not found" });
