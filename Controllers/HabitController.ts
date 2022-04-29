@@ -14,11 +14,19 @@ class HabitClass {
         title: title,
         description: description,
         habitType: habitType,
-        duration: duration,
         tags: tags,
         reminder:reminder,
         userId: req.user.id,
       });
+      if(duration){
+        if(duration[0]){
+          newHabit.duration=21;
+        }else if(duration[1]){
+          newHabit.duration=30;
+        }else if(duration[2]){
+          newHabit.duration=50;
+        }
+      }
       res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
       return await newHabit.save();
     } catch (error) {
