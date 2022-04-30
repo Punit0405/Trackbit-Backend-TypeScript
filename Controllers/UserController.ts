@@ -439,12 +439,12 @@ class UserClass {
         return res.status(200).json({status:false,data:"No User Exists"});
 
       }
-      return res.status(500).json({status:true,data:loggedinUser})
+      return res.status(200).json({status:true,data:loggedinUser})
 
      
    } catch (error) {
      console.log(error)
-     return res.status(200).json({status:false,data:"Some Internal Server Error Occured"})
+     return res.status(500).json({status:false,data:"Some Internal Server Error Occured"})
    }
  }
  public fetchAppliedChallanges = async(req:RequestUser,res:Response)=>{
@@ -478,12 +478,12 @@ class UserClass {
        return res.status(200).json({status:false,data:"No User Exists"});
 
      }
-     return res.status(500).json({status:true,data:{level:loggedinUser.level,experience:loggedinUser.experience,health:loggedinUser.health}})
+     return res.status(200).json({status:true,data:{level:loggedinUser.level,experience:loggedinUser.experience,health:loggedinUser.health}})
 
     
   } catch (error) {
     console.log(error)
-    return res.status(200).json({status:false,data:"Some Internal Server Error Occured"})
+    return res.status(500).json({status:false,data:"Some Internal Server Error Occured"})
   }
 }
 }
