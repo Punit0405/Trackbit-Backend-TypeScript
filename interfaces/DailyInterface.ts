@@ -6,6 +6,7 @@ interface DailyInterface {
     challagneId:Types.ObjectId,
     checklists:[string],
     startDate:Date,
+    difficulty:boolean[],
     days:string,
     tags:[string],
     reminder:Date,

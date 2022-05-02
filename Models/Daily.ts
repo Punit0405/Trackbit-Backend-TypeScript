@@ -19,6 +19,12 @@ const dailySchema = new Schema<DailyInterface>({
         type:Schema.Types.ObjectId,
         ref:'Challange'
     },
+    difficulty:{
+        type:[Boolean],
+        required:true,
+        default:[true,false,false]
+        
+    },
     checklists:{
         type:[String]
     },

@@ -8,14 +8,16 @@ class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
         try {
             
-            const {title,description,checklists,dueDate,tags,reminder} = req.body;
+            const {title,description,checklists,difficulty,dueDate,tags,reminder} = req.body;
             const newTodo=new Todo({
                 title:title,
                 description:description,
                 checkLists:checklists,
                 userId:req.user.id,
                 dueDate:dueDate,
-                tags:tags
+                tags:tags,
+                reminder:reminder,
+                difficulty:difficulty
                 
                 
     
@@ -77,7 +79,7 @@ class TodoClass{
                   .status(400)
                   .json({ status: false, data: "Please Enter a valid habit id" });
               }
-               const {title,description,checklists,dueDate,tags,reminder} = req.body;
+               const {title,description,difficulty,checklists,dueDate,tags,reminder} = req.body;
                const todo = await Todo.findById(id);
                if(!todo){
                    return res.status(404).json({status:false,data:"Todo not found"})
@@ -100,6 +102,9 @@ class TodoClass{
                }
                if(dueDate){
                    todo.dueDate=dueDate
+               }
+               if(difficulty){
+                   todo.difficulty=difficulty
                }
                if(tags){
                    todo.tags=tags

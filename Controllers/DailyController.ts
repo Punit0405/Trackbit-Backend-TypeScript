@@ -13,6 +13,7 @@ class DailyClass {
         checklists,
         startDate,
         days,
+        difficulty,
         tags,
         reminder,
       } = req.body;
@@ -24,6 +25,8 @@ class DailyClass {
         userId: req.user.id,
         startDate: startDate,
         tags: tags,
+        reminder:reminder,
+        difficulty:difficulty
       });
       res.status(200).json({ status: true, data: "Daily Added Sucessfully" });
       return await newDaily.save();
@@ -89,6 +92,7 @@ class DailyClass {
         startDate,
         tags,
         reminder,
+        difficulty
       } = req.body;
       const daily = await Daily.findById(id);
       if (!daily) {
@@ -115,6 +119,9 @@ class DailyClass {
       }
       if (startDate) {
         daily.startDate = startDate;
+      }
+      if (difficulty) {
+        daily.difficulty = difficulty;
       }
       if (days) {
         daily.days = days;

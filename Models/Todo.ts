@@ -27,11 +27,17 @@ const todoSchema = new Schema<TodoInterface>({
         required:true,
         
     },
+    difficulty:{
+        type:[Boolean],
+        required:true,
+        default:[true,false,false]
+        
+    },
     tags:{
        type:[String]
     },
     reminder:{
-        type:Date,
+        type:String,
 
     },
     createdAt:{

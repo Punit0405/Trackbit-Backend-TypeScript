@@ -7,7 +7,8 @@ interface TodoInterface {
     checklists:[string],
     dueDate:Date
     tags:[string],
-    reminder:Date,
+    difficulty:boolean[],
+    reminder:String,
     createdAt:Date
 
     
