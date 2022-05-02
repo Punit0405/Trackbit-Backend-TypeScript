@@ -20,7 +20,7 @@ const habitSchema = new Schema<HabitInterface>({
         ref:'Challange'
     },
     habitType:{
-        type:Boolean,
+        type:[Boolean],
         required:true
     },
     duration:{

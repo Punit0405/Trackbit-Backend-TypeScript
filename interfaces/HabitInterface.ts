@@ -4,7 +4,7 @@ interface HabitInterface {
     description:string,
     userId:Types.ObjectId,
     challagneId:Types.ObjectId,
-    habitType:boolean,
+    habitType:boolean[],
     duration:boolean[],
     difficulty:boolean[],
     tags:[string],
