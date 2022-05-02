@@ -1,23 +1,28 @@
 import Todo from '../Models/Todo';
 import {Response} from 'express';
+import User from '../Models/User';
+import TodoInterface from '../interfaces/TodoInterface';
 import RequestUser from '../Middlewares/RequestInterface';
+import parameterValidator from '../Validations/parameterValidator';
 class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
         try {
             
-            const {title,description,checklists,dueDate,tags,reminder} = req.body;
+            const {title,description,checklists,difficulty,dueDate,tags,reminder} = req.body;
             const newTodo=new Todo({
                 title:title,
                 description:description,
                 checkLists:checklists,
                 userId:req.user.id,
                 dueDate:dueDate,
-                tags:tags
+                tags:tags,
+                reminder:reminder,
+                difficulty:difficulty
                 
                 
     
             })
-            res.status(200).json({status:200,data:"Todo Added Sucessfully"})
+            res.status(200).json({status:true,data:"Todo Added Sucessfully"})
             return await newTodo.save()
             
             
@@ -30,11 +35,34 @@ class TodoClass{
     }
     public fetchTodos =async (req:RequestUser,res:Response)=>{
         try {
-            const todos = await Todo.find({userId:req.user.id}).select("-userId");
+            let todos = await Todo.find({userId:req.user.id}).select("-userId");
+            
+            let challangeTodos:any[]=[];
+            const loggedinUser = await User.findById(req.user.id)
+            .populate({
+                path:'appliedChallanges',
+                populate:[{
+                path:'habits',model:'Habit'
+            },{path:'todos',model:'Todo'},{path:'dailies',model:'Daily'}]});
+            if(!loggedinUser){
+                return res.status(401).json({status:false,data:"Loggedin User Not exists"})
+            }
+            loggedinUser.appliedChallanges.map((challange:any)=>{
+              challange.todos.map((todo:TodoInterface)=>{
+                challangeTodos.push(todo)
+              })
+                      
+            });
+            
+            todos=todos.concat(challangeTodos);
+
+        
+            
             return res.status(200).json({status:true,data:todos})
     
             
         } catch (error) {
+            
             return res.status(500).json({status:false,data:"Some Internal Server Occured"})
         }
     
@@ -42,7 +70,16 @@ class TodoClass{
     public updateTodo = async(req:RequestUser,res:Response)=>{
         try {
                const {id}= req.params;
-               const {title,description,checklists,dueDate,tags,reminder} = req.body;
+               if(!id){
+
+                return res.status(404).json({status:false,data:"Please provide habit id"})
+              }
+              if (!parameterValidator(id)) {
+                return res
+                  .status(400)
+                  .json({ status: false, data: "Please Enter a valid habit id" });
+              }
+               const {title,description,difficulty,checklists,dueDate,tags,reminder} = req.body;
                const todo = await Todo.findById(id);
                if(!todo){
                    return res.status(404).json({status:false,data:"Todo not found"})
@@ -61,10 +98,13 @@ class TodoClass{
                    todo.description=description;
                }
                if(checklists){
-                   todo.checkLists=checklists
+                   todo.checklists=checklists
                }
                if(dueDate){
                    todo.dueDate=dueDate
+               }
+               if(difficulty){
+                   todo.difficulty=difficulty
                }
                if(tags){
                    todo.tags=tags
@@ -85,6 +125,15 @@ class TodoClass{
     public deleteTodo = async(req:RequestUser,res:Response)=>{
         try {
             const {id}=req.params;
+            if(!id){
+
+                return res.status(404).json({status:false,data:"Please provide habit id"})
+              }
+              if (!parameterValidator(id)) {
+                return res
+                  .status(400)
+                  .json({ status: false, data: "Please Enter a valid habit id" });
+              }
             const todo= await Todo.findById(id);
             if(!todo){
                 return res.status(404).json({status:false,data:"Todo Not Found"})
@@ -96,7 +145,7 @@ class TodoClass{
             return res.status(200).json({status:true,data:todo});
             
         } catch (error) {
-            console.log(error)
+  
             return res.status(500).json({status:false,data:"Some Internal Error Occured"})
         }
     }

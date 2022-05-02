@@ -1,19 +1,7 @@
 import { Schema,Types ,model} from 'mongoose';
-
-interface TodoInterface {
-    title:string,
-    description:string,
-    userId:Types.ObjectId,
-    checkLists:[string],
-    dueDate:Date
-    tags:[string],
-    reminder:Date,
-    createdAt:Date
-
-    
+import TodoInterface from '../interfaces/TodoInterface';
 
 
-}
 const todoSchema = new Schema<TodoInterface>({
     title:{
         type:String,
@@ -27,7 +15,11 @@ const todoSchema = new Schema<TodoInterface>({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
-    checkLists:{
+    challagneId:{
+        type:Schema.Types.ObjectId,
+        ref:'Challange'
+    },
+    checklists:{
         type:[String]
     },
     dueDate:{
@@ -35,11 +27,17 @@ const todoSchema = new Schema<TodoInterface>({
         required:true,
         
     },
+    difficulty:{
+        type:[Boolean],
+        required:true,
+        default:[true,false,false]
+        
+    },
     tags:{
        type:[String]
     },
     reminder:{
-        type:Date,
+        type:String,
 
     },
     createdAt:{
