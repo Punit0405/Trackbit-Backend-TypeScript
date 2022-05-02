@@ -5,9 +5,9 @@ interface HabitInterface {
     userId:Types.ObjectId,
     challagneId:Types.ObjectId,
     habitType:boolean,
-    duration:boolean[],
+    duration:number,
     tags:[string],
-    reminder:Date,
+    reminder:string,
     createdAt:Date
 
     
