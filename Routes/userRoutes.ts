@@ -31,6 +31,7 @@ class UserRoutes {
 
     // Route for User Information
     this.router.route('/fetchuser').get(isLoggedin,UserController.fetchUser);
+    this.router.route('/fetchuserlevels').get(isLoggedin,UserController.fetchExperience);
     this.router.route('/fetchappliedchallanges').get(isLoggedin,UserController.fetchAppliedChallanges);
 
     // Route For Increasing User Experience

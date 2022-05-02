@@ -439,12 +439,12 @@ class UserClass {
         return res.status(200).json({status:false,data:"No User Exists"});
 
       }
-      return res.status(500).json({status:true,data:loggedinUser})
+      return res.status(200).json({status:true,data:loggedinUser})
 
      
    } catch (error) {
      console.log(error)
-     return res.status(200).json({status:false,data:"Some Internal Server Error Occured"})
+     return res.status(500).json({status:false,data:"Some Internal Server Error Occured"})
    }
  }
  public fetchAppliedChallanges = async(req:RequestUser,res:Response)=>{
@@ -471,6 +471,21 @@ class UserClass {
      return res.status(500).json({status:false,data:"Some Internal Error Occured"})
    }
  }
+ public fetchExperience = async(req:RequestUser,res:Response)=>{
+  try {
+     let loggedinUser = await User.findById(req.user.id).select(['-password','-appliedChallanges','-createdAt','-email_verified']);
+     if(!loggedinUser){
+       return res.status(200).json({status:false,data:"No User Exists"});
+
+     }
+     return res.status(200).json({status:true,data:{level:loggedinUser.level,experience:loggedinUser.experience,health:loggedinUser.health}})
+
+    
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({status:false,data:"Some Internal Server Error Occured"})
+  }
+}
 }
 
 export default UserClass;
