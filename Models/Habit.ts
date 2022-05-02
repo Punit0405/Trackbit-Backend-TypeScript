@@ -1,20 +1,7 @@
 import { Schema,Types ,model} from 'mongoose';
-
-interface HabitInterface {
-    title:string,
-    description:string,
-    password:string,
-    userId:Types.ObjectId,
-    habitType:boolean,
-    duration:number,
-    tags:[string],
-    reminder:Date,
-    createdAt:Date
-
-    
+import HabitInterface from '../interfaces/HabitInterface';
 
 
-}
 const habitSchema = new Schema<HabitInterface>({
     title:{
         type:String,
@@ -28,20 +15,31 @@ const habitSchema = new Schema<HabitInterface>({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
+    challagneId:{
+        type:Schema.Types.ObjectId,
+        ref:'Challange'
+    },
     habitType:{
-        type:Boolean,
+        type:[Boolean],
         required:true
     },
     duration:{
-        type:Number,
+        type:[Boolean],
         required:true,
-        default:21
+        default:[true,false,false]
+        
+    },
+    difficulty:{
+        type:[Boolean],
+        required:true,
+        default:[true,false,false]
+        
     },
     tags:{
        type:[String]
     },
     reminder:{
-        type:Date,
+        type:String,
 
     },
     createdAt:{
