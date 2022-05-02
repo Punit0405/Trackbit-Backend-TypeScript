@@ -21,8 +21,9 @@ class HabitClass {
       res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
       return await newHabit.save();
     } catch (error) {
+      console.log(error,"Adding Habit")
       return res
-        .status(500)
+      .status(500)
         .json({ status: false, data: "Some Internal Error Occured" });
     }
   };
@@ -57,8 +58,9 @@ class HabitClass {
 
       return res.status(200).json({ status: true, data: habits });
     } catch (error) {
+      console.log(error,"Fetching Habit")
       return res
-        .status(500)
+      .status(500)
         .json({ status: false, data: "Some Internal Server Occured" });
     }
   };
@@ -79,7 +81,7 @@ class HabitClass {
 
       const { title, description, habitType, duration, tags, reminder } =
         req.body;
-        console.log(req.body,"Add Habit");
+       
       const habit = await Habit.findById(id);
       if (!habit) {
         return res.status(404).json({ status: false, data: "Habit not found" });
@@ -87,7 +89,7 @@ class HabitClass {
 
       if (habit.userId.toString() !== req.user.id) {
         return res
-          .status(400)
+        .status(400)
           .json({
             status: false,
             data: "Habit doesn't Exists for this Account",
@@ -115,8 +117,9 @@ class HabitClass {
       await habit.save();
       return res.status(200).json({ status: true, data: habit });
     } catch (error) {
+      console.log(error,"Updating Habit")
       return res
-        .status(500)
+      .status(500)
         .json({ status: false, data: "Some Internal Server Occured" });
     }
   };
@@ -147,9 +150,10 @@ class HabitClass {
       await Habit.findByIdAndDelete(id);
       return res.status(200).json({ status: true, data: habit });
     } catch (error) {
+      console.log(error,"Deleting Habit")
       return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
+      .status(500)
+      .json({ status: false, data: "Some Internal Error Occured" });
     }
   };
 }
