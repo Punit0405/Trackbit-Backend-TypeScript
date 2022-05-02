@@ -379,7 +379,7 @@ class UserClass {
       }
       loggedinUser.experience = loggedinUser.experience + experience;
       res.status(200).json({ status: true, data: "Experience Updataed" });
-      while (loggedinUser.experience >= 50) {
+      while (loggedinUser.experience > 50) {
         loggedinUser.experience = loggedinUser.experience - 50;
         loggedinUser.level++;
       }

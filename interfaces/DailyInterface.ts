@@ -7,7 +7,7 @@ interface DailyInterface {
     checklists:[string],
     startDate:Date,
     difficulty:boolean[],
-    days:string,
+    days:boolean[],
     tags:[string],
     reminder:Date,
     createdAt:Date  

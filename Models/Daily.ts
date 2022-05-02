@@ -34,8 +34,7 @@ const dailySchema = new Schema<DailyInterface>({
         
     },
     days:{
-        type:String,
-        default:'EveryDay'
+        type:[Boolean]
 
 
     },
