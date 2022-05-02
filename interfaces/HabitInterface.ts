@@ -6,6 +6,7 @@ interface HabitInterface {
     challagneId:Types.ObjectId,
     habitType:boolean,
     duration:boolean[],
+    difficulty:boolean[],
     tags:[string],
     reminder:string,
     createdAt:Date

@@ -29,6 +29,12 @@ const habitSchema = new Schema<HabitInterface>({
         default:[true,false,false]
         
     },
+    difficulty:{
+        type:[Boolean],
+        required:true,
+        default:[true,false,false]
+        
+    },
     tags:{
        type:[String]
     },

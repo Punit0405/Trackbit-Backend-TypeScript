@@ -7,7 +7,7 @@ import parameterValidator from "../Validations/parameterValidator";
 class HabitClass {
   public addHabit = async (req: RequestUser, res: Response) => {
     try {
-      const { title, description, habitType, duration, tags, reminder } =
+      const { title, description, habitType, difficulty,duration, tags, reminder } =
         req.body;
         console.log(req.body,"Add Habit");
       const newHabit = new Habit({
@@ -15,6 +15,7 @@ class HabitClass {
         description: description,
         habitType: habitType,
         duration: duration,
+        difficulty: difficulty,
         tags: tags,
         reminder:reminder,
         userId: req.user.id,
@@ -80,7 +81,7 @@ class HabitClass {
           .json({ status: false, data: "Please Enter a valid habit id" });
       }
 
-      const { title, description, habitType, duration, tags, reminder } =
+      const { title, description, habitType, difficulty,duration, tags, reminder } =
         req.body;
        
       const habit = await Habit.findById(id);
@@ -108,6 +109,9 @@ class HabitClass {
       }
       if (duration) {
         habit.duration = duration;
+      }
+      if (difficulty) {
+        habit.duration = difficulty;
       }
       if (tags) {
         habit.tags = tags;
