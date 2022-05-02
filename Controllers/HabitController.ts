@@ -16,6 +16,7 @@ class HabitClass {
         habitType: habitType,
         duration: duration,
         tags: tags,
+        reminder:reminder,
         userId: req.user.id,
       });
       res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
