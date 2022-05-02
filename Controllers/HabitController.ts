@@ -9,7 +9,6 @@ class HabitClass {
     try {
       const { title, description, habitType, difficulty,duration, tags, reminder } =
         req.body;
-        console.log(req.body,"Add Habit");
       const newHabit = new Habit({
         title: title,
         description: description,

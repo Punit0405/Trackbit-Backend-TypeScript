@@ -16,7 +16,6 @@ const isLoggedin = async (req:RequestUser,res:Response,next:NextFunction)=>{
              return res.status(401).json({status:false,data:"Not a valid User"})
          }
         req.user=loggedUser;
-        console.log(req.headers,"Origin")
         next();
     } catch (error) {
         
