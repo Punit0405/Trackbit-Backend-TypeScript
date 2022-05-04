@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: echo ${{secrets.AWSHOST}
+    - run: echo ${{secrets.AWSHOST}}
     - run: sudo pm2 restart Trackbit
   
     
