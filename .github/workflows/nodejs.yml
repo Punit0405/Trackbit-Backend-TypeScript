@@ -26,12 +26,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-      env:
-          AWSHOST: ${{ secrets.AWSHOST }}
-          JWT_USER_REGISTER_SECRET_KEY: ${{ secrets.JWT_USER_REGISTER_SECRET_KEY }}    
+    - name: create env file
+      run: |
+        touch .env
+        echo AWSHOST=${{ secrets.AWSHOST }} >> .env    
     - run: npm ci
-    - run: echo ${AWSHOST}
-    - run: echo ${AWSHOST}
     - run: sudo pm2 restart Trackbit
   
     
