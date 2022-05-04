@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ 'release-habit-punit' ]
+    branches:  release-habit-punit 
   pull_request:
-    branches: [ 'release-habit-punit' ]
+    branches:  release-habit-punit 
 
 jobs:
   build:
