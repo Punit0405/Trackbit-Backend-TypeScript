@@ -26,8 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env:
+          AWSHOST: ${{ secrets.AWSHOST }}
+          JWT_USER_REGISTER_SECRET_KEY: ${{ secrets.JWT_USER_REGISTER_SECRET_KEY }}    
     - run: npm ci
-    - run: echo ${{secrets.JWT_USER_REGISTER_SECRET_KEY}}
+    - run: echo ${{#AWSHOST}}
+    - run: echo ${{AWSHOST}}
     - run: sudo pm2 restart Trackbit
   
     
