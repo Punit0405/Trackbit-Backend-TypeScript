@@ -5,9 +5,9 @@ name: Tb
 
 on:
   push:
-    branches:  release-habit-punit
+    branches:  ['*']
   pull_request:
-    branches:  release-habit-punit
+    branches:  ['*']
 
 jobs:
   build:
