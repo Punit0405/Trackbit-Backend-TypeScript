@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    
     - name: create env file
       run: |
         touch .env
@@ -39,6 +40,7 @@ jobs:
         echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env 
         echo AWSHOST=${{ secrets.AWSHOST }} >> .env
     - run: npm ci
+    - run: npm run build --if-present
     - run: sudo pm2 restart Trackbit
   
     
