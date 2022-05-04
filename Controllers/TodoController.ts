@@ -9,6 +9,7 @@ class TodoClass{
         try {
             
             const {title,description,checklists,difficulty,dueDate,tags,reminder} = req.body;
+            console.log(req.body);
             const newTodo=new Todo({
                 title:title,
                 description:description,
