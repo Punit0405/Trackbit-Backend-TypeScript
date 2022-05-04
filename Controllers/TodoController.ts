@@ -12,7 +12,7 @@ class TodoClass{
             const newTodo=new Todo({
                 title:title,
                 description:description,
-                checkLists:checklists,
+                checklists:checklists,
                 userId:req.user.id,
                 dueDate:dueDate,
                 tags:tags,
