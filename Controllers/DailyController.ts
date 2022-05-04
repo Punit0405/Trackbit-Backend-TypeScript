@@ -6,6 +6,7 @@ import RequestUser from "../Middlewares/RequestInterface";
 import parameterValidator from "../Validations/parameterValidator";
 class DailyClass {
   public addDaily = async (req: RequestUser, res: Response) => {
+    console.log(req.body)
     try {
       const {
         title,
