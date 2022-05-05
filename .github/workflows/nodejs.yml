@@ -32,7 +32,7 @@ jobs:
         touch .env
         echo PORT=${{ secrets.PORT }} >> .env
         echo JWT_USER_REGISTER_SECRET_KEY=${{ secrets.JWT_USER_REGISTER_SECRET_KEY }} >> .env 
-        echo DATABASE_URI=mongodb+srv://PunitTewani:Punit92655@cluster0.qvrin.mongodb.net/TrackBit?retryWrites=true >> .env 
+        echo DATABASE_URI=mongodb+srv://PunitTewani:Punit92655@cluster0.qvrin.mongodb.net/TrackBit?retryWrites=true\&w=majority >> .env 
         echo JWT_USER_LOGIN_SECRET_KEY=${{ secrets.JWT_USER_LOGIN_SECRET_KEY }} >> .env 
         echo MAILER_EMAIL=${{ secrets.MAILER_EMAIL }} >> .env 
         echo MAILER_PASSWORD=${{ secrets.MAILER_PASSWORD }} >> .env 
