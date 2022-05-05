@@ -31,8 +31,8 @@ jobs:
       run: |
         touch .env
         echo PORT=${{ secrets.PORT }} >> .env
-        echo DATABASE_URI=${{ secrets.DATABASE_URI }} >> .env 
         echo JWT_USER_REGISTER_SECRET_KEY=${{ secrets.JWT_USER_REGISTER_SECRET_KEY }} >> .env 
+        echo DATABASE_URI=${{ secrets.DATABASE_URI }} >> .env 
         echo JWT_USER_LOGIN_SECRET_KEY=${{ secrets.JWT_USER_LOGIN_SECRET_KEY }} >> .env 
         echo MAILER_EMAIL=${{ secrets.MAILER_EMAIL }} >> .env 
         echo MAILER_PASSWORD=${{ secrets.MAILER_PASSWORD }} >> .env 
