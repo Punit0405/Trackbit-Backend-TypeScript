@@ -8,7 +8,7 @@ class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
         try {
             
-            const {title,description,checklists,difficulty,dueDate,tags,reminder} = req.body;
+            const {title,description,checklists,difficulty,reminderDate,dueDate,tags,reminderTime} = req.body;
             console.log(req.body);
             const newTodo=new Todo({
                 title:title,
@@ -16,8 +16,9 @@ class TodoClass{
                 checklists:checklists,
                 userId:req.user.id,
                 dueDate:dueDate,
+                reminderDate:reminderDate,
                 tags:tags,
-                reminder:reminder,
+                reminderTime:reminderTime,
                 difficulty:difficulty
                 
                 
@@ -80,7 +81,7 @@ class TodoClass{
                   .status(400)
                   .json({ status: false, data: "Please Enter a valid habit id" });
               }
-               const {title,description,difficulty,checklists,dueDate,tags,reminder} = req.body;
+               const {title,description,difficulty,reminderDate,checklists,dueDate,tags,reminderTime} = req.body;
                const todo = await Todo.findById(id);
                if(!todo){
                    return res.status(404).json({status:false,data:"Todo not found"})
@@ -104,6 +105,9 @@ class TodoClass{
                if(dueDate){
                    todo.dueDate=dueDate
                }
+               if(reminderDate){
+                   todo.reminderDate=reminderDate
+               }
                if(difficulty){
                    todo.difficulty=difficulty
                }
@@ -111,8 +115,8 @@ class TodoClass{
                    todo.tags=tags
     
                }
-               if(reminder){
-                   todo.reminder=reminder
+               if(reminderTime){
+                   todo.reminderTime=reminderTime
                }
                await todo.save();
                return res.status(200).json({status:true,data:todo})

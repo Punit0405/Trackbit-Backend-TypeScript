@@ -6,9 +6,10 @@ interface TodoInterface {
     challagneId:Types.ObjectId,
     checklists:[string],
     dueDate:Date
+    reminderDate:Date
     tags:[string],
     difficulty:boolean[],
-    reminder:String,
+    reminderTime:String,
     createdAt:Date
 
     

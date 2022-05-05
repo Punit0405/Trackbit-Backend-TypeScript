@@ -46,9 +46,10 @@ class ChallangeClass {
             description: todo.description,
             checklists: todo.checklists,
             dueDate: todo.dueDate,
+            reminderDate: todo.reminderDate,
             challagneId: newchallange._id,
             tags: todo.tags,
-            reminder: todo.reminder,
+            reminderTime: todo.reminderTime,
           });
           newchallange.todos.push(newTodo._id);
           await newTodo.save();
@@ -354,7 +355,7 @@ class ChallangeClass {
       }
 
       try {
-        const { title, description, checklists, dueDate, tags, reminder } =
+        const { title, description, checklists, dueDate,reminderDate, tags, reminderTime } =
           req.body;
         const todo = await Todo.findById(id);
         if (!todo) {
@@ -375,11 +376,14 @@ class ChallangeClass {
         if (dueDate) {
           todo.dueDate = dueDate;
         }
+        if (reminderDate) {
+          todo.dueDate = reminderDate;
+        }
         if (tags) {
           todo.tags = tags;
         }
-        if (reminder) {
-          todo.reminder = reminder;
+        if (reminderTime) {
+          todo.reminderTime = reminderTime;
         }
         await todo.save();
         return res.status(200).json({ status: true, data: todo });
