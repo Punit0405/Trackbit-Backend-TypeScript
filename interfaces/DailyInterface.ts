@@ -9,7 +9,7 @@ interface DailyInterface {
     difficulty:boolean[],
     days:boolean[],
     tags:[string],
-    reminder:Date,
+    reminder:string,
     createdAt:Date  
 
 }

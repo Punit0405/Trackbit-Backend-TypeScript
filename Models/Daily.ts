@@ -42,7 +42,7 @@ const dailySchema = new Schema<DailyInterface>({
        type:[String]
     },
     reminder:{
-        type:Date,
+        type:String,
 
     },
     createdAt:{
