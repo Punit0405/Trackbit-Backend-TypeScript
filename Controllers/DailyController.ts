@@ -21,7 +21,7 @@ class DailyClass {
       const newDaily = new Daily({
         title: title,
         description: description,
-        checkLists: checklists,
+        checklists: checklists,
         days: days,
         userId: req.user.id,
         startDate: startDate,
