@@ -410,6 +410,7 @@ class UserClass {
             loggedinUser.health = 50;
             loggedinUser.healthResetCount++;
             loggedinUser.experience -=10;
+       
          
             if(loggedinUser.experience <=0){
                 loggedinUser.experience=0;
