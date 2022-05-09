@@ -565,9 +565,12 @@ class ChallangeClass {
           .status(401)
           .json({ status: false, data: "You doesn't own this challange" });
       }
-      await User.findByIdAndUpdate(req.user.id, {
-        $pull: { appliedChallanges: challangeId },
-      });
+      
+      challange.participants.forEach(async (participant)=>{
+        await User.findByIdAndUpdate(participant,{
+          $pull: { appliedChallanges: challangeId },
+        });
+      })
       challange.habits.forEach(async (habit) => {
         await Habit.findByIdAndDelete(habit);
       });
