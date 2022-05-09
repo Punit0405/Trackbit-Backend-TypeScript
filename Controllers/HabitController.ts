@@ -39,6 +39,7 @@ class HabitClass {
           {
             path: "habits",
             model: "Habit",
+            select:"-challagneId"
           },
           { path: "todos", model: "Todo" },
           { path: "dailies", model: "Daily" },

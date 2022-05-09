@@ -47,10 +47,11 @@ class DailyClass {
         populate: [
           {
             path: "habits",
+            select:"-challagneId",
             model: "Habit",
           },
-          { path: "dailies", model: "Daily" },
-          { path: "dailies", model: "Daily" },
+          { path: "todos",     select:"-challagneId",model: "Todo" },
+          { path: "dailies",  select:"-challagneId",model: "Daily" },
         ],
       });
       if (!loggedinUser) {

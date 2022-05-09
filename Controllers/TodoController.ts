@@ -44,8 +44,8 @@ class TodoClass{
             .populate({
                 path:'appliedChallanges',
                 populate:[{
-                path:'habits',model:'Habit'
-            },{path:'todos',model:'Todo'},{path:'dailies',model:'Daily'}]});
+                path:'habits',model:'Habit', select:"-challagneId"
+            },{path:'todos', select:"-challagneId",model:'Todo'},{path:'dailies',select:"-challagneId",model:'Daily'}]});
             if(!loggedinUser){
                 return res.status(401).json({status:false,data:"Loggedin User Not exists"})
             }
