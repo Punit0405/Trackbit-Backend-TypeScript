@@ -60,6 +60,18 @@ class ChallangeRouter {
       .route("/showparticipants/:challangeId")
       .get(isLoggedin, ChallangeController.showParticipants);
 
+      this.router
+      .route("/deletechallangetodo/:id")
+      .delete(isLoggedin, ChallangeController.deleteChallangeTodo);
+
+      this.router
+      .route("/deletechallangehabit/:id")
+      .delete(isLoggedin, ChallangeController.deleteChallangeHabit);
+
+      this.router
+      .route("/deletechallangedaily/:id")
+      .delete(isLoggedin, ChallangeController.deleteChallangeDaily);
+
     this.router.route('/fetchallchallanges').get(isLoggedin,ChallangeController.fetchChallangeForall)
     this.router.route('/deletechallange/:challangeId').delete(isLoggedin,ChallangeController.deleteChallange)
   }
