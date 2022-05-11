@@ -746,6 +746,7 @@ class ChallangeClass {
   public fetchChallangeForall = async (req: RequestUser, res: Response) => {
     try {
       const challanges = await Challange.find()
+        .populate({path:"userId",select:["name","email"],model:"User"})
         .populate({ path: "habits" })
         .populate({ path: "todos" })
         .populate({ path: "dailies" });
