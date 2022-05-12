@@ -134,12 +134,10 @@ class ChallangeClass {
           req.user.id as unknown as mongoose.Types.ObjectId
         )
       ) {
-        return res
-          .status(400)
-          .json({
-            status: false,
-            data: "You are already joined the challange",
-          });
+        return res.status(400).json({
+          status: false,
+          data: "You are already joined the challange",
+        });
       }
       loggedinUser.appliedChallanges.push(challange._id);
       res.status(200).json({
@@ -376,13 +374,14 @@ class ChallangeClass {
       }
 
       try {
-         await Challange.findByIdAndUpdate(challageId,{
-           $pull:{habits:id}
-         }),
-         await Habit.findByIdAndDelete(id);
-        
-        
-        return res.status(200).json({ status: true, data: "Habit Deleted Successfully" });
+        await Challange.findByIdAndUpdate(challageId, {
+          $pull: { habits: id },
+        }),
+          await Habit.findByIdAndDelete(id);
+
+        return res
+          .status(200)
+          .json({ status: true, data: "Habit Deleted Successfully" });
       } catch (error) {
         return res
           .status(500)
@@ -523,22 +522,21 @@ class ChallangeClass {
           .status(401)
           .json({ status: false, data: "You doesn't own this challange" });
       }
-      if (
-        !challange.todos.includes(id as unknown as mongoose.Types.ObjectId)
-      ) {
+      if (!challange.todos.includes(id as unknown as mongoose.Types.ObjectId)) {
         return res
           .status(404)
           .json({ status: false, data: "Todo not found for this challange" });
       }
 
       try {
-         await Challange.findByIdAndUpdate(challageId,{
-           $pull:{todos:id}
-         }),
-         await Todo.findByIdAndDelete(id);
-        
-        
-        return res.status(200).json({ status: true, data: "Todo Deleted Successfully" });
+        await Challange.findByIdAndUpdate(challageId, {
+          $pull: { todos: id },
+        }),
+          await Todo.findByIdAndDelete(id);
+
+        return res
+          .status(200)
+          .json({ status: true, data: "Todo Deleted Successfully" });
       } catch (error) {
         return res
           .status(500)
@@ -690,13 +688,14 @@ class ChallangeClass {
       }
 
       try {
-         await Challange.findByIdAndUpdate(challageId,{
-           $pull:{dailies:id}
-         }),
-         await Daily.findByIdAndDelete(id);
-        
-        
-        return res.status(200).json({ status: true, data: "Daily Deleted Successfully" });
+        await Challange.findByIdAndUpdate(challageId, {
+          $pull: { dailies: id },
+        }),
+          await Daily.findByIdAndDelete(id);
+
+        return res
+          .status(200)
+          .json({ status: true, data: "Daily Deleted Successfully" });
       } catch (error) {
         return res
           .status(500)
@@ -705,10 +704,12 @@ class ChallangeClass {
     } catch (error) {
       return res
         .status(500)
-        .json({ status: false, data: "627bb2b464a00ac777175173Some Internal Error Occured" });
+        .json({
+          status: false,
+          data: "627bb2b464a00ac777175173Some Internal Error Occured",
+        });
     }
   };
-
 
   public showParticipants = async (req: RequestUser, res: Response) => {
     try {
@@ -746,7 +747,7 @@ class ChallangeClass {
   public fetchChallangeForall = async (req: RequestUser, res: Response) => {
     try {
       const challanges = await Challange.find()
-        .populate({path:"userId",select:["name","email"],model:"User"})
+        .populate({ path: "userId", select: ["name", "email"], model: "User" })
         .populate({ path: "habits" })
         .populate({ path: "todos" })
         .populate({ path: "dailies" });
@@ -814,9 +815,9 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Error Occured" });
     }
   };
-  public completeChallangeTodo = async(req:RequestUser,res:Response)=>{
+  public completeChallangeTodo = async (req: RequestUser, res: Response) => {
     try {
-      let todoId=req.params.todoId;
+      let todoId = req.params.todoId;
       todoId = todoId.trim();
       if (!parameterValidator(todoId)) {
         return res
@@ -824,28 +825,31 @@ class ChallangeClass {
           .json({ status: false, data: "Please Enter a valid todo id" });
       }
       const todo = await Todo.findById(todoId);
-      if(!todo){
-        return res.status(404).json({status:false,data:"Todo not found"});
-  
+      if (!todo) {
+        return res.status(404).json({ status: false, data: "Todo not found" });
       }
       const challange = await Challange.findById(todo.challagneId);
-      if(!challange?.participants.includes(req.user.id)){
-        return res.status(401).json({status:false,data:"You are not in this challange"});
+      if (!challange?.participants.includes(req.user.id)) {
+        return res
+          .status(401)
+          .json({ status: false, data: "You are not in this challange" });
       }
-      await Todo.findByIdAndUpdate(todoId,{
-        $push:{completedParticipants:req.user.id}
+      await Todo.findByIdAndUpdate(todoId, {
+        $push: { completedParticipants: req.user.id },
       });
-      return res.status(200).json({status:true,data:"Todo Completed Marked"})
-      
+      return res
+        .status(200)
+        .json({ status: true, data: "Todo Completed Marked" });
     } catch (error) {
-      return res.status(500).json({status:false,data:"Internal Server Error Occured"})
+      return res
+        .status(500)
+        .json({ status: false, data: "Internal Server Error Occured" });
     }
-  
-  }
+  };
 
-  public completeChallangeDaily = async(req:RequestUser,res:Response)=>{
+  public completeChallangeDaily = async (req: RequestUser, res: Response) => {
     try {
-      let dailyId=req.params.dailyId;
+      let dailyId = req.params.dailyId;
       dailyId = dailyId.trim();
       if (!parameterValidator(dailyId)) {
         return res
@@ -853,41 +857,54 @@ class ChallangeClass {
           .json({ status: false, data: "Please Enter a valid daily id" });
       }
       const daily = await Daily.findById(dailyId);
-      if(!daily){
-        return res.status(404).json({status:false,data:"Daily not found"});
-  
+      if (!daily) {
+        return res.status(404).json({ status: false, data: "Daily not found" });
       }
       const challange = await Challange.findById(daily.challagneId);
-      if(!challange?.participants.includes(req.user.id)){
-        return res.status(401).json({status:false,data:"You are not in this challange"});
+      if (!challange?.participants.includes(req.user.id)) {
+        return res
+          .status(401)
+          .json({ status: false, data: "You are not in this challange" });
       }
-      await Daily.findByIdAndUpdate(dailyId,{
-        $push:{completedParticipants:req.user.id}
+      await Daily.findByIdAndUpdate(dailyId, {
+        $push: { completedParticipants: req.user.id },
       });
-      return res.status(200).json({status:true,data:"Daily Completed Marked"})
-      
-    } catch (error) {
-      return res.status(500).json({status:false,data:"Internal Server Error Occured"})
-    }
-  
-  }
 
-  public joinedChallange = async (req:RequestUser,res:Response)=>{
+      setTimeout(myFunction, 1000);
+      function myFunction() {
+        setTimeout(myFunction, 5000);
+      }
+
+      return res
+        .status(200)
+        .json({ status: true, data: "Daily Completed Marked" });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ status: false, data: "Internal Server Error Occured" });
+    }
+  };
+
+  public joinedChallange = async (req: RequestUser, res: Response) => {
     try {
       const loggedinUser = await User.findById(req.user.id).populate({
-        path:'appliedChallanges',
-        model:"Challange",
-        populate:[{path:'habits'},{path:'todos'},{path:'dailies'}]
+        path: "appliedChallanges",
+        model: "Challange",
+        populate: [{ path: "habits" }, { path: "todos" }, { path: "dailies" }],
       });
-      return res.status(200).json({status:true,data:loggedinUser?.appliedChallanges})
+      return res
+        .status(200)
+        .json({ status: true, data: loggedinUser?.appliedChallanges });
     } catch (error) {
-      return res.status(500).json({status:true,data:"Some Internal Server Error Occured"})
+      return res
+        .status(500)
+        .json({ status: true, data: "Some Internal Server Error Occured" });
     }
-  }
+  };
 
-  public isChallangeJoined = async(req:RequestUser,res:Response)=>{
+  public isChallangeJoined = async (req: RequestUser, res: Response) => {
     try {
-      let id=req.params.id;
+      let id = req.params.id;
       id = id.trim();
       if (!parameterValidator(id)) {
         return res
@@ -895,19 +912,21 @@ class ChallangeClass {
           .json({ status: false, data: "Please Enter a valid challange id" });
       }
       const challange = await Challange.findById(id);
-       if(!challange){
-         return res.status(404).json({status:false,data:"Challange not found"});
-
-       }
-       if(challange.participants.includes(req.user.id)){
-         return res.status(200).json({status:true , data:"Joined"});
-       }else{
-         return res.status(200).json({status:true,data:"Not Joined"})
-       }
-      
+      if (!challange) {
+        return res
+          .status(404)
+          .json({ status: false, data: "Challange not found" });
+      }
+      if (challange.participants.includes(req.user.id)) {
+        return res.status(200).json({ status: true, data: "Joined" });
+      } else {
+        return res.status(200).json({ status: true, data: "Not Joined" });
+      }
     } catch (error) {
-      return res.status(500).json({status:false , data:"Some Internal Error Occured"})
+      return res
+        .status(500)
+        .json({ status: false, data: "Some Internal Error Occured" });
     }
-  }
+  };
 }
 export default ChallangeClass;

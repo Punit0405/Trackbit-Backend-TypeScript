@@ -7,7 +7,7 @@ import ChallangeRouter from "./Routes/challangeRoutes";
 import DailyRouter from "./Routes/dailyRoutes";
 import TodoRouter from "./Routes/todoRoutes";
 import homeRoutes from "./Routes/route";
-
+import clearArray from "./Controllers/Settimeoutn";
 
 const userRoutes = new userRouter().router;
 const habitRoutes = new habitRouter().router;
@@ -25,6 +25,7 @@ class App {
     this.app = express();
     this.middlewares();
     this.routes();
+    clearArray();
   }
 
   private middlewares(): void {
