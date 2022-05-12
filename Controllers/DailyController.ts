@@ -61,7 +61,10 @@ class DailyClass {
       }
       loggedinUser.appliedChallanges.map((challange: any) => {
         challange.dailies.map((daily: DailyInterface) => {
-          challangeDailys.push(daily);
+          if(!daily.completedParticipants.includes(req.user.id)){
+
+            challangeDailys.push(daily)
+        }
         });
       });
 

@@ -15,6 +15,10 @@ const dailySchema = new Schema<DailyInterface>({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
+    completedParticipants:{
+        type:[Schema.Types.ObjectId],
+        ref:'User'
+    },
     challagneId:{
         type:Schema.Types.ObjectId,
         ref:'Challange'

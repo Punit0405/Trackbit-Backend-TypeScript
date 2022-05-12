@@ -73,6 +73,10 @@ class ChallangeRouter {
       .delete(isLoggedin, ChallangeController.deleteChallangeDaily);
 
     this.router.route('/fetchallchallanges').get(isLoggedin,ChallangeController.fetchChallangeForall)
+    this.router.route('/completechallangetodo/:todoId').get(isLoggedin,ChallangeController.completeChallangeTodo)
+    this.router.route('/completechallangedaily/:dailyId').get(isLoggedin,ChallangeController.completeChallangeDaily)
+    this.router.route('/joinedchallange').get(isLoggedin,ChallangeController.joinedChallange)
+    this.router.route('/ischallangejoined/:id').get(isLoggedin,ChallangeController.isChallangeJoined)
     this.router.route('/deletechallange/:challangeId').delete(isLoggedin,ChallangeController.deleteChallange)
   }
 }

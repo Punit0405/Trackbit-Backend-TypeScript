@@ -19,6 +19,10 @@ const todoSchema = new Schema<TodoInterface>({
         type:Schema.Types.ObjectId,
         ref:'Challange'
     },
+    completedParticipants:{
+        type:[Schema.Types.ObjectId],
+        ref:'User'
+    },
     checklists:{
         type:[String]
     },

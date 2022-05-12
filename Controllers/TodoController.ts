@@ -51,7 +51,10 @@ class TodoClass{
             }
             loggedinUser.appliedChallanges.map((challange:any)=>{
               challange.todos.map((todo:TodoInterface)=>{
-                challangeTodos.push(todo)
+                  if(!todo.completedParticipants.includes(req.user.id)){
+
+                      challangeTodos.push(todo)
+                  }
               })
                       
             });
