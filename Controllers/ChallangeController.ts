@@ -876,7 +876,8 @@ class ChallangeClass {
     try {
       const loggedinUser = await User.findById(req.user.id).populate({
         path:'appliedChallanges',
-        model:"Challange"
+        model:"Challange",
+        populate:[{path:'habits'},{path:'todos'},{path:'dailies'}]
       });
       return res.status(200).json({status:true,data:loggedinUser?.appliedChallanges})
     } catch (error) {
@@ -899,9 +900,9 @@ class ChallangeClass {
 
        }
        if(challange.participants.includes(req.user.id)){
-         return res.status(200).json({status:true , data:true});
+         return res.status(200).json({status:true , data:"Joined"});
        }else{
-         return res.status(200).json({status:true,data:false})
+         return res.status(200).json({status:true,data:"Not Joined"})
        }
       
     } catch (error) {
