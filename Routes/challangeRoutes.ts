@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import ChallangeClass from "../Controllers/ChallangeController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import ChallangeValidator from "../Validations/challangeValidator";
+import cron from 'node-cron';
 
 const ChallangeController = new ChallangeClass();
 const validator = new ChallangeValidator();
@@ -11,6 +12,10 @@ class ChallangeRouter {
   constructor() {
     this.router = express.Router();
     this.routes();
+    cron.schedule("0 0 * * *",()=>{
+      ChallangeController.emptyArray();
+    })
+  
   }
   private routes() {
     //Route for Adding Habbit

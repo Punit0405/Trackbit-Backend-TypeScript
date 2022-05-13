@@ -928,5 +928,17 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Error Occured" });
     }
   };
+
+  public emptyArray = async ()=>{
+    Daily.find({}, (err: any, data: any) => {
+      if (err) {
+        return console.log(err);
+      }
+      data.forEach((daily: any) => {
+        daily.completedParticipants = [];
+        daily.save();
+      });
+    });
+  }
 }
 export default ChallangeClass;
