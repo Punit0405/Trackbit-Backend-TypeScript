@@ -10,20 +10,24 @@ import homeRoutes from "./Routes/route";
 
 const userRoutes = new userRouter().router;
 const habitRoutes = new habitRouter().router;
-const checkRoutes = new homeRoutes().router
+const checkRoutes = new homeRoutes().router;
 const todoRoutes = new TodoRouter().router;
 
 const dailyRoutes = new DailyRouter().router;
-const challangeRoutes=new ChallangeRouter().router;
+const challangeRoutes = new ChallangeRouter().router;
 const db = new Dbconnection();
 
 class App {
-  public app: express.Application;
+  protected app: express.Application;
 
   constructor() {
     this.app = express();
     this.middlewares();
     this.routes();
+
+    this.app.listen(process.env.PORT, () => {
+      console.log("TrackBit  Server Running on Port 5000");
+    });
   }
 
   private middlewares(): void {
@@ -35,10 +39,9 @@ class App {
     this.app.use("/api/v1/habit", habitRoutes);
     this.app.use("/api/v1/todo", todoRoutes);
     this.app.use("/api/v1/daily", dailyRoutes);
-    this.app.use("/api/v1/challange",challangeRoutes);
-    this.app.use("/",checkRoutes)
-    
+    this.app.use("/api/v1/challange", challangeRoutes);
+    this.app.use("/", checkRoutes);
   }
 }
 
-export default new App().app;
+export default App;

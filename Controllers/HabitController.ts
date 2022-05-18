@@ -16,6 +16,7 @@ class HabitClass {
         duration: duration,
         difficulty: difficulty,
         tags: tags,
+        type:false,
         reminder:reminder,
         userId: req.user.id,
       });

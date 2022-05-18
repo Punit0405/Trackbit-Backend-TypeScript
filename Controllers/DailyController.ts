@@ -23,6 +23,8 @@ class DailyClass {
         description: description,
         checklists: checklists,
         days: days,
+        completed:false,
+        type:false,
         userId: req.user.id,
         startDate: startDate,
         tags: tags,
@@ -40,6 +42,11 @@ class DailyClass {
   public fetchDailys = async (req: RequestUser, res: Response) => {
     try {
       let dailies = await Daily.find({ userId: req.user.id }).select("-userId");
+      dailies = dailies.filter((daily)=>{
+        if(daily.completed){
+          return daily
+        }
+      })
 
       let challangeDailys: any[] = [];
       const loggedinUser = await User.findById(req.user.id).populate({

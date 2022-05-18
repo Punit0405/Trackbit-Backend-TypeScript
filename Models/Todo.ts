@@ -23,6 +23,10 @@ const todoSchema = new Schema<TodoInterface>({
         type:[Schema.Types.ObjectId],
         ref:'User'
     },
+    type:{
+        type:Boolean,
+        required:true
+    },
     checklists:{
         type:[String]
     },

@@ -31,6 +31,7 @@ class ChallangeClass {
             habitType: habit.habitType,
             duration: habit.duration,
             tags: habit.tags,
+            type:true,
             challagneId: newchallange._id,
             reminder: habit.reminder,
           });
@@ -46,6 +47,7 @@ class ChallangeClass {
             description: todo.description,
             checklists: todo.checklists,
             dueDate: todo.dueDate,
+            type:true,
             reminderDate: todo.reminderDate,
             challagneId: newchallange._id,
             tags: todo.tags,
@@ -65,6 +67,7 @@ class ChallangeClass {
             startDate: daily.startDate,
             challagneId: newchallange._id,
             days: daily.days,
+            type:true,
             tags: daily.tags,
             reminder: daily.reminder,
           });
@@ -828,6 +831,10 @@ class ChallangeClass {
       if (!todo) {
         return res.status(404).json({ status: false, data: "Todo not found" });
       }
+      if(!todo.type){
+        await Todo.findByIdAndDelete(todoId);
+        return res.status(200).json({status:true,data:"Todo completed successfully"})
+      }
       const challange = await Challange.findById(todo.challagneId);
       if (!challange?.participants.includes(req.user.id)) {
         return res
@@ -859,6 +866,11 @@ class ChallangeClass {
       const daily = await Daily.findById(dailyId);
       if (!daily) {
         return res.status(404).json({ status: false, data: "Daily not found" });
+      }
+      if(!daily.type){
+        daily.completed=true;
+        await daily.save();
+        return res.status(200).json({status:true,data:"Daily Completed Successfully"})
       }
       const challange = await Challange.findById(daily.challagneId);
       if (!challange?.participants.includes(req.user.id)) {
@@ -935,8 +947,15 @@ class ChallangeClass {
         return console.log(err);
       }
       data.forEach((daily: any) => {
-        daily.completedParticipants = [];
-        daily.save();
+        if(!daily.type){
+          daily.completed = false,
+           daily.save();
+        }else{
+          daily.completedParticipants = [];
+          daily.save();
+
+        }
+       
       });
     });
   }

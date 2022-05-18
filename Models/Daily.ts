@@ -19,6 +19,14 @@ const dailySchema = new Schema<DailyInterface>({
         type:[Schema.Types.ObjectId],
         ref:'User'
     },
+    completed:{
+        type:Boolean,
+    },
+    
+    type:{
+        type:Boolean,
+        required:true
+    },
     challagneId:{
         type:Schema.Types.ObjectId,
         ref:'Challange'

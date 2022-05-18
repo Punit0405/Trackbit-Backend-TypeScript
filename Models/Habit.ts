@@ -15,6 +15,10 @@ const habitSchema = new Schema<HabitInterface>({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
+    type:{
+        type:Boolean,
+        required:true
+    },
     challagneId:{
         type:Schema.Types.ObjectId,
         ref:'Challange'

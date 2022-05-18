@@ -7,8 +7,10 @@ interface DailyInterface {
     checklists:[string],
     startDate:Date,
     difficulty:boolean[],
+    type:boolean,
     completedParticipants:[Types.ObjectId],
     days:boolean[],
+    completed:boolean,
     tags:[string],
     reminder:string,
     createdAt:Date  

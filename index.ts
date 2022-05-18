@@ -1,6 +1,4 @@
-import app from "./app";
-const port= 5000;
+import App from "./app";
 
-app.listen(process.env.PORT,()=>{
-    console.log("TrackBit  Server Running on Port 5000");
-})
+new App();
+

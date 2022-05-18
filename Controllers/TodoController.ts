@@ -18,6 +18,7 @@ class TodoClass{
                 dueDate:dueDate,
                 reminderDate:reminderDate,
                 tags:tags,
+                type:false,
                 reminderTime:reminderTime,
                 difficulty:difficulty
                 
