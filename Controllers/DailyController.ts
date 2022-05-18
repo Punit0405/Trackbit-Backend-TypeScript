@@ -43,7 +43,7 @@ class DailyClass {
     try {
       let dailies = await Daily.find({ userId: req.user.id }).select("-userId");
       dailies = dailies.filter((daily)=>{
-        if(daily.completed){
+        if(!daily.completed){
           return daily
         }
       })
