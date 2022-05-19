@@ -30,6 +30,9 @@ class TodoRouter {
     this.router
       .route("/deleteTodo/:id")
       .delete(isLoggedin, TodoController.deleteTodo);
+    this.router
+      .route("/completetodo/:todoId")
+      .get(isLoggedin, TodoController.completeTodo);
   }
 }
 export default TodoRouter;

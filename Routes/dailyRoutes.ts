@@ -32,6 +32,10 @@ class DailyRouter {
     this.router
       .route("/deletedaily/:id")
       .delete(isLoggedin, DailyController.deleteDaily);
+
+    this.router
+      .route("/completedaily/:dailyId")
+      .get(isLoggedin, DailyController.completeDaily);
   }
 }
 export default DailyRouter;

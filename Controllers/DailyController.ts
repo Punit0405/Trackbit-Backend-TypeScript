@@ -4,6 +4,7 @@ import User from "../Models/User";
 import DailyInterface from "../interfaces/DailyInterface";
 import RequestUser from "../Middlewares/RequestInterface";
 import parameterValidator from "../Validations/parameterValidator";
+import Challange from "../Models/Challange";
 class DailyClass {
   public addDaily = async (req: RequestUser, res: Response) => {
     console.log(req.body)
@@ -182,6 +183,58 @@ class DailyClass {
       return res
         .status(500)
         .json({ status: false, data: "Some Internal Error Occured" });
+    }
+  };
+
+  public completeDaily = async (req: RequestUser, res: Response) => {
+    try {
+      let dailyId = req.params.dailyId;
+      dailyId = dailyId.trim();
+      if (!parameterValidator(dailyId)) {
+        return res
+          .status(400)
+          .json({ status: false, data: "Please Enter a valid daily id" });
+      }
+      const daily = await Daily.findById(dailyId);
+      if (!daily) {
+        return res.status(404).json({ status: false, data: "Daily not found" });
+      }
+      if (!daily.type) {
+        if (daily.userId.toString() === req.user.id) {
+          daily.completed = true;
+          await daily.save();
+          console.log(daily)
+          return res
+            .status(200)
+            .json({ status: true, data: "Daily Completed Successfully" });
+        } else {
+          return res
+            .status(401)
+            .json({ status: false, data: "You don't own this daily." });
+        }
+      }
+      const challange = await Challange.findById(daily.challagneId);
+      if (!challange?.participants.includes(req.user.id)) {
+        return res
+          .status(401)
+          .json({ status: false, data: "You are not in this challange" });
+      }
+      await Daily.findByIdAndUpdate(dailyId, {
+        $push: { completedParticipants: req.user.id },
+      });
+
+      setTimeout(myFunction, 1000);
+      function myFunction() {
+        setTimeout(myFunction, 5000);
+      }
+
+      return res
+        .status(200)
+        .json({ status: true, data: "Daily Completed Marked" });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ status: false, data: "Internal Server Error Occured" });
     }
   };
 }

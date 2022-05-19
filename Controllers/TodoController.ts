@@ -4,6 +4,7 @@ import User from '../Models/User';
 import TodoInterface from '../interfaces/TodoInterface';
 import RequestUser from '../Middlewares/RequestInterface';
 import parameterValidator from '../Validations/parameterValidator';
+import Challange from '../Models/Challange';
 class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
         try {
@@ -157,7 +158,50 @@ class TodoClass{
   
             return res.status(500).json({status:false,data:"Some Internal Error Occured"})
         }
-    }
+    };
+    public completeTodo = async (req: RequestUser, res: Response) => {
+        try {
+          let todoId = req.params.todoId;
+          todoId = todoId.trim();
+          if (!parameterValidator(todoId)) {
+            return res
+              .status(400)
+              .json({ status: false, data: "Please Enter a valid todo id" });
+          }
+          const todo = await Todo.findById(todoId);
+          if (!todo) {
+            return res.status(404).json({ status: false, data: "Todo not found" });
+          }
+          if (!todo.type) {
+            if (todo.userId.toString() === req.user.id) {
+              await Todo.findByIdAndDelete(todoId);
+              return res
+                .status(200)
+                .json({ status: true, data: "Todo completed successfully" });
+            } else {
+              return res
+                .status(401)
+                .json({ status: false, data: "You don't own this todo." });
+            }
+          }
+          const challange = await Challange.findById(todo.challagneId);
+          if (!challange?.participants.includes(req.user.id)) {
+            return res
+              .status(401)
+              .json({ status: false, data: "You are not in this challange" });
+          }
+          await Todo.findByIdAndUpdate(todoId, {
+            $push: { completedParticipants: req.user.id },
+          });
+          return res
+            .status(200)
+            .json({ status: true, data: "Todo Completed Marked" });
+        } catch (error) {
+          return res
+            .status(500)
+            .json({ status: false, data: "Internal Server Error Occured" });
+        }
+      };
 
 
 }
