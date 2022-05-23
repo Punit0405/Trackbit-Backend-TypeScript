@@ -51,12 +51,8 @@ const todoSchema = new Schema<TodoInterface>({
     reminderTime:{
         type:String,
 
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
     }
-});
+},{timestamps:true});
 
 const Todo = model<TodoInterface>("Todo",todoSchema);
 

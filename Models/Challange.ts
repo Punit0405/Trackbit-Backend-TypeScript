@@ -1,4 +1,5 @@
 import { Schema,Types ,model} from 'mongoose';
+import { createTrue } from 'typescript';
 import ChallangeInterface from '../interfaces/ChallangeInterface';
 
 
@@ -14,10 +15,6 @@ const challangeSchema = new Schema<ChallangeInterface>({
     userId:{
         type:Schema.Types.ObjectId,
         ref:'User'
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
     },
     dailies:{
         type:[Schema.Types.ObjectId],
@@ -39,7 +36,7 @@ const challangeSchema = new Schema<ChallangeInterface>({
         type:Number,
         required:true
     }
-});
+},{timestamps:true});
 
 const Challange = model<ChallangeInterface>("Challange",challangeSchema);
 

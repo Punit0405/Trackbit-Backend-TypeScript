@@ -56,12 +56,8 @@ const dailySchema = new Schema<DailyInterface>({
     reminder:{
         type:String,
 
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
     }
-});
+},{timestamps:true});
 
 const Daily = model<DailyInterface>("Daily",dailySchema);
 

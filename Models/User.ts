@@ -54,12 +54,8 @@ const userSchema = new Schema<UserInterface>({
      },
      photoUrl:{
          type:String
-     },
-     createdAt:{
-         type:Date,
-         default:Date.now
-     } 
-});
+     }
+},{timestamps:true});
 
 const User=model<UserInterface>("User",userSchema);
 

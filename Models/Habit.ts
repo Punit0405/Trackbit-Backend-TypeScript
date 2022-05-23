@@ -45,12 +45,8 @@ const habitSchema = new Schema<HabitInterface>({
     reminder:{
         type:String,
 
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
     }
-});
+},{timestamps:true});
 
 const Habit = model<HabitInterface>("Habit",habitSchema);
 

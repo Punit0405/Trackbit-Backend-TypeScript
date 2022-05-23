@@ -19,7 +19,9 @@ class HabitRouter {
       .post(isLoggedin, validator.validateHabit, HabitController.addHabit);
 
     //Route for Fetching Habit
-    this.router.route("/fetchhabit").get(isLoggedin, HabitController.fetchHabits);
+    this.router
+      .route("/fetchhabit")
+      .get(isLoggedin, HabitController.fetchHabits);
 
     //Route for Updating Habit
     this.router
@@ -30,8 +32,6 @@ class HabitRouter {
     this.router
       .route("/deleteHabit/:id")
       .delete(isLoggedin, HabitController.deleteHabit);
-
-      
   }
 }
 export default HabitRouter;
