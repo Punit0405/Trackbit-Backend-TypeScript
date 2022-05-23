@@ -4,6 +4,7 @@ import Habit from "../Models/Habit";
 import User from "../Models/User";
 import Todo from "../Models/Todo";
 import Daily from "../Models/Daily";
+
 import { Response } from "express";
 import RequestUser from "../Middlewares/RequestInterface";
 import HabitInterface from "../interfaces/HabitInterface";
@@ -91,7 +92,8 @@ class ChallangeClass {
       const challanges = await Challange.find({ userId: req.user.id })
         .populate({ path: "habits" })
         .populate({ path: "todos" })
-        .populate({ path: "dailies" });
+        .populate({ path: "dailies" })
+        .populate({path:'userId'});
       if (challanges.length === 0) {
         return res
           .status(404)
@@ -106,7 +108,7 @@ class ChallangeClass {
   };
   public joinChallange = async (req: RequestUser, res: Response) => {
     try {
-      const challangeId = req.params.challangeId;
+      const challangeId = (req.params.challangeId).trim();
       if (!challangeId) {
         return res
           .status(400)
@@ -825,7 +827,7 @@ class ChallangeClass {
       const loggedinUser = await User.findById(req.user.id).populate({
         path: "appliedChallanges",
         model: "Challange",
-        populate: [{ path: "habits" }, { path: "todos" }, { path: "dailies" }],
+        populate: [{ path: "habits" },{path:'userId'}, { path: "todos" }, { path: "dailies" }],
       });
       return res
         .status(200)
