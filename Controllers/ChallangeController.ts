@@ -190,9 +190,7 @@ class ChallangeClass {
       .status(200)
       .json({ status: true, data: "Challenge left successfully" });
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Server Error Occured" });
+  
 
   };
   public updateChallange = async (req: RequestUser, res: Response) => {
@@ -235,9 +233,7 @@ class ChallangeClass {
     await challange.save();
     return res.status(200).json({ status: true, data: challange });
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Server Occured" });
+   
 
   };
   public updateChallangeHabit = async (req: RequestUser, res: Response) => {
@@ -322,9 +318,7 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Server Occured" });
     }
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+
 
   };
 
@@ -389,9 +383,7 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Server Occured" });
     }
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+  
 
   };
 
@@ -480,9 +472,7 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Server Occured" });
     }
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+    
 
   };
   public deleteChallangeTodo = async (req: RequestUser, res: Response) => {
@@ -544,9 +534,7 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Server Occured" });
     }
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+ 
 
   };
   public updateChallangeDaily = async (req: RequestUser, res: Response) => {
@@ -636,10 +624,7 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Server Occured" });
     }
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
-
+   
   };
 
   public deleteChallangeDaily = async (req: RequestUser, res: Response) => {
@@ -703,10 +688,7 @@ class ChallangeClass {
         .json({ status: false, data: "Some Internal Server Occured" });
     }
 
-    return res.status(500).json({
-      status: false,
-      data: "627bb2b464a00ac777175173Some Internal Error Occured",
-    });
+   
 
   };
 
@@ -738,9 +720,7 @@ class ChallangeClass {
       .status(200)
       .json({ status: true, data: challange.participants });
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+   
 
   };
   public fetchChallangeForall = async (req: RequestUser, res: Response) => {
@@ -757,9 +737,7 @@ class ChallangeClass {
     }
     return res.status(200).json({ status: true, data: challanges });
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+  
 
   };
   public deleteChallange = async (req: RequestUser, res: Response) => {
@@ -809,9 +787,7 @@ class ChallangeClass {
 
     //  await Challange.findByIdAndDelete(challangeId);
 
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+    
 
   };
 
@@ -829,9 +805,7 @@ class ChallangeClass {
       .status(200)
       .json({ status: true, data: loggedinUser?.appliedChallanges });
 
-    return res
-      .status(500)
-      .json({ status: true, data: "Some Internal Server Error Occured" });
+   
 
   };
 
@@ -855,9 +829,7 @@ class ChallangeClass {
     } else {
       return res.status(200).json({ status: true, data: "Not Joined" });
     }
-    return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
+    
 
   };
 
