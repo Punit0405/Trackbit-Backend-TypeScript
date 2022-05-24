@@ -6,7 +6,7 @@ import HabitInterface from "../interfaces/HabitInterface";
 import parameterValidator from "../Validations/parameterValidator";
 class HabitClass {
   public addHabit = async (req: RequestUser, res: Response) => {
-    try {
+  
       const { title, description, habitType, difficulty,duration, tags, reminder } =
         req.body;
       const newHabit = new Habit({
@@ -22,15 +22,10 @@ class HabitClass {
       });
       res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
       return await newHabit.save();
-    } catch (error) {
-      console.log(error,"Adding Habit")
-      return res
-      .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+
   };
   public fetchHabits = async (req: RequestUser, res: Response) => {
-    try {
+   
       let habits = await Habit.find({ userId: req.user.id }).select("-userId");
 
       let challangeHabits: any[] = [];
@@ -60,15 +55,10 @@ class HabitClass {
       habits = habits.concat(challangeHabits);
 
       return res.status(200).json({ status: true, data: habits });
-    } catch (error) {
-      console.log(error,"Fetching Habit")
-      return res
-      .status(500)
-        .json({ status: false, data: "Some Internal Server Occured" });
-    }
+ 
   };
   public updateHabit = async (req: RequestUser, res: Response) => {
-    try {
+
       let { id } = req.params;
       id = id.trim();
       if (!id) {
@@ -122,15 +112,10 @@ class HabitClass {
       }
       await habit.save();
       return res.status(200).json({ status: true, data: habit });
-    } catch (error) {
-      console.log(error,"Updating Habit")
-      return res
-      .status(500)
-        .json({ status: false, data: "Some Internal Server Occured" });
-    }
+  
   };
   public deleteHabit = async (req: RequestUser, res: Response) => {
-    try {
+  
       const { id } = req.params;
       if(!id){
 
@@ -155,12 +140,7 @@ class HabitClass {
       }
       await Habit.findByIdAndDelete(id);
       return res.status(200).json({ status: true, data: habit });
-    } catch (error) {
-      console.log(error,"Deleting Habit")
-      return res
-      .status(500)
-      .json({ status: false, data: "Some Internal Error Occured" });
-    }
+   
   };
 }
 export default HabitClass;

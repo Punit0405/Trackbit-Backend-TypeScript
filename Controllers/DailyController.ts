@@ -8,7 +8,7 @@ import Challange from "../Models/Challange";
 class DailyClass {
   public addDaily = async (req: RequestUser, res: Response) => {
     console.log(req.body)
-    try {
+
       const {
         title,
         description,
@@ -34,14 +34,10 @@ class DailyClass {
       });
       res.status(200).json({ status: true, data: "Daily Added Sucessfully" });
       return await newDaily.save();
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+  
   };
   public fetchDailys = async (req: RequestUser, res: Response) => {
-    try {
+
       let dailies = await Daily.find({ userId: req.user.id }).select("-userId");
       dailies = dailies.filter((daily)=>{
         if(!daily.completed){
@@ -79,14 +75,10 @@ class DailyClass {
       dailies = dailies.concat(challangeDailys);
 
       return res.status(200).json({ status: true, data: dailies });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Server Occured" });
-    }
+   
   };
   public updateDaily = async (req: RequestUser, res: Response) => {
-    try {
+ 
       const { id } = req.params;
       if(!id){
 
@@ -147,14 +139,10 @@ class DailyClass {
       }
       await daily.save();
       return res.status(200).json({ status: true, data: daily });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Server Occured" });
-    }
+
   };
   public deleteDaily = async (req: RequestUser, res: Response) => {
-    try {
+ 
       const { id } = req.params;
       if(!id){
 
@@ -179,15 +167,11 @@ class DailyClass {
       }
       await Daily.findByIdAndDelete(id);
       return res.status(200).json({ status: true, data: daily });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+ 
   };
 
   public completeDaily = async (req: RequestUser, res: Response) => {
-    try {
+
       let dailyId = req.params.dailyId;
       dailyId = dailyId.trim();
       if (!parameterValidator(dailyId)) {
@@ -231,11 +215,7 @@ class DailyClass {
       return res
         .status(200)
         .json({ status: true, data: "Daily Completed Marked" });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, data: "Internal Server Error Occured" });
-    }
+  
   };
 }
 export default DailyClass;

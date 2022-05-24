@@ -7,7 +7,7 @@ import parameterValidator from '../Validations/parameterValidator';
 import Challange from '../Models/Challange';
 class TodoClass{
     public addTodo =async(req:RequestUser,res:Response)=>{    
-        try {
+      
             
             const {title,description,checklists,difficulty,reminderDate,dueDate,tags,reminderTime} = req.body;
             console.log(req.body);
@@ -31,14 +31,12 @@ class TodoClass{
             
             
             
-        } catch (error) {
-            return res.status(500).json({status:false,data:"Some Internal Error Occured"})
-        }
+     
         
     
     }
     public fetchTodos =async (req:RequestUser,res:Response)=>{
-        try {
+       
             let todos = await Todo.find({userId:req.user.id}).select("-userId");
             
             let challangeTodos:any[]=[];
@@ -68,14 +66,11 @@ class TodoClass{
             return res.status(200).json({status:true,data:todos})
     
             
-        } catch (error) {
-            
-            return res.status(500).json({status:false,data:"Some Internal Server Occured"})
-        }
+      
     
     }
     public updateTodo = async(req:RequestUser,res:Response)=>{
-        try {
+       
                const {id}= req.params;
                if(!id){
 
@@ -126,14 +121,10 @@ class TodoClass{
                await todo.save();
                return res.status(200).json({status:true,data:todo})
     
-               
-           } catch (error) {
-            
-               return res.status(500).json({status:false,data:"Some Internal Server Occured"})
-           }
+          
     }
     public deleteTodo = async(req:RequestUser,res:Response)=>{
-        try {
+
             const {id}=req.params;
             if(!id){
 
@@ -154,13 +145,10 @@ class TodoClass{
             await Todo.findByIdAndDelete(id)
             return res.status(200).json({status:true,data:todo});
             
-        } catch (error) {
-  
-            return res.status(500).json({status:false,data:"Some Internal Error Occured"})
-        }
+     
     };
     public completeTodo = async (req: RequestUser, res: Response) => {
-        try {
+      
           let todoId = req.params.todoId;
           todoId = todoId.trim();
           if (!parameterValidator(todoId)) {
@@ -196,11 +184,7 @@ class TodoClass{
           return res
             .status(200)
             .json({ status: true, data: "Todo Completed Marked" });
-        } catch (error) {
-          return res
-            .status(500)
-            .json({ status: false, data: "Internal Server Error Occured" });
-        }
+ 
       };
 
 
