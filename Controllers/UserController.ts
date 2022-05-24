@@ -10,7 +10,6 @@ import RequestUser from "../Middlewares/RequestInterface";
 
 class UserClass {
   public userRegister = async (req: RequestUser, res: Response) => {
-    throw new Error("Hello Javascript")
     
       const { name, email, password, confirmpassword } = req.body;
       if (!name) {
