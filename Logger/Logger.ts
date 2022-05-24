@@ -5,6 +5,11 @@ const { combine, timestamp, label, printf } = format;
 const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
 });
+const timezoned = () => {
+  return new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata'
+  });
+}
 
 class Logger {
     public logger:winston.Logger
@@ -12,7 +17,7 @@ class Logger {
      this.logger = createLogger({
       format: combine(
        label({ label: 'Trackbit!' }),
-       timestamp(),
+       timestamp({format:timezoned}),
        myFormat
   ),
 
