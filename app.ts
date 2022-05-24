@@ -1,3 +1,4 @@
+import "express-async-errors";
 import express from "express";
 import "dotenv/config";
 import userRouter from "./Routes/userRoutes";
@@ -7,6 +8,8 @@ import ChallangeRouter from "./Routes/challangeRoutes";
 import DailyRouter from "./Routes/dailyRoutes";
 import TodoRouter from "./Routes/todoRoutes";
 import homeRoutes from "./Routes/route";
+import Logger from "./Logger/Logger";
+import mailer from "./Controllers/Mailer";
 
 const userRoutes = new userRouter().router;
 const habitRoutes = new habitRouter().router;
@@ -16,6 +19,7 @@ const todoRoutes = new TodoRouter().router;
 const dailyRoutes = new DailyRouter().router;
 const challangeRoutes = new ChallangeRouter().router;
 const db = new Dbconnection();
+const logger = new Logger().logger;
 
 class App {
   protected app: express.Application;
@@ -24,6 +28,22 @@ class App {
     this.app = express();
     this.middlewares();
     this.routes();
+    this.app.use((err: any, req: any, res: any, next: any) => {
+      logger.error(err.message);
+      res.status(500).json({status:false,data:"Some Internal Server Error Occured"});
+      const mailOptions = {
+        from: "tewani0405@gmail.com",
+        to: "punit.tewani.sa@gmail.com",
+        subject: "Error Occured In Trackbit",
+        text : err.stack
+      };
+      mailer.sendMail(mailOptions,(err)=>{
+        if(err){
+          logger.error("Cannot Sent Email")
+        }
+      })
+
+    });
 
     this.app.listen(process.env.PORT, () => {
       console.log("TrackBit  Server Running on Port 5000");

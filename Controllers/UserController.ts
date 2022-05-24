@@ -10,7 +10,7 @@ import RequestUser from "../Middlewares/RequestInterface";
 
 class UserClass {
   public userRegister = async (req: RequestUser, res: Response) => {
-    try {
+    
       const { name, email, password, confirmpassword } = req.body;
       if (!name) {
         return res
@@ -91,15 +91,11 @@ class UserClass {
           data: "Internal Server Error,Try After Some Time",
         });
       }
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+    
   };
 
   public verifyUser = async (req: RequestUser, res: Response) => {
-    try {
+   
       const token = req.params.token;
 
       try {
@@ -138,15 +134,10 @@ class UserClass {
           .status(400)
           .json({ status: false, data: "Link Expired ! Please Re-Register" });
       }
-    } catch (error: any) {
-
-      return res
-        .status(500)
-        .json({ success: false, data: "Some Internal Error Occured" });
-    }
+  
   };
   public sendVerifyLink = async(req:RequestUser,res:Response)=>{
-    try {
+   
       const {email}= req.body;
       if(!email){
         return res.status(404).json({status:false,data:'Please Provide Email Id'});
@@ -200,14 +191,12 @@ class UserClass {
       
 
       
-    } catch (error) {
-      return res.status(500).json({status:false,data:"Some Internal Error Occured"})
-    }
+  
   }
 
   public userLogin = async (req: RequestUser, res: Response) => {
 
-    try {
+   
       const { userEmail, userPassword } = req.body;
       if (!userEmail) {
         return res
@@ -250,15 +239,10 @@ class UserClass {
           .status(400)
           .json({ status: false, data: "Invalid Credentials" });
       }
-    } catch (error: any) {
-     
-      return res
-        .status(501)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+
   };
   public userGoogleLogin = async (req: RequestUser, res: Response) => {
-    try {
+   
       const idToken = req.body.idToken;
       const accessToken = req.body.accessToken;
       if (!idToken) {
@@ -334,15 +318,10 @@ class UserClass {
           .set("Auth-token", authToken)
           .json({ status: true, data: authToken });
       }
-    } catch (error: any) {
-      console.log(error.message);
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+
   };
   public userGoogleLogout = async (req: RequestUser, res: Response) => {
-    try {
+  
       const dbUser = await User.findById(req.user.id);
       if (dbUser) {
         const URL = `https://accounts.google.com/o/oauth2/revoke?token=${dbUser.accessToken}`;
@@ -355,16 +334,11 @@ class UserClass {
           .status(400)
           .json({ status: false, data: "User doesn't exists anymore" });
       }
-    } catch (error: any) {
-      console.log(error.message);
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+
   };
 
   public increaseExperience = async (req: RequestUser, res: Response) => {
-    try {
+   
       const experience = req.body.experience;
       if (!experience) {
         return res
@@ -384,15 +358,10 @@ class UserClass {
         loggedinUser.level++;
       }
       return await loggedinUser.save();
-    } catch (error: any) {
-      console.log(error.message);
-      return res
-        .status(500)
-        .json({ status: false, data: "Some Internal Error Occured" });
-    }
+
   };
   public decreaseHealth = async(req:RequestUser,res:Response)=>{
-    try {
+   
         const health =  req.body.health;
         if(!health){
             return res.status(400).json({status:false,data:"Health not provided"})
@@ -426,15 +395,11 @@ class UserClass {
 
 
         
-    } catch (error:any) {
-        console.log(error.message);
-        return res.status(500).json({status:false,data:"Some Internal Error Occured"})
-        
-    }
+ 
 }
 
  public fetchUser = async(req:RequestUser,res:Response)=>{
-   try {
+
       let loggedinUser = await User.findById(req.user.id).select(['-password','-appliedChallanges','-createdAt','-email_verified']);
       if(!loggedinUser){
         return res.status(200).json({status:false,data:"No User Exists"});
@@ -443,13 +408,10 @@ class UserClass {
       return res.status(200).json({status:true,data:loggedinUser})
 
      
-   } catch (error) {
-     console.log(error)
-     return res.status(500).json({status:false,data:"Some Internal Server Error Occured"})
-   }
+
  }
  public fetchAppliedChallanges = async(req:RequestUser,res:Response)=>{
-   try {
+ 
     const loggedinUser = await User.findById(req.user.id).populate({
       path: "appliedChallanges",
       populate: [
@@ -468,12 +430,10 @@ class UserClass {
      }
      return res.status(200).json({status:true,data:loggedinUser.appliedChallanges})
      
-   } catch (error) {
-     return res.status(500).json({status:false,data:"Some Internal Error Occured"})
-   }
+ 
  }
  public fetchExperience = async(req:RequestUser,res:Response)=>{
-  try {
+
      let loggedinUser = await User.findById(req.user.id).select(['-password','-appliedChallanges','-createdAt','-email_verified']);
      if(!loggedinUser){
        return res.status(200).json({status:false,data:"No User Exists"});
@@ -482,10 +442,7 @@ class UserClass {
      return res.status(200).json({status:true,data:{level:loggedinUser.level,experience:loggedinUser.experience,health:loggedinUser.health}})
 
     
-  } catch (error) {
-    console.log(error)
-    return res.status(500).json({status:false,data:"Some Internal Server Error Occured"})
-  }
+
 }
 }
 
