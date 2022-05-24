@@ -46,7 +46,7 @@ class App {
     });
 
     this.app.listen(process.env.PORT, () => {
-      console.log("TrackBit  Server Running on Port 5000");
+      logger.info(`Server is running of port ${process.env.PORT}`)
     });
   }
 
