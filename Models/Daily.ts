@@ -1,4 +1,4 @@
-import { Schema,Types ,model} from "mongoose";
+import { Schema ,model} from "mongoose";
 import DailyInterface from "../interfaces/DailyInterface";
 
 

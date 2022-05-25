@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import UserClass from "../Controllers/UserController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import UserValidator from "../Validations/userValidator";

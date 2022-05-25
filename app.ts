@@ -18,7 +18,7 @@ const todoRoutes = new TodoRouter().router;
 
 const dailyRoutes = new DailyRouter().router;
 const challangeRoutes = new ChallangeRouter().router;
-const db = new Dbconnection();
+new Dbconnection();
 const logger = new Logger().logger;
 
 class App {
@@ -42,6 +42,7 @@ class App {
                     logger.error("Cannot Sent Email");
                 }
             });
+            next();
 
         });
 

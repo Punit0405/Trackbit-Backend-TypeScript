@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import TodoClass from "../Controllers/TodoController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import TodoValidator from "../Validations/todoValidator";

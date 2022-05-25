@@ -1,5 +1,4 @@
-import { Schema,Types ,model} from "mongoose";
-import { createTrue } from "typescript";
+import { Schema ,model} from "mongoose";
 import ChallangeInterface from "../interfaces/ChallangeInterface";
 
 
