@@ -1,5 +1,5 @@
-import { Schema,Types ,model} from 'mongoose';
-import HabitInterface from '../interfaces/HabitInterface';
+import { Schema,Types ,model} from "mongoose";
+import HabitInterface from "../interfaces/HabitInterface";
 
 
 const habitSchema = new Schema<HabitInterface>({
@@ -13,7 +13,7 @@ const habitSchema = new Schema<HabitInterface>({
     },
     userId:{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:"User"
     },
     type:{
         type:Boolean,
@@ -21,7 +21,7 @@ const habitSchema = new Schema<HabitInterface>({
     },
     challagneId:{
         type:Schema.Types.ObjectId,
-        ref:'Challange'
+        ref:"Challange"
     },
     habitType:{
         type:[Boolean],
@@ -40,7 +40,7 @@ const habitSchema = new Schema<HabitInterface>({
         
     },
     tags:{
-       type:[String]
+        type:[String]
     },
     reminder:{
         type:String,

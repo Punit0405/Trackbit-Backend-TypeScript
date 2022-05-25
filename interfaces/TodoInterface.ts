@@ -1,4 +1,4 @@
-import {Types} from 'mongoose';
+import {Types} from "mongoose";
 interface TodoInterface {
     title:string,
     description:string,
@@ -11,7 +11,7 @@ interface TodoInterface {
     tags:[string],
     completedParticipants:[Types.ObjectId],
     difficulty:boolean[],
-    reminderTime:String,
+    reminderTime:string,
     createdAt:Date
 
     

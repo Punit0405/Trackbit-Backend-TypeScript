@@ -22,46 +22,46 @@ const db = new Dbconnection();
 const logger = new Logger().logger;
 
 class App {
-  protected app: express.Application;
+    protected app: express.Application;
 
-  constructor() {
-    this.app = express();
-    this.middlewares();
-    this.routes();
-    this.app.use((err: any, req: any, res: any, next: any) => {
-      logger.error(err.message);
-      res.status(500).json({status:false,data:"Some Internal Server Error Occured"});
-      const mailOptions = {
-        from: "tewani0405@gmail.com",
-        to: "punit.tewani.sa@gmail.com",
-        subject: "Error Occured In Trackbit",
-        text : err.stack
-      };
-      mailer.sendMail(mailOptions,(err)=>{
-        if(err){
-          logger.error("Cannot Sent Email")
-        }
-      })
+    constructor() {
+        this.app = express();
+        this.middlewares();
+        this.routes();
+        this.app.use((err: any, req: any, res: any, next: any) => {
+            logger.error(err.message);
+            res.status(500).json({status:false,data:"Some Internal Server Error Occured"});
+            const mailOptions = {
+                from: "tewani0405@gmail.com",
+                to: "punit.tewani.sa@gmail.com",
+                subject: "Error Occured In Trackbit",
+                text : err.stack
+            };
+            mailer.sendMail(mailOptions,(err)=>{
+                if(err){
+                    logger.error("Cannot Sent Email");
+                }
+            });
 
-    });
+        });
 
-    this.app.listen(process.env.PORT, () => {
-      logger.info(`Server is running of port ${process.env.PORT}`)
-    });
-  }
+        this.app.listen(process.env.PORT, () => {
+            logger.info(`Server is running of port ${process.env.PORT}`);
+        });
+    }
 
-  private middlewares(): void {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-  }
-  private routes(): void {
-    this.app.use("/api/v1/user", userRoutes);
-    this.app.use("/api/v1/habit", habitRoutes);
-    this.app.use("/api/v1/todo", todoRoutes);
-    this.app.use("/api/v1/daily", dailyRoutes);
-    this.app.use("/api/v1/challange", challangeRoutes);
-    this.app.use("/", checkRoutes);
-  }
+    private middlewares(): void {
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: false }));
+    }
+    private routes(): void {
+        this.app.use("/api/v1/user", userRoutes);
+        this.app.use("/api/v1/habit", habitRoutes);
+        this.app.use("/api/v1/todo", todoRoutes);
+        this.app.use("/api/v1/daily", dailyRoutes);
+        this.app.use("/api/v1/challange", challangeRoutes);
+        this.app.use("/", checkRoutes);
+    }
 }
 
 export default App;
