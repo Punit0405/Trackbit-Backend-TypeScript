@@ -10,7 +10,7 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: "ts-loader",exclude: /node_modules/,},
+            { test: /\.tsx?$/, loader: "ts-loader",exclude: /node_modules /},
             { test: /\.json/, loader: "json-loader", exclude:/node_modules/,}
         ]
     },

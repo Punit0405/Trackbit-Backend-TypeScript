@@ -22,7 +22,7 @@ new Dbconnection();
 const logger = new Logger().logger;
 
 class App {
-    protected app: express.Application;
+    public app: express.Application;
 
     constructor() {
         this.app = express();
