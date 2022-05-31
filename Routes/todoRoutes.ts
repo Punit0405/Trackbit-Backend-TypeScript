@@ -33,6 +33,11 @@ class TodoRouter {
         this.router
             .route("/completetodo/:todoId")
             .get(isLoggedin, TodoController.completeTodo);
+
+        //Route for Adding Habbit
+        this.router
+        .route("/checklisttodo/:todoid")
+        .post(isLoggedin, TodoController.checkTodoCheckList);
     }
 }
 export default TodoRouter;

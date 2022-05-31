@@ -46,13 +46,19 @@ class ChallangeClass {
                 const newTodo = new Todo({
                     title: todo.title,
                     description: todo.description,
-                    checklists: todo.checklists,
                     dueDate: todo.dueDate,
                     type: true,
                     reminderDate: todo.reminderDate,
                     challagneId: newchallange._id,
                     tags: todo.tags,
                     reminderTime: todo.reminderTime,
+                });
+                todo.checklists.forEach((checklist:any) => {
+                    const checklistObject = {
+                        checklist:checklist
+                    }
+                    newTodo.checklists.push(checklistObject)
+                    
                 });
                 newchallange.todos.push(newTodo._id);
                 await newTodo.save();

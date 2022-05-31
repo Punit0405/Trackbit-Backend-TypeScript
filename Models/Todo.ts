@@ -28,7 +28,19 @@ const todoSchema = new Schema<TodoInterface>({
         required:true
     },
     checklists:{
-        type:[String]
+        type:[
+            {
+            checklist:{
+                type:String,
+            },
+            checkedParticipants:{
+                type:[Schema.Types.ObjectId]
+            },
+            checked:{
+                type:Boolean
+            }
+        
+        }]
     },
     dueDate:{
         type:Date,

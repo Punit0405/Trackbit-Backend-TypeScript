@@ -14,7 +14,6 @@ class TodoClass{
         const newTodo=new Todo({
             title:title,
             description:description,
-            checklists:checklists,
             userId:req.user.id,
             dueDate:dueDate,
             reminderDate:reminderDate,
@@ -25,6 +24,14 @@ class TodoClass{
                 
                 
     
+        });
+        checklists.forEach((checklist:any) => {
+            const checklistObject = {
+                checklist:checklist,
+                checked:false
+            }
+            newTodo.checklists.push(checklistObject)
+            
         });
         res.status(200).json({status:true,data:"Todo Added Sucessfully"});
         return await newTodo.save();
@@ -60,6 +67,19 @@ class TodoClass{
         });
             
         todos=todos.concat(challangeTodos);
+        todos.forEach((todo:any)=>{
+            if(todo.type){
+                todo.checklists.forEach((checklist:any)=>{
+                    if(checklist.checkedParticipants.includes(req.user.id)){
+                        checklist.checked=true;
+                        
+                    }else{
+                        checklist.checked=false;
+                    }
+
+                })
+            }
+        })
 
         
             
@@ -186,6 +206,69 @@ class TodoClass{
             .json({ status: true, data: "Todo Completed Marked" });
  
     };
+
+    public checkTodoCheckList=async (req: RequestUser, res: Response)=>{
+        let {todoid}=req.params;
+        todoid = todoid.trim();
+        let {checklistid}=req.body;
+        checklistid=checklistid.trim();
+    
+        if(!todoid){
+            return res.status(400).json({status:false,data:"Please Provide Todo Id"});
+        }
+        if(!parameterValidator(todoid)){
+            return res.status(400).json({status:false,data:"Please Provide valid todo Id"})
+        }
+        const todo=await Todo.findById(todoid);
+        if(!todo){
+            return res.status(400).json({status:false,data:"Todo not found"})
+        }
+        if (!todo.type) {
+            if (todo.userId.toString() === req.user.id) {
+                 todo.checklists.forEach((checklist:any)=>{
+                     if(checklist._id.toString() === checklistid){
+                         checklist.checked=true;
+                     };
+                 })
+                 console.log(todo);
+                todo.save();
+
+                return res
+                    .status(200)
+                    .json({ status: true, data: "Checklist checked successfully" });
+            } else {
+                return res
+                    .status(401)
+                    .json({ status: false, data: "You don't own this todo." });
+            }
+        }
+        const challange = await Challange.findById(todo.challagneId);
+        if (!challange?.participants.includes(req.user.id)) {
+            return res
+                .status(401)
+                .json({ status: false, data: "You are not in this challange" });
+        };
+        todo.checklists.forEach((checklist:any)=>{
+            if(checklist.checkedParticipants.includes(req.user.id)){
+                if(checklist._id.toString()===checklistid){
+                 
+                    checklist.checkedParticipants.remove(req.user.id);
+                }
+
+            }else{
+                if(checklist._id.toString()===checklistid){
+                 
+                    checklist.checkedParticipants.push(req.user.id);
+                }
+            }
+             
+        })
+        todo.save();
+        
+        return res
+            .status(200)
+            .json({ status: true, data: "Checklist Checked" });
+    }
 
 
 }

@@ -7,7 +7,7 @@ import habitRouter from "./Routes/habitRoutes";
 import ChallangeRouter from "./Routes/challangeRoutes";
 import DailyRouter from "./Routes/dailyRoutes";
 import TodoRouter from "./Routes/todoRoutes";
-import homeRoutes from "./Routes/route";
+import homeRoutes from "./Validations/route";
 import Logger from "./Logger/Logger";
 import mailer from "./Controllers/Mailer";
 

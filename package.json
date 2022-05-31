@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "nodemon index.ts",
-    "start:dev": "concurrently -k \"nodemon ./build/index.js\" \"tsc -w \"",
+    "start:dev": "concurrently -k \"nodemon --inspect ./build/index.js \" \"tsc -w \"",
     "test": "ts-mocha -p tsconfig.json './spec/**/*spec.ts' --exit "
   },
   "keywords": [
