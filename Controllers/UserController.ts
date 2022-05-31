@@ -7,6 +7,9 @@ import client from "./GoogleAuthClient";
 import { TokenPayload } from "google-auth-library";
 import axios from "axios";
 import RequestUser from "../Middlewares/RequestInterface";
+import Logger from "../Logger/Logger";
+
+const logger = new Logger().logger;
 
 class UserClass {
     public userRegister = async (req: RequestUser, res: Response) => {
@@ -69,7 +72,7 @@ class UserClass {
             };
             mailer.sendMail(mailOptions, function (error: any) {
                 if (error) {
-                    console.log(error);
+                    logger.error(error.message);
                     return res.status(501).json({
                         success: false,
                         data: "Internal Error Occured Please Try After Sometime",
@@ -85,7 +88,7 @@ class UserClass {
             });
             return await dbUser.save();
         } catch (error: any) {
-            console.log(error);
+            logger.error(error.message);
             return res.status(501).json({
                 succss: false,
                 data: "Internal Server Error,Try After Some Time",
@@ -141,7 +144,7 @@ class UserClass {
    
         const {email}= req.body;
         if(!email){
-            return res.status(404).json({status:false,data:"Please Provide Email Id"});
+            return res.status(404).json({status:false,data:"Please Provide Email Iconsole.log"});
         }
         const user=await User.findOne({email:email});
         if(!user){
@@ -167,7 +170,7 @@ class UserClass {
             };
             mailer.sendMail(mailOptions, function (error: any) {
                 if (error) {
-                    console.log(error);
+                    logger.error(error.message);
                     return res.status(501).json({
                         success: false,
                         data: "Internal Error Occured Please Try After Sometime",
@@ -183,7 +186,8 @@ class UserClass {
                 data: "Email sent successfully, Please Verify within 10 minutes.",
             });
         } catch (error: any) {
-            console.log(error.message);
+             logger.error(error.message);
+            
             return res.status(501).json({
                 succss: false,
                 data: "Internal Server Error,Try After Some Time",
@@ -321,6 +325,66 @@ class UserClass {
         }
 
     };
+    public userFacebookLogin = async (req: RequestUser, res: Response) => {
+
+   
+  
+    const accessToken = req.body.accessToken;
+    if (!accessToken) {
+        return res
+            .status(400)
+            .json({ status: false, data: "accessToken Not Provided" });
+    }
+    const result:any = await axios.get(`https://graph.facebook.com/v2.12/me?fields=name,picture,first_name,last_name,email&access_token=${accessToken}`);
+    const payload:any= result.data;
+    const databaseCheck = await User.findOne({ email: payload.email });
+    if (databaseCheck) {
+        const user = {
+            id: databaseCheck._id,
+            email: databaseCheck.email,
+        };
+        databaseCheck.accessToken = accessToken;
+        const authToken = await jwt.sign(
+            user,
+      process.env.JWT_USER_LOGIN_SECRET_KEY as string
+        );
+
+        res
+            .status(200)
+            .cookie("auth-token", authToken)
+            .set("Auth-token", authToken)
+            .json({ status: true, data: authToken });
+        return await databaseCheck.save();
+    } else {
+        const salt = await bcrypt.genSalt(10);
+        const databasePassword = await bcrypt.hash(
+            (payload.email as string) + payload.name,
+            salt
+        );
+        const newUser = new User({
+            email: payload.email,
+            name: payload.name,
+            password: databasePassword,
+            photoUrl: payload.picture.data.url,
+            accessToken: accessToken
+        });
+        const user = {
+            id: newUser._id,
+            email: newUser.email,
+        };
+        const authToken = await jwt.sign(
+            user,
+      process.env.JWT_USER_LOGIN_SECRET_KEY as string
+        );
+        await newUser.save();
+        return res
+            .status(200)
+            .cookie("auth-token", authToken)
+            .set("Auth-token", authToken)
+            .json({ status: true, data: authToken });
+    }
+
+};
     public userGoogleLogout = async (req: RequestUser, res: Response) => {
   
         const dbUser = await User.findById(req.user.id);
@@ -337,6 +401,7 @@ class UserClass {
         }
 
     };
+
 
     public increaseExperience = async (req: RequestUser, res: Response) => {
    

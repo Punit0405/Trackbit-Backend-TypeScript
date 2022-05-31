@@ -23,6 +23,9 @@ class UserRoutes {
         //Route for User Login With google
         this.router.route("/usergooglelogin").post(UserController.userGoogleLogin);
 
+
+        this.router.route("/userfacebooklogin").post(UserController.userFacebookLogin);
+
         //Route for User Logout
         this.router
             .route("/usergooglelogout")
