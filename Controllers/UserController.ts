@@ -128,7 +128,7 @@ class UserClass {
             });
         }
         databaseCheck.email_verified=true;
-        res.status(301).redirect("https://uo0oq.app.link/pmmjr29jlqb");
+        res.status(301).redirect("https://uo0oq.test-app.link/1uaasyGZuqb");
         // res
         //     .status(200)
         //     .json({status:true,data:"Email Verified , Continue to login"});
