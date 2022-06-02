@@ -10,11 +10,12 @@ describe("User-Registraion" ,()=>{
         console.log("Hello");
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
             "name":"Punit Tewani",
-            "email":"keta.sarang.sa@gmail.com",
+            "email":"keta.sggdgegetetfingiiaradgmoing.sa@gmail.com",
             "password":"Punit@92655",
             "confirmpassword":"Punit@92655"
             
         });
+        console.log(response.body)
         expect(response.status).to.be.eq(200);
         
         
@@ -112,10 +113,10 @@ describe("User-Registraion" ,()=>{
             "confirmpassword":"Punit"
             
         });
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.be.eq(422);
         
     }),
-    it("Addng user with less than 6 characters and diffrent confirm password",async ()=>{
+    it("Addng user with less than 8 characters and diffrent confirm password",async ()=>{
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
             "name":"Punit Tewani",
             "email":"punit.tewani.sa@gmail.com",
@@ -123,7 +124,7 @@ describe("User-Registraion" ,()=>{
             "confirmpassword":"Punit@92655"
             
         });
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.equal(422);
         
     })
     
