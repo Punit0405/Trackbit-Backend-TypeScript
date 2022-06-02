@@ -36,6 +36,10 @@ class DailyRouter {
         this.router
             .route("/completedaily/:dailyId")
             .get(isLoggedin, DailyController.completeDaily);
+
+            this.router
+            .route("/checklistdaily/:dailyid")
+            .post(isLoggedin, DailyController.checkDailyCheckList);
     }
 }
 export default DailyRouter;

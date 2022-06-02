@@ -4,7 +4,7 @@ interface DailyInterface {
     description:string,
     userId:Types.ObjectId,
     challagneId:Types.ObjectId,
-    checklists:[string],
+    checklists:[{checklist:string,checkedParticipants?:[Types.ObjectId],checked?:Boolean}],
     startDate:Date,
     difficulty:boolean[],
     type:boolean,

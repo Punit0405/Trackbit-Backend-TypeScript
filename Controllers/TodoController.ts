@@ -159,6 +159,9 @@ class TodoClass{
         if(!todo){
             return res.status(404).json({status:false,data:"Todo Not Found"});
         }
+        if(todo.type){
+            return res.status(401).json({status:false,data:"You cannot delete challangetype todo"})
+        }
         if(todo.userId.toString()!==req.user.id){
             return res.status(400).json({status:false,data:"Todo Doesn't Exists For this Account"});
         }
@@ -227,8 +230,13 @@ class TodoClass{
             if (todo.userId.toString() === req.user.id) {
                  todo.checklists.forEach((checklist:any)=>{
                      if(checklist._id.toString() === checklistid){
-                         checklist.checked=true;
+                        if(checklist.checked){
+
+                            checklist.checked=false;
+                           }else{
+                            checklist.checked=true;
                      };
+                    }
                  })
                  console.log(todo);
                 todo.save();

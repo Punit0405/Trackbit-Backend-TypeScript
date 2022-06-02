@@ -22,7 +22,6 @@ class DailyClass {
         const newDaily = new Daily({
             title: title,
             description: description,
-            checklists: checklists,
             days: days,
             completed:false,
             type:false,
@@ -31,6 +30,14 @@ class DailyClass {
             tags: tags,
             reminder:reminder,
             difficulty:difficulty
+        });
+        checklists.forEach((checklist:any) => {
+            const checklistObject = {
+                checklist:checklist,
+                checked:false
+            }
+            newDaily.checklists.push(checklistObject)
+            
         });
         res.status(200).json({ status: true, data: "Daily Added Sucessfully" });
         return await newDaily.save();
@@ -73,6 +80,19 @@ class DailyClass {
         });
 
         dailies = dailies.concat(challangeDailys);
+        dailies.forEach((daily:any)=>{
+            if(daily.type){
+                daily.checklists.forEach((checklist:any)=>{
+                    if(checklist.checkedParticipants.includes(req.user.id)){
+                        checklist.checked=true;
+                        
+                    }else{
+                        checklist.checked=false;
+                    }
+
+                })
+            }
+        })
 
         return res.status(200).json({ status: true, data: dailies });
    
@@ -157,6 +177,9 @@ class DailyClass {
         if (!daily) {
             return res.status(404).json({ status: false, data: "Daily Not Found" });
         }
+        if(daily.type){
+            return res.status(401).json({status:false,data:"You cannot delete challangetype daily"})
+        }
         if (daily.userId.toString() !== req.user.id) {
             return res
                 .status(400)
@@ -217,5 +240,73 @@ class DailyClass {
             .json({ status: true, data: "Daily Completed Marked" });
   
     };
+
+    public checkDailyCheckList=async (req: RequestUser, res: Response)=>{
+        let {dailyid}=req.params;
+        dailyid = dailyid.trim();
+        let {checklistid}=req.body;
+        checklistid=checklistid.trim();
+    
+        if(!dailyid){
+            return res.status(400).json({status:false,data:"Please Provide Todo Id"});
+        }
+        if(!parameterValidator(dailyid)){
+            return res.status(400).json({status:false,data:"Please Provide valid todo Id"})
+        }
+        const daily=await Daily.findById(dailyid);
+        if(!daily){
+            return res.status(400).json({status:false,data:"Todo not found"})
+        }
+        if (!daily.type) {
+            if (daily.userId.toString() === req.user.id) {
+                daily.checklists.forEach((checklist:any)=>{
+                     if(checklist._id.toString() === checklistid){
+                         if(checklist.checked){
+
+                             checklist.checked=false;
+                            }else{
+                             checklist.checked=true;
+
+                         }
+                     };
+                 })
+                 daily.save();
+
+                return res
+                    .status(200)
+                    .json({ status: true, data: "Checklist checked successfully" });
+            } else {
+                return res
+                    .status(401)
+                    .json({ status: false, data: "You don't own this todo." });
+            }
+        }
+        const challange = await Challange.findById(daily.challagneId);
+        if (!challange?.participants.includes(req.user.id)) {
+            return res
+                .status(401)
+                .json({ status: false, data: "You are not in this challange" });
+        };
+        daily.checklists.forEach((checklist:any)=>{
+            if(checklist.checkedParticipants.includes(req.user.id)){
+                if(checklist._id.toString()===checklistid){
+                 
+                    checklist.checkedParticipants.remove(req.user.id);
+                }
+
+            }else{
+                if(checklist._id.toString()===checklistid){
+                 
+                    checklist.checkedParticipants.push(req.user.id);
+                }
+            }
+             
+        })
+        daily.save();
+        
+        return res
+            .status(200)
+            .json({ status: true, data: "Checklist Checked" });
+    }
 }
 export default DailyClass;

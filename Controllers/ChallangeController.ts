@@ -70,13 +70,19 @@ class ChallangeClass {
                 const newDaily = new Daily({
                     title: daily.title,
                     description: daily.description,
-                    checklists: daily.checklists,
                     startDate: daily.startDate,
                     challagneId: newchallange._id,
                     days: daily.days,
                     type: true,
                     tags: daily.tags,
                     reminder: daily.reminder,
+                });
+                daily.checklists.forEach((checklist:any) => {
+                    const checklistObject = {
+                        checklist:checklist
+                    }
+                    newDaily.checklists.push(checklistObject)
+                    
                 });
                 newchallange.dailies.push(newDaily._id);
                 await newDaily.save();

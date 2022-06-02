@@ -38,7 +38,19 @@ const dailySchema = new Schema<DailyInterface>({
         
     },
     checklists:{
-        type:[String]
+        type:[
+            {
+            checklist:{
+                type:String,
+            },
+            checkedParticipants:{
+                type:[Schema.Types.ObjectId]
+            },
+            checked:{
+                type:Boolean
+            }
+        
+        }]
     },
     startDate:{
         type:Date,
