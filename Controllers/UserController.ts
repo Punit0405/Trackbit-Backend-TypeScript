@@ -1,7 +1,7 @@
-import {  Response } from "express";
+import { Response } from "express";
 import User from "../Models/User";
 import bcrypt from "bcryptjs";
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import mailer from "./Mailer";
 import client from "./GoogleAuthClient";
 import { TokenPayload } from "google-auth-library";
@@ -13,7 +13,7 @@ const logger = new Logger().logger;
 
 class UserClass {
     public userRegister = async (req: RequestUser, res: Response) => {
-    
+
         const { name, email, password, confirmpassword } = req.body;
         if (!name) {
             return res
@@ -48,19 +48,19 @@ class UserClass {
         }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
- 
+
         const dbUser = new User({
             name: name,
             email: email,
             password: hashPassword,
 
         });
-      
+
         try {
             const token = await jwt.sign(
-                {email:email},
-          process.env.JWT_USER_REGISTER_SECRET_KEY as string,
-          { expiresIn: "10m" }
+                { email: email },
+                process.env.JWT_USER_REGISTER_SECRET_KEY as string,
+                { expiresIn: "10m" }
             );
 
             const mailOptions = {
@@ -79,7 +79,7 @@ class UserClass {
                     });
                 } else {
                     console.log("success");
-           
+
                 }
             });
             res.status(200).json({
@@ -94,73 +94,73 @@ class UserClass {
                 data: "Internal Server Error,Try After Some Time",
             });
         }
-    
+
     };
 
     public verifyUser = async (req: RequestUser, res: Response) => {
-   
+
         const token = req.params.token;
 
         try {
-        interface Jwtverify {
-          name: string;
-          email: string;
-          password: string;
-        }
+            interface Jwtverify {
+                name: string;
+                email: string;
+                password: string;
+            }
 
-        const payload: Jwtverify = (await jwt.verify(
-            token,
-          process.env.JWT_USER_REGISTER_SECRET_KEY as string
-        )) as Jwtverify;
-        const user = {
-            name: payload.name,
-            email: payload.email,
-            password: payload.password,
-        };
-        const databaseCheck = await User.findOne({ email: user.email });
-        if(!databaseCheck){
-            return res.status(400).json({status:false,data:"User Not Registered,Please Register"});
-        }
-        if (databaseCheck.email_verified) {
-            return res.status(401).json({
-                status: false,
-                data: "Email is Already Verified , Please Continue To Login",
-            });
-        }
-        databaseCheck.email_verified=true;
-        res.status(301).redirect("https://uo0oq.test-app.link/1uaasyGZuqb");
-        // res
-        //     .status(200)
-        //     .json({status:true,data:"Email Verified , Continue to login"});
-        return await databaseCheck.save();
+            const payload: Jwtverify = (await jwt.verify(
+                token,
+                process.env.JWT_USER_REGISTER_SECRET_KEY as string
+            )) as Jwtverify;
+            const user = {
+                name: payload.name,
+                email: payload.email,
+                password: payload.password,
+            };
+            const databaseCheck = await User.findOne({ email: user.email });
+            if (!databaseCheck) {
+                return res.status(400).json({ status: false, data: "User Not Registered,Please Register" });
+            }
+            if (databaseCheck.email_verified) {
+                return res.status(401).json({
+                    status: false,
+                    data: "Email is Already Verified , Please Continue To Login",
+                });
+            }
+            databaseCheck.email_verified = true;
+            res.status(301).redirect("https://uo0oq.test-app.link/1uaasyGZuqb");
+            // res
+            //     .status(200)
+            //     .json({status:true,data:"Email Verified , Continue to login"});
+            return await databaseCheck.save();
         } catch (error: any) {
             return res
                 .status(400)
                 .json({ status: false, data: "Link Expired ! Please Re-Register" });
         }
-  
+
     };
-    public sendVerifyLink = async(req:RequestUser,res:Response)=>{
-   
-        const {email}= req.body;
-        if(!email){
-            return res.status(404).json({status:false,data:"Please Provide Email Iconsole.log"});
+    public sendVerifyLink = async (req: RequestUser, res: Response) => {
+
+        const { email } = req.body;
+        if (!email) {
+            return res.status(404).json({ status: false, data: "Please Provide Email Iconsole.log" });
         }
-        const user=await User.findOne({email:email});
-        if(!user){
-            return res.status(404).json({status:false,data:"User not exists,Please Register first"});
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({ status: false, data: "User not exists,Please Register first" });
         }
-        if(user.email_verified){
-            return res.status(400).json({status:false,data:"Email is already verified"});
+        if (user.email_verified) {
+            return res.status(400).json({ status: false, data: "Email is already verified" });
 
         }
         try {
             const token = await jwt.sign(
-                {email:email},
-            process.env.JWT_USER_REGISTER_SECRET_KEY as string,
-            { expiresIn: "10m" }
+                { email: email },
+                process.env.JWT_USER_REGISTER_SECRET_KEY as string,
+                { expiresIn: "10m" }
             );
-  
+
             const mailOptions = {
                 from: "tewani0405@gmail.com",
                 to: email,
@@ -175,11 +175,11 @@ class UserClass {
                         success: false,
                         data: "Internal Error Occured Please Try After Sometime",
                     });
-                } else { 
+                } else {
                     console.log("success");
-              
+
                 }
-            
+
             });
             return res.status(200).json({
                 success: true,
@@ -187,21 +187,21 @@ class UserClass {
             });
         } catch (error: any) {
             logger.error(error.message);
-            
+
             return res.status(501).json({
                 succss: false,
                 data: "Internal Server Error,Try After Some Time",
             });
         }
-      
 
-      
-  
+
+
+
     };
 
     public userLogin = async (req: RequestUser, res: Response) => {
 
-   
+
         const { userEmail, userPassword } = req.body;
         if (!userEmail) {
             return res
@@ -216,14 +216,14 @@ class UserClass {
         const user = await User.findOne({ email: userEmail });
         if (!user) {
             return res
-                .status(404)
+                .status(400)
                 .json({ status: false, data: "Invalid Credentials" });
         }
-     
+
 
         if (await bcrypt.compare(userPassword, user.password)) {
-            if(!user.email_verified){
-                return res.status(400).json({status:false,data:"Email is not verified, Please Verify"});
+            if (!user.email_verified) {
+                return res.status(400).json({ status: false, data: "Email is not verified, Please Verify" });
             }
             const loginData = {
                 id: user._id,
@@ -231,7 +231,7 @@ class UserClass {
             };
             const token = await jwt.sign(
                 loginData,
-          process.env.JWT_USER_LOGIN_SECRET_KEY as string
+                process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
 
             return res
@@ -247,7 +247,7 @@ class UserClass {
 
     };
     public userGoogleLogin = async (req: RequestUser, res: Response) => {
-   
+
         const idToken = req.body.idToken;
         const accessToken = req.body.accessToken;
         if (!idToken) {
@@ -285,7 +285,7 @@ class UserClass {
             databaseCheck.accessToken = accessToken;
             const authToken = await jwt.sign(
                 user,
-          process.env.JWT_USER_LOGIN_SECRET_KEY as string
+                process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
 
             res
@@ -314,7 +314,7 @@ class UserClass {
             };
             const authToken = await jwt.sign(
                 user,
-          process.env.JWT_USER_LOGIN_SECRET_KEY as string
+                process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
             await newUser.save();
             return res
@@ -327,16 +327,16 @@ class UserClass {
     };
     public userFacebookLogin = async (req: RequestUser, res: Response) => {
 
-   
-  
+
+
         const accessToken = req.body.accessToken;
         if (!accessToken) {
             return res
                 .status(400)
                 .json({ status: false, data: "accessToken Not Provided" });
         }
-        const result:any = await axios.get(`https://graph.facebook.com/v2.12/me?fields=name,picture,first_name,last_name,email&access_token=${accessToken}`);
-        const payload:any= result.data;
+        const result: any = await axios.get(`https://graph.facebook.com/v2.12/me?fields=name,picture,first_name,last_name,email&access_token=${accessToken}`);
+        const payload: any = result.data;
         const databaseCheck = await User.findOne({ email: payload.email });
         if (databaseCheck) {
             const user = {
@@ -346,7 +346,7 @@ class UserClass {
             databaseCheck.accessToken = accessToken;
             const authToken = await jwt.sign(
                 user,
-      process.env.JWT_USER_LOGIN_SECRET_KEY as string
+                process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
 
             res
@@ -374,7 +374,7 @@ class UserClass {
             };
             const authToken = await jwt.sign(
                 user,
-      process.env.JWT_USER_LOGIN_SECRET_KEY as string
+                process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
             await newUser.save();
             return res
@@ -386,7 +386,7 @@ class UserClass {
 
     };
     public userGoogleLogout = async (req: RequestUser, res: Response) => {
-  
+
         const dbUser = await User.findById(req.user.id);
         if (dbUser) {
             const URL = `https://accounts.google.com/o/oauth2/revoke?token=${dbUser.accessToken}`;
@@ -404,7 +404,7 @@ class UserClass {
 
 
     public increaseExperience = async (req: RequestUser, res: Response) => {
-   
+
         const experience = req.body.experience;
         if (!experience) {
             return res
@@ -426,32 +426,32 @@ class UserClass {
         return await loggedinUser.save();
 
     };
-    public decreaseHealth = async(req:RequestUser,res:Response)=>{
-   
-        const health =  req.body.health;
-        if(!health){
-            return res.status(400).json({status:false,data:"Health not provided"});
+    public decreaseHealth = async (req: RequestUser, res: Response) => {
+
+        const health = req.body.health;
+        if (!health) {
+            return res.status(400).json({ status: false, data: "Health not provided" });
         }
-        const loggedinUser= await User.findById(req.user.id);
+        const loggedinUser = await User.findById(req.user.id);
         if (!loggedinUser) {
             return res
                 .status(404)
                 .json({ status: false, data: "User doesn't exists any more!" });
         }
-        loggedinUser.health=loggedinUser.health - health;
-        res.status(200).json({status:true,data:"Health Updataed"});
-        while(loggedinUser.health <=0){
+        loggedinUser.health = loggedinUser.health - health;
+        res.status(200).json({ status: true, data: "Health Updataed" });
+        while (loggedinUser.health <= 0) {
 
             loggedinUser.health = 50;
             loggedinUser.healthResetCount++;
-            loggedinUser.experience -=10;
-       
-         
-            if(loggedinUser.experience <=0){
-                loggedinUser.experience=0;
+            loggedinUser.experience -= 10;
+
+
+            if (loggedinUser.experience <= 0) {
+                loggedinUser.experience = 0;
                 loggedinUser.level--;
             }
-            
+
         }
 
 
@@ -460,54 +460,54 @@ class UserClass {
         return await loggedinUser.save();
 
 
-        
- 
+
+
     };
 
-    public fetchUser = async(req:RequestUser,res:Response)=>{
+    public fetchUser = async (req: RequestUser, res: Response) => {
 
-        const loggedinUser = await User.findById(req.user.id).select(["-password","-appliedChallanges","-createdAt","-email_verified"]);
-        if(!loggedinUser){
-            return res.status(200).json({status:false,data:"No User Exists"});
+        const loggedinUser = await User.findById(req.user.id).select(["-password", "-appliedChallanges", "-createdAt", "-email_verified"]);
+        if (!loggedinUser) {
+            return res.status(200).json({ status: false, data: "No User Exists" });
 
         }
-        return res.status(200).json({status:true,data:loggedinUser});
+        return res.status(200).json({ status: true, data: loggedinUser });
 
-     
+
 
     };
-    public fetchAppliedChallanges = async(req:RequestUser,res:Response)=>{
- 
+    public fetchAppliedChallanges = async (req: RequestUser, res: Response) => {
+
         const loggedinUser = await User.findById(req.user.id).populate({
             path: "appliedChallanges",
             populate: [
                 {
                     path: "habits",
-                    model: "Habit", 
-                    select:"title description tags"
-          
+                    model: "Habit",
+                    select: "title description tags"
+
                 },
-                { path: "dailies", select:"title description tags",model: "Daily" },
-                { path: "todos", select:"title description tags",model: "Todo" },
+                { path: "dailies", select: "title description tags", model: "Daily" },
+                { path: "todos", select: "title description tags", model: "Todo" },
             ],
         });
-        if(!loggedinUser){
-            return res.status(404).json({status:false,data:"User Doen't Exists More"});
+        if (!loggedinUser) {
+            return res.status(404).json({ status: false, data: "User Doen't Exists More" });
         }
-        return res.status(200).json({status:true,data:loggedinUser.appliedChallanges});
-     
- 
+        return res.status(200).json({ status: true, data: loggedinUser.appliedChallanges });
+
+
     };
-    public fetchExperience = async(req:RequestUser,res:Response)=>{
+    public fetchExperience = async (req: RequestUser, res: Response) => {
 
-        const loggedinUser = await User.findById(req.user.id).select(["-password","-appliedChallanges","-createdAt","-email_verified"]);
-        if(!loggedinUser){
-            return res.status(200).json({status:false,data:"No User Exists"});
+        const loggedinUser = await User.findById(req.user.id).select(["-password", "-appliedChallanges", "-createdAt", "-email_verified"]);
+        if (!loggedinUser) {
+            return res.status(200).json({ status: false, data: "No User Exists" });
 
         }
-        return res.status(200).json({status:true,data:{level:loggedinUser.level,experience:loggedinUser.experience,health:loggedinUser.health}});
+        return res.status(200).json({ status: true, data: { level: loggedinUser.level, experience: loggedinUser.experience, health: loggedinUser.health } });
 
-    
+
 
     };
 }
