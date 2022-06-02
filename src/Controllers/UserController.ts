@@ -37,13 +37,13 @@ class UserClass {
         }
         if (password !== confirmpassword) {
             return res
-                .status(401)
+                .status(400)
                 .json({ status: false, data: "Password Doesn't Match" });
         }
         const user = await User.find({ email: email });
         if (user.length !== 0) {
             return res
-                .status(401)
+                .status(400)
                 .json({ status: false, data: "User Already Exists" });
         }
         const salt = await bcrypt.genSalt(10);

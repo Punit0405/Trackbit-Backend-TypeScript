@@ -7,7 +7,8 @@
     "build": "webpack",
     "start": "nodemon index.ts",
     "start:dev": "concurrently -k \"nodemon --inspect ./build/index.js \" \"tsc -w \"",
-    "test": "ts-mocha -p tsconfig.json './spec/**/*spec.ts' --exit "
+    "sonar": "sonar-scanner -Dsonar.login=admin -Dsonar.password=Punit@92655 -Dproject.settings=file.properties",
+    "test": "ts-mocha -p tsconfig.json '.src//spec/**/*spec.ts' --timeout 10000 --exit "
   },
   "keywords": [
     "trackbit",
@@ -59,6 +60,7 @@
     "node-cron": "^3.0.0",
     "nodemailer": "^6.7.3",
     "nodemon": "^2.0.15",
+    "sonarqube-scanner": "^2.8.1",
     "supertest": "^6.2.3",
     "ts-node": "^10.7.0",
     "webpack": "^5.72.0",
