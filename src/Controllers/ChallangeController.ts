@@ -103,9 +103,7 @@ class ChallangeClass {
         }
         return res.status(200).json({ status: true, data: challanges });
 
-        return res
-            .status(500)
-            .json({ status: false, data: "Some Internal Error Occured" });
+        
 
     };
     public joinChallange = async (req: RequestUser, res: Response) => {
@@ -155,9 +153,7 @@ class ChallangeClass {
         await challange.save();
         return await loggedinUser.save();
 
-        return res
-            .status(500)
-            .json({ status: false, data: "Some Internal Error Occured" });
+        
 
     };
     public leaveChallange = async (req: RequestUser, res: Response) => {
@@ -288,7 +284,7 @@ class ChallangeClass {
                 .json({ status: false, data: "Habit not found for this challange" });
         }
 
-        try {
+        
             const { title, description, habitType, duration, tags, reminder } =
         req.body;
             const habit = await Habit.findById(id);
@@ -318,11 +314,7 @@ class ChallangeClass {
             }
             await habit.save();
             return res.status(200).json({ status: true, data: habit });
-        } catch (error) {
-            return res
-                .status(500)
-                .json({ status: false, data: "Some Internal Server Occured" });
-        }
+        
 
 
 
