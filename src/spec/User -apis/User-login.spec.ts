@@ -1,5 +1,5 @@
-import App from "../../app";
-import chai from "chai";
+import app from "../appfile.spec";
+import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 
 chai.should();
