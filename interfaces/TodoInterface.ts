@@ -4,7 +4,7 @@ interface TodoInterface {
     description:string,
     userId:Types.ObjectId,
     challagneId:Types.ObjectId,
-    checklists:[{checklist:string,checkedParticipants?:[Types.ObjectId],checked?:Boolean}],
+    checklists:[{checklist:string,checkedParticipants?:[Types.ObjectId],checked?:boolean}],
     dueDate:Date
     reminderDate:Date,
     type:boolean,

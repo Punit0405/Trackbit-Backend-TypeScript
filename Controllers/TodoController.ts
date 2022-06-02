@@ -29,8 +29,8 @@ class TodoClass{
             const checklistObject = {
                 checklist:checklist,
                 checked:false
-            }
-            newTodo.checklists.push(checklistObject)
+            };
+            newTodo.checklists.push(checklistObject);
             
         });
         res.status(200).json({status:true,data:"Todo Added Sucessfully"});
@@ -77,9 +77,9 @@ class TodoClass{
                         checklist.checked=false;
                     }
 
-                })
+                });
             }
-        })
+        });
 
         
             
@@ -217,20 +217,20 @@ class TodoClass{
             return res.status(400).json({status:false,data:"Please Provide Todo Id"});
         }
         if(!parameterValidator(todoid)){
-            return res.status(400).json({status:false,data:"Please Provide valid todo Id"})
+            return res.status(400).json({status:false,data:"Please Provide valid todo Id"});
         }
         const todo=await Todo.findById(todoid);
         if(!todo){
-            return res.status(400).json({status:false,data:"Todo not found"})
+            return res.status(400).json({status:false,data:"Todo not found"});
         }
         if (!todo.type) {
             if (todo.userId.toString() === req.user.id) {
-                 todo.checklists.forEach((checklist:any)=>{
-                     if(checklist._id.toString() === checklistid){
-                         checklist.checked=true;
-                     };
-                 })
-                 console.log(todo);
+                todo.checklists.forEach((checklist:any)=>{
+                    if(checklist._id.toString() === checklistid){
+                        checklist.checked=true;
+                    }
+                });
+                console.log(todo);
                 todo.save();
 
                 return res
@@ -247,7 +247,7 @@ class TodoClass{
             return res
                 .status(401)
                 .json({ status: false, data: "You are not in this challange" });
-        };
+        }
         todo.checklists.forEach((checklist:any)=>{
             if(checklist.checkedParticipants.includes(req.user.id)){
                 if(checklist._id.toString()===checklistid){
@@ -262,13 +262,13 @@ class TodoClass{
                 }
             }
              
-        })
+        });
         todo.save();
         
         return res
             .status(200)
             .json({ status: true, data: "Checklist Checked" });
-    }
+    };
 
 
 }

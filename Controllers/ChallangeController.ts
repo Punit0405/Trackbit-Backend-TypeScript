@@ -56,8 +56,8 @@ class ChallangeClass {
                 todo.checklists.forEach((checklist:any) => {
                     const checklistObject = {
                         checklist:checklist
-                    }
-                    newTodo.checklists.push(checklistObject)
+                    };
+                    newTodo.checklists.push(checklistObject);
                     
                 });
                 newchallange.todos.push(newTodo._id);

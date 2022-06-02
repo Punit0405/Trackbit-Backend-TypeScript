@@ -186,7 +186,7 @@ class UserClass {
                 data: "Email sent successfully, Please Verify within 10 minutes.",
             });
         } catch (error: any) {
-             logger.error(error.message);
+            logger.error(error.message);
             
             return res.status(501).json({
                 succss: false,
@@ -329,62 +329,62 @@ class UserClass {
 
    
   
-    const accessToken = req.body.accessToken;
-    if (!accessToken) {
-        return res
-            .status(400)
-            .json({ status: false, data: "accessToken Not Provided" });
-    }
-    const result:any = await axios.get(`https://graph.facebook.com/v2.12/me?fields=name,picture,first_name,last_name,email&access_token=${accessToken}`);
-    const payload:any= result.data;
-    const databaseCheck = await User.findOne({ email: payload.email });
-    if (databaseCheck) {
-        const user = {
-            id: databaseCheck._id,
-            email: databaseCheck.email,
-        };
-        databaseCheck.accessToken = accessToken;
-        const authToken = await jwt.sign(
-            user,
+        const accessToken = req.body.accessToken;
+        if (!accessToken) {
+            return res
+                .status(400)
+                .json({ status: false, data: "accessToken Not Provided" });
+        }
+        const result:any = await axios.get(`https://graph.facebook.com/v2.12/me?fields=name,picture,first_name,last_name,email&access_token=${accessToken}`);
+        const payload:any= result.data;
+        const databaseCheck = await User.findOne({ email: payload.email });
+        if (databaseCheck) {
+            const user = {
+                id: databaseCheck._id,
+                email: databaseCheck.email,
+            };
+            databaseCheck.accessToken = accessToken;
+            const authToken = await jwt.sign(
+                user,
       process.env.JWT_USER_LOGIN_SECRET_KEY as string
-        );
+            );
 
-        res
-            .status(200)
-            .cookie("auth-token", authToken)
-            .set("Auth-token", authToken)
-            .json({ status: true, data: authToken });
-        return await databaseCheck.save();
-    } else {
-        const salt = await bcrypt.genSalt(10);
-        const databasePassword = await bcrypt.hash(
-            (payload.email as string) + payload.name,
-            salt
-        );
-        const newUser = new User({
-            email: payload.email,
-            name: payload.name,
-            password: databasePassword,
-            photoUrl: payload.picture.data.url,
-            accessToken: accessToken
-        });
-        const user = {
-            id: newUser._id,
-            email: newUser.email,
-        };
-        const authToken = await jwt.sign(
-            user,
+            res
+                .status(200)
+                .cookie("auth-token", authToken)
+                .set("Auth-token", authToken)
+                .json({ status: true, data: authToken });
+            return await databaseCheck.save();
+        } else {
+            const salt = await bcrypt.genSalt(10);
+            const databasePassword = await bcrypt.hash(
+                (payload.email as string) + payload.name,
+                salt
+            );
+            const newUser = new User({
+                email: payload.email,
+                name: payload.name,
+                password: databasePassword,
+                photoUrl: payload.picture.data.url,
+                accessToken: accessToken
+            });
+            const user = {
+                id: newUser._id,
+                email: newUser.email,
+            };
+            const authToken = await jwt.sign(
+                user,
       process.env.JWT_USER_LOGIN_SECRET_KEY as string
-        );
-        await newUser.save();
-        return res
-            .status(200)
-            .cookie("auth-token", authToken)
-            .set("Auth-token", authToken)
-            .json({ status: true, data: authToken });
-    }
+            );
+            await newUser.save();
+            return res
+                .status(200)
+                .cookie("auth-token", authToken)
+                .set("Auth-token", authToken)
+                .json({ status: true, data: authToken });
+        }
 
-};
+    };
     public userGoogleLogout = async (req: RequestUser, res: Response) => {
   
         const dbUser = await User.findById(req.user.id);

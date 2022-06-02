@@ -36,8 +36,8 @@ class TodoRouter {
 
         //Route for Adding Habbit
         this.router
-        .route("/checklisttodo/:todoid")
-        .post(isLoggedin, TodoController.checkTodoCheckList);
+            .route("/checklisttodo/:todoid")
+            .post(isLoggedin, TodoController.checkTodoCheckList);
     }
 }
 export default TodoRouter;
