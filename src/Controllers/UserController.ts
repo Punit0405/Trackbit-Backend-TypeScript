@@ -464,10 +464,9 @@ class UserClass {
     };
 
     public fetchUser = async (req: RequestUser, res: Response) => {
-
-        const loggedinUser = await User.findById(req.user.id).select(["-password", "-appliedChallanges", "-createdAt", "-email_verified"]);
+        const loggedinUser = await User.findById(req.user.id.trim()).select(["-password", "-appliedChallanges", "-createdAt", "-email_verified"]);
         if (!loggedinUser) {
-            return res.status(200).json({ status: false, data: "No User Exists" });
+            return res.status(404).json({ status: false, data: "No User Exists" });
 
         }
         return res.status(200).json({ status: true, data: loggedinUser });

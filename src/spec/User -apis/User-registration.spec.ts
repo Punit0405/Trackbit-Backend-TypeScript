@@ -5,11 +5,11 @@ import chaiHttp from "chai-http";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("User-Registraion", () => {
+describe("User-Registraion", () => {
     it("New User Register with All parameters", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
             "name":"Punit Tewani",
-            "email":"keta.sggdgegetetfingiiaradgmoing.sa@gmail.com",
+            "email":"keta.sggdgegetetfdffbfgingiiaradgmoing.sa@gmail.com",
             "password":"Punit@92655",
             "confirmpassword":"Punit@92655"
             
@@ -112,7 +112,7 @@ describe.skip("User-Registraion", () => {
             "confirmpassword": "Punit"
 
         });
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.be.eq(422);
 
     }),
     it("Adding user with less than 6 characters and diffrent confirm password", async () => {
@@ -123,7 +123,7 @@ describe.skip("User-Registraion", () => {
             "confirmpassword": "Punit@92655"
 
         });
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.be.eq(422);
 
     });
 
