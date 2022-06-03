@@ -7,6 +7,7 @@
     "build": "webpack",
     "start": "nodemon src/index.ts",
     "start:dev": "concurrently -k \"nodemon --inspect ./build/index.js \" \"tsc -w \"",
+    "coverage": "nyc --reporter=lcov npm run test",
     "sonar": "sonar-scanner -Dsonar.login=admin -Dsonar.password=Punit@92655 -Dproject.settings=file.properties",
     "test": "ts-mocha -p tsconfig.json './src/spec/**/*spec.ts' --timeout 10000 --exit "
   },
@@ -43,6 +44,7 @@
     "@types/branch-sdk": "^2.53.3",
     "@types/node": "^17.0.25",
     "aws4": "^1.11.0",
+    "nyc": "^15.1.0",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "bson-ext": "^4.0.2",
