@@ -5,7 +5,7 @@ import chaiHttp from "chai-http";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("User-Login", () => {
+describe.skip("Get-Userinfo", () => {
     it("Getting User-Info with Auth-Token", async () => {
         const response = await chai.request(app)
             .get("/api/v1/user/fetchuser")
