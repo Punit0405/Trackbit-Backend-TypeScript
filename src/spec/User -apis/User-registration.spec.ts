@@ -15,7 +15,7 @@ describe.skip("User-Registraion", () => {
             "confirmpassword":"Punit@92655"
             
         });
-        console.log(response.body)
+        console.log(response.body);
         expect(response.status).to.be.eq(200);
 
 
