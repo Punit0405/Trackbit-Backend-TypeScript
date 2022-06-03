@@ -5,7 +5,7 @@ import RequestUser from "../Middlewares/RequestInterface";
 class UserValidator{
     public validateUser =[
         check("name","Name should have atlease 3 letters").isLength({min:3}),
-        check("password","Password must have atleast 8 characters").isLength({min:3}),
+        check("password","Password must have atleast 8 characters").isLength({min:8}),
         check("email","Email id is not valid").isEmail(),
     
         (req:RequestUser, res:Response, next:NextFunction) => {

@@ -9,12 +9,13 @@ describe.skip("User-Registraion", () => {
     it("New User Register with All parameters", async () => {
         console.log("Hello");
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name": "Punit Tewani",
-            "email": "keta.sarang.sa@gmail.com",
-            "password": "Punit@92655",
-            "confirmpassword": "Punit@92655"
-
+            "name":"Punit Tewani",
+            "email":"keta.sggdgegetetfingiiaradgmoing.sa@gmail.com",
+            "password":"Punit@92655",
+            "confirmpassword":"Punit@92655"
+            
         });
+        console.log(response.body)
         expect(response.status).to.be.eq(200);
 
 
