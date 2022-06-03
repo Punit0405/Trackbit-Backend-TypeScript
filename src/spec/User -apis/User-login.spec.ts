@@ -5,7 +5,7 @@ import chaiHttp from "chai-http";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("User-Login", () => {
+describe("User-Login", () => {
     it("User Login with Valid Credentials", async () => {
         const response = await chai.request(app)
             .post("/api/v1/user/userlogin")
