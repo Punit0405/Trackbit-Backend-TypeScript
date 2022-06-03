@@ -6,9 +6,9 @@ import HabitInterface from "../interfaces/HabitInterface";
 import parameterValidator from "../Validations/parameterValidator";
 class HabitClass {
     public addHabit = async (req: RequestUser, res: Response) => {
-  
-        const { title, description, habitType, difficulty,duration, tags, reminder } =
-        req.body;
+
+        const { title, description, habitType, difficulty, duration, tags, reminder } =
+            req.body;
         const newHabit = new Habit({
             title: title,
             description: description,
@@ -16,8 +16,8 @@ class HabitClass {
             duration: duration,
             difficulty: difficulty,
             tags: tags,
-            type:false,
-            reminder:reminder,
+            type: false,
+            reminder: reminder,
             userId: req.user.id,
         });
         res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
@@ -25,7 +25,7 @@ class HabitClass {
 
     };
     public fetchHabits = async (req: RequestUser, res: Response) => {
-   
+
         let habits = await Habit.find({ userId: req.user.id }).select("-userId");
 
         const challangeHabits: any[] = [];
@@ -35,7 +35,7 @@ class HabitClass {
                 {
                     path: "habits",
                     model: "Habit",
-                    select:"-challagneId"
+                    select: "-challagneId"
                 },
                 { path: "todos", model: "Todo" },
                 { path: "dailies", model: "Daily" },
@@ -55,7 +55,7 @@ class HabitClass {
         habits = habits.concat(challangeHabits);
 
         return res.status(200).json({ status: true, data: habits });
- 
+
     };
     public updateHabit = async (req: RequestUser, res: Response) => {
 
@@ -72,9 +72,9 @@ class HabitClass {
                 .json({ status: false, data: "Please Enter a valid habit id" });
         }
 
-        const { title, description, habitType, difficulty,duration, tags, reminder } =
-        req.body;
-       
+        const { title, description, habitType, difficulty, duration, tags, reminder } =
+            req.body;
+
         const habit = await Habit.findById(id);
         if (!habit) {
             return res.status(404).json({ status: false, data: "Habit not found" });
@@ -112,14 +112,14 @@ class HabitClass {
         }
         await habit.save();
         return res.status(200).json({ status: true, data: habit });
-  
+
     };
     public deleteHabit = async (req: RequestUser, res: Response) => {
-  
-        const { id } = req.params;
-        if(!id){
 
-            return res.status(404).json({status:false,data:"Please provide habit id"});
+        const { id } = req.params;
+        if (!id) {
+
+            return res.status(404).json({ status: false, data: "Please provide habit id" });
         }
         if (!parameterValidator(id)) {
             return res
@@ -140,7 +140,7 @@ class HabitClass {
         }
         await Habit.findByIdAndDelete(id);
         return res.status(200).json({ status: true, data: habit });
-   
+
     };
 }
 export default HabitClass;
