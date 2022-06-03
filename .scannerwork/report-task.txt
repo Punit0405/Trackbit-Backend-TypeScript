@@ -2,5 +2,5 @@ projectKey=trackbit-backend
 serverUrl=http://localhost:9000
 serverVersion=9.4.0.54424
 dashboardUrl=http://localhost:9000/dashboard?id=trackbit-backend
-ceTaskId=AYEj3EcedCz_yk57nIyB
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYEj3EcedCz_yk57nIyB
+ceTaskId=AYEkgU5HdCz_yk57nIyC
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYEkgU5HdCz_yk57nIyC

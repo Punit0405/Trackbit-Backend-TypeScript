@@ -1,130 +1,130 @@
 import app from "../appfile.spec";
-import chai ,{expect} from "chai";
+import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 
 chai.should();
 chai.use(chaiHttp);
 
-describe("User-Registraion" ,()=>{
-    it("New User Register with All parameters" , async ()=>{
+describe.skip("User-Registraion", () => {
+    it("New User Register with All parameters", async () => {
         console.log("Hello");
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"keta.sarang.sa@gmail.com",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "email": "keta.sarang.sa@gmail.com",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(200);
-        
-        
+
+
     }),
-    it("Addng already registerd user",async ()=>{
+    it("Addng already registerd user", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(400);
-        
+
     }),
-    it("Adding User without Email Parameter" , async ()=>{
+    it("Adding User without Email Parameter", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(422);
 
     }),
-    it("Addng User without name ",async ()=>{
+    it("Adding User without name ", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@92655"
-            
+
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(422);
-        
+
     }),
-    it("Addng user without password",async ()=>{
+    it("Adding user without password", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sa@gmail.com",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sa@gmail.com",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(422);
-        
+
     }),
-    it("Addng user without confirm password",async ()=>{
+    it("Adding user without confirm password", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(400);
-        
+
     }),
-    it("Addng user with diffrent passwords",async ()=>{
+    it("Adding user with diffrent passwords", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@98243"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@98243"
+
         });
         expect(response.status).to.be.eq(400);
-        
+
     }),
-    it("Addng user with less than 3 characters in name",async ()=>{
+    it("Adding user with less than 3 characters in name", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Pu",
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Pu",
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(422);
-        
+
     }),
-    it("Addng user with invalid email id",async ()=>{
+    it("Adding user with invalid email id", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sagmail.com",
-            "password":"Punit@92655",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sagmail.com",
+            "password": "Punit@92655",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(422);
-        
+
     }),
-    it("Addng user with password less than 6 characters",async ()=>{
+    it("Adding user with password less than 6 characters", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit",
-            "confirmpassword":"Punit"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit",
+            "confirmpassword": "Punit"
+
         });
         expect(response.status).to.be.eq(400);
-        
+
     }),
-    it("Addng user with less than 6 characters and diffrent confirm password",async ()=>{
+    it("Adding user with less than 6 characters and diffrent confirm password", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
-            "name":"Punit Tewani",
-            "email":"punit.tewani.sa@gmail.com",
-            "password":"Punit",
-            "confirmpassword":"Punit@92655"
-            
+            "name": "Punit Tewani",
+            "email": "punit.tewani.sa@gmail.com",
+            "password": "Punit",
+            "confirmpassword": "Punit@92655"
+
         });
         expect(response.status).to.be.eq(400);
-        
-    })
-    
+
+    });
+
 });

@@ -285,35 +285,35 @@ class ChallangeClass {
         }
 
         
-            const { title, description, habitType, duration, tags, reminder } =
+        const { title, description, habitType, duration, tags, reminder } =
         req.body;
-            const habit = await Habit.findById(id);
-            if (!habit) {
-                return res
-                    .status(404)
-                    .json({ status: false, data: "Habit not found" });
-            }
+        const habit = await Habit.findById(id);
+        if (!habit) {
+            return res
+                .status(404)
+                .json({ status: false, data: "Habit not found" });
+        }
 
-            if (title) {
-                habit.title = title;
-            }
-            if (description) {
-                habit.description = description;
-            }
-            if (habitType) {
-                habit.habitType = habitType;
-            }
-            if (duration) {
-                habit.duration = duration;
-            }
-            if (tags) {
-                habit.tags = tags;
-            }
-            if (reminder) {
-                habit.reminder = reminder;
-            }
-            await habit.save();
-            return res.status(200).json({ status: true, data: habit });
+        if (title) {
+            habit.title = title;
+        }
+        if (description) {
+            habit.description = description;
+        }
+        if (habitType) {
+            habit.habitType = habitType;
+        }
+        if (duration) {
+            habit.duration = duration;
+        }
+        if (tags) {
+            habit.tags = tags;
+        }
+        if (reminder) {
+            habit.reminder = reminder;
+        }
+        await habit.save();
+        return res.status(200).json({ status: true, data: habit });
         
 
 

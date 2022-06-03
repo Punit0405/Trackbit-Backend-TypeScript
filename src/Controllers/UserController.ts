@@ -260,7 +260,6 @@ class UserClass {
                 .status(400)
                 .json({ status: false, data: "accessToken Not Provided" });
         }
-
         const token = await client.verifyIdToken({
             idToken: idToken,
             audience: process.env.CLIENT_ID,
