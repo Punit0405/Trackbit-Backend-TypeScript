@@ -113,7 +113,7 @@ describe.skip("User-Registraion", () => {
             "confirmpassword": "Punit"
 
         });
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.be.eq(422);
 
     }),
     it("Adding user with less than 6 characters and diffrent confirm password", async () => {
@@ -124,7 +124,7 @@ describe.skip("User-Registraion", () => {
             "confirmpassword": "Punit@92655"
 
         });
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.be.eq(422);
 
     });
 
