@@ -497,7 +497,7 @@ class UserClass {
 
     };
     public fetchExperience = async (req: RequestUser, res: Response) => {
-
+        
         const loggedinUser = await User.findById(req.user.id).select(["-password", "-appliedChallanges", "-createdAt", "-email_verified"]);
         if (!loggedinUser) {
             return res.status(200).json({ status: false, data: "No User Exists" });

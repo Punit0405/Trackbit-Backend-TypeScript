@@ -5,9 +5,8 @@ import chaiHttp from "chai-http";
 chai.should();
 chai.use(chaiHttp);
 
-describe("User-Registraion", () => {
+describe.skip("User-Registraion", () => {
     it("New User Register with All parameters", async () => {
-        console.log("Hello");
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
             "name":"Punit Tewani",
             "email":"keta.sggdgegetetfdffbfgingiiaradgmoing.sa@gmail.com",
