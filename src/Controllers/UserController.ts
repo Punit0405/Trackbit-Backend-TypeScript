@@ -15,21 +15,6 @@ class UserClass {
     public userRegister = async (req: RequestUser, res: Response) => {
 
         const { name, email, password, confirmpassword } = req.body;
-        if (!name) {
-            return res
-                .status(400)
-                .json({ status: false, data: "Name is not provided" });
-        }
-        if (!email) {
-            return res
-                .status(400)
-                .json({ status: false, data: "Email is not provided" });
-        }
-        if (!password) {
-            return res
-                .status(400)
-                .json({ status: false, data: "PassWord is not provided" });
-        }
         if (!confirmpassword) {
             return res
                 .status(400)
