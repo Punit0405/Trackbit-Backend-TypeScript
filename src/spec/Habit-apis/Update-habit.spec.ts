@@ -54,7 +54,7 @@ describe("Update Habit", async () => {
                 "tags": ["Drinkning", "Health", "Hello"],
                 "reminder": "23:10"
             });
-
+        
         expect(response.status).to.be.eq(422);
     });
 });
