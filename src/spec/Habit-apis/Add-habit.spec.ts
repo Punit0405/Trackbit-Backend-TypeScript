@@ -5,7 +5,7 @@ import chaiHttp from "chai-http";
 chai.should();
 chai.use(chaiHttp);
 
-describe("Add Habit", async () => {
+describe.skip("Add Habit", async () => {
   it("Adding Habit with all the parameters with token", async () => {
     const response = await chai
       .request(app)

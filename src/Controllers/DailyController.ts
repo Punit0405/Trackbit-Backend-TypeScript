@@ -157,6 +157,9 @@ class DailyClass {
         if (!daily) {
             return res.status(404).json({ status: false, data: "Daily Not Found" });
         }
+        if(daily.type){
+            return res.status(400).json({status:false,data:"You cannot delete challange Daily"})
+        }
         if (daily.userId.toString() !== req.user.id) {
             return res
                 .status(400)
