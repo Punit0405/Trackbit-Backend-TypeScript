@@ -7,15 +7,16 @@ import constants from "../constants";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("Delete Habit", async () => {
+describe("Delete Habit", async () => {
   it("Deleting Habit  with token", async () => {
     const response = await chai
       .request(app)
       .delete(constants.habitApi.deleteHabiturl + constants.habitApi.actualdeletehabitId)
       .set(
         "authtoken",
-        constants.habitApi.actualdeletehabitId
+        constants.habitApi.token
       );
+      console.log(response.body)
     expect(response.status).to.be.eq(constants.successCode);
   });
   it("Deleting Habit with invalid habitid with token", async () => {
@@ -31,7 +32,7 @@ describe.skip("Delete Habit", async () => {
   it("Deleting Habit of another user with token", async () => {
     const response = await chai
       .request(app)
-      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.actualdeletehabitId)
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.anotherUserHabitId)
       .set(
         "authtoken",
         constants.habitApi.anotherUserHabitId
@@ -61,7 +62,7 @@ describe.skip("Delete Habit", async () => {
   it("Deleting challange Habit  with token", async () => {
     const response = await chai
       .request(app)
-      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId)
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.challangeHabitId)
       .set(
         "authtoken",
         constants.habitApi.token

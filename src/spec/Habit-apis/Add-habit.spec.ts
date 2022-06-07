@@ -6,7 +6,7 @@ import constants from '../constants';
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("Add Habit", async () => {
+describe("Add Habit", async () => {
   it("Adding Habit with all the parameters with token", async () => {
     const response = await chai
       .request(app)
