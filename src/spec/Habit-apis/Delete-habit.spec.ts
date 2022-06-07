@@ -1,66 +1,88 @@
 import app from "../appfile.spec";
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
+import constants from "../constants";
+
 
 chai.should();
 chai.use(chaiHttp);
 
 describe.skip("Delete Habit", async () => {
-  it("Deleting Habit 21 with token", async () => {
+  it("Deleting Habit  with token", async () => {
     const response = await chai
       .request(app)
-      .delete("/api/v1/habit/deletehabit/6299fd026cea63461dfd6fa5")
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.actualdeletehabitId)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDMyMTgwOH0.JiO2VDu8d3vcUA-aBct7_4HsLa04O62JfUkYvajR1zw"
+        constants.habitApi.actualdeletehabitId
       );
-    expect(response.status).to.be.eq(200);
+    expect(response.status).to.be.eq(constants.successCode);
+  });
+  it("Deleting Habit with invalid habitid with token", async () => {
+    const response = await chai
+      .request(app)
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.actualdeletehabitId)
+      .set(
+        "authtoken",
+        constants.habitApi.invalidHabitId
+      );
+    expect(response.status).to.be.eq(constants.requestFail);
+  });
+  it("Deleting Habit of another user with token", async () => {
+    const response = await chai
+      .request(app)
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.actualdeletehabitId)
+      .set(
+        "authtoken",
+        constants.habitApi.anotherUserHabitId
+      );
+    expect(response.status).to.be.eq(constants.requestFail);
   });
   it("Deleting non existing Habit  with token", async () => {
     const response = await chai
       .request(app)
-      .delete("/api/v1/habit/deletehabit/6299fdadc155384d22113588")
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDMyMTgwOH0.JiO2VDu8d3vcUA-aBct7_4HsLa04O62JfUkYvajR1zw"
+        constants.habitApi.token
       );
-    expect(response.status).to.be.eq(404);
+    expect(response.status).to.be.eq(constants.notFound);
   });
   it("Deleting Habit without habitid  with token", async () => {
     const response = await chai
       .request(app)
-      .delete("/api/v1/habit/deletehabit/")
+      .delete(constants.habitApi.deleteHabiturl)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDMyMTgwOH0.JiO2VDu8d3vcUA-aBct7_4HsLa04O62JfUkYvajR1zw"
+        constants.habitApi.token
       );
-    expect(response.status).to.be.eq(404);
+    expect(response.status).to.be.eq(constants.notFound);
   });
   it("Deleting challange Habit  with token", async () => {
     const response = await chai
       .request(app)
-      .delete("/api/v1/habit/deletehabit/629af2f118e237aea678f156")
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDMyMTgwOH0.JiO2VDu8d3vcUA-aBct7_4HsLa04O62JfUkYvajR1zw"
+        constants.habitApi.token
       );
-    expect(response.status).to.be.eq(400);
+    expect(response.status).to.be.eq(constants.requestFail);
   });
   it("Deleting   Habit  without token", async () => {
     const response = await chai
       .request(app)
-      .delete("/api/v1/habit/deletehabit/6299e9744b4ec8009f5c4272");
-    expect(response.status).to.be.eq(400);
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId);
+    expect(response.status).to.be.eq(constants.requestFail);
   });
   it("Fetching Habit  with invalidtoken", async () => {
     const response = await chai
       .request(app)
-      .delete("/api/v1/habit/deletehabit/6299e9744b4ec8009f5c4272")
+      .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzfh hththGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDMyMTgwOH0.JiO2VDu8d3vcUA-aBct7_4HsLa04O62JfUkYvajR1zw"
+       constants.habitApi.invaldtoken
       );
-    expect(response.status).to.be.eq(400);
+    expect(response.status).to.be.eq(constants.requestFail);
   });
 
 

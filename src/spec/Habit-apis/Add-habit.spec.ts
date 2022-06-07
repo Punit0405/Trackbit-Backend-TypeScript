@@ -1,6 +1,7 @@
 import app from "../appfile.spec";
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
+import constants from '../constants';
 
 chai.should();
 chai.use(chaiHttp);
@@ -9,10 +10,10 @@ describe.skip("Add Habit", async () => {
   it("Adding Habit with all the parameters with token", async () => {
     const response = await chai
       .request(app)
-      .post("/api/v1/habit/addhabit")
+      .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU"
+        constants.habitApi.token
       )
       .send({
         "title":"Habit as 1450",
@@ -22,15 +23,16 @@ describe.skip("Add Habit", async () => {
         "tags":["Smoking0","Health0"],
         "reminder": "14:50:00"
     });
-    expect(response.status).to.be.eq(200);
+    expect(response.status).to.be.eq(constants.successCode);
   });
   it("Adding Habit with all the parameters with invalid token", async () => {
     const response = await chai
       .request(app)
-      .post("/api/v1/habit/addhabit")
+      .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5csCI6IkpXVCJ9.eyJpZCbggdgsI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU"
+        constants.habitApi.invaldtoken
+        
       )
       .send({
         "title":"Habit as 1450",
@@ -40,12 +42,12 @@ describe.skip("Add Habit", async () => {
         "tags":["Smoking0","Health0"],
         "reminder": "14:50:00"
     });
-    expect(response.status).to.be.eq(400);
+    expect(response.status).to.be.eq(constants.requestFail);
   });
   it("Adding Habit with all the parameters without token", async () => {
     const response = await chai
       .request(app)
-      .post("/api/v1/habit/addhabit")
+      .post(constants.habitApi.addHabiturl)
       .send({
         "title":"Habit as 1450",
         "description":"Leave Smoking in 2100 Days",
@@ -54,15 +56,15 @@ describe.skip("Add Habit", async () => {
         "tags":["Smoking0","Health0"],
         "reminder": "14:50:00"
     });
-    expect(response.status).to.be.eq(400);
+    expect(response.status).to.be.eq(constants.requestFail);
   });
   it("Adding Habit with all the parameters but title less than 6 characters with token", async () => {
     const response = await chai
       .request(app)
-      .post("/api/v1/habit/addhabit")
+      .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU"
+        constants.habitApi.token
       )
       .send({
         "title":"Habi",
@@ -72,15 +74,15 @@ describe.skip("Add Habit", async () => {
         "tags":["Smoking0","Health0"],
         "reminder": "14:50:00"
     });
-    expect(response.status).to.be.eq(422);
+    expect(response.status).to.be.eq(constants.validationFail);
   });
   it("Adding Habit with all the parameters but description less than 10 characters with token", async () => {
     const response = await chai
       .request(app)
-      .post("/api/v1/habit/addhabit")
+      .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU"
+        constants.habitApi.token
       )
       .send({
         "title":"Habibfhb hgbyubuy",
@@ -90,15 +92,15 @@ describe.skip("Add Habit", async () => {
         "tags":["Smoking0","Health0"],
         "reminder": "14:50:00"
     });
-    expect(response.status).to.be.eq(422);
+    expect(response.status).to.be.eq(constants.validationFail);
   });
   it("Adding Habit with all the parameters without title and description with token", async () => {
     const response = await chai
       .request(app)
-      .post("/api/v1/habit/addhabit")
+      .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU"
+        constants.habitApi.token
       )
       .send({
         "habitType":[true,false],
@@ -106,6 +108,6 @@ describe.skip("Add Habit", async () => {
         "tags":["Smoking0","Health0"],
         "reminder": "14:50:00"
     });
-    expect(response.status).to.be.eq(422);
+    expect(response.status).to.be.eq(constants.validationFail);
   });
 });
