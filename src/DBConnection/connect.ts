@@ -5,14 +5,14 @@ const logger = new Logger().logger;
 class DBConnection{
     constructor(){
        
-            mongoose.connect(process.env.DATABASE_URI as string, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            } as ConnectionOptions).then(()=>{
-                logger.info("Connected to the Trackbit Database");
-            }).catch((error)=>{
-                console.log(error);
-            });
+        mongoose.connect(process.env.DATABASE_URI as string, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        } as ConnectionOptions).then(()=>{
+            logger.info("Connected to the Trackbit Database");
+        }).catch((error)=>{
+            console.log(error);
+        });
        
       
      
