@@ -160,7 +160,7 @@ class TodoClass{
             return res.status(404).json({status:false,data:"Todo Not Found"});
         }
         if(todo.type){
-            return res.status(400).json({status:false,data:"You cannot delete challange habit"})
+            return res.status(400).json({status:false,data:"You cannot delete challange habit"});
         }
         if(todo.userId.toString()!==req.user.id){
             return res.status(400).json({status:false,data:"Todo Doesn't Exists For this Account"});
