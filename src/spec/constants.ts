@@ -16,6 +16,7 @@ export default class Constants {
 
     };
     public static readonly todoApi = {
+        addTodourl:"/api/v1/todo/addtodo",
         fetchTodourl: "/api/v1/todo/fetchtodo",
         deleteTodourl: "/api/v1/todo/deletetodo",
         deleteTodoId: "/629ee88f66ac7b6b35bc69be",

@@ -28,10 +28,10 @@ describe("Add Todo", async () => {
         const response = await chai
             .request(app)
             .post(constants.todoApi.addTodourl)
-            .set("authtoken", constants.token)
+            .set("authtoken", constants.invalidtoken)
             .send({
                 "title": "Trackbit",
-                "descr200iption": "Todo From Trackbi",
+                "description": "Todo From Trackbi",
                 "dueDate": "2022-05-20",
                 "reminderDate": "2022-05-10",
                 "reminderTime": "10:05",
