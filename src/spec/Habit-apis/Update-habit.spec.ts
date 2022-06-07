@@ -13,7 +13,7 @@ describe("Update Habit", async () => {
       .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
       .set(
         "authtoken",
-       constants.habitApi.token
+       constants.token
       )
       .send({
         title: "Sahbjnkml,;fa",
@@ -29,7 +29,7 @@ describe("Update Habit", async () => {
       .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
       .set(
         "authtoken",
-       constants.habitApi.token
+       constants.token
       )
       .send({
         title: "Sah",
@@ -45,7 +45,7 @@ describe("Update Habit", async () => {
       .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
       .set(
         "authtoken",
-       constants.habitApi.token
+       constants.token
       )
       .send({
         title: "Sahbjnkml,;fa",
@@ -61,7 +61,7 @@ describe("Update Habit", async () => {
       .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
       .set(
         "authtoken",
-        constants.habitApi.invaldtoken
+        constants.invalidtoken
       )
       .send({
         description: "iasfdssffedweeweffeeffewfewfew",
@@ -87,7 +87,7 @@ describe("Update Habit", async () => {
       .put(constants.habitApi.updateHabiturl + constants.habitApi.anotherUserHabitId)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       )
       .send({
         title: "Sahbjnkml,;fa",
@@ -103,7 +103,7 @@ describe("Update Habit", async () => {
       .put(constants.habitApi.updateHabiturl + constants.habitApi.invalidHabitId)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       )
       .send({
         title: "Sahbjnkml,;fa",

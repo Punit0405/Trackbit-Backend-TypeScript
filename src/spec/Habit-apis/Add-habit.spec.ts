@@ -13,7 +13,7 @@ describe("Add Habit", async () => {
       .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       )
       .send({
         "title":"Habit as 1450",
@@ -31,7 +31,7 @@ describe("Add Habit", async () => {
       .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        constants.habitApi.invaldtoken
+        constants.invalidtoken
         
       )
       .send({
@@ -64,7 +64,7 @@ describe("Add Habit", async () => {
       .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       )
       .send({
         "title":"Habi",
@@ -82,7 +82,7 @@ describe("Add Habit", async () => {
       .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       )
       .send({
         "title":"Habibfhb hgbyubuy",
@@ -100,7 +100,7 @@ describe("Add Habit", async () => {
       .post(constants.habitApi.addHabiturl)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       )
       .send({
         "habitType":[true,false],

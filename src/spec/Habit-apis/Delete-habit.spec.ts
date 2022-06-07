@@ -14,7 +14,7 @@ describe("Delete Habit", async () => {
       .delete(constants.habitApi.deleteHabiturl + constants.habitApi.actualdeletehabitId)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       );
       console.log(response.body)
     expect(response.status).to.be.eq(constants.successCode);
@@ -45,7 +45,7 @@ describe("Delete Habit", async () => {
       .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       );
     expect(response.status).to.be.eq(constants.notFound);
   });
@@ -55,7 +55,7 @@ describe("Delete Habit", async () => {
       .delete(constants.habitApi.deleteHabiturl)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       );
     expect(response.status).to.be.eq(constants.notFound);
   });
@@ -65,7 +65,7 @@ describe("Delete Habit", async () => {
       .delete(constants.habitApi.deleteHabiturl + constants.habitApi.challangeHabitId)
       .set(
         "authtoken",
-        constants.habitApi.token
+        constants.token
       );
     expect(response.status).to.be.eq(constants.requestFail);
   });
@@ -81,7 +81,7 @@ describe("Delete Habit", async () => {
       .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId)
       .set(
         "authtoken",
-       constants.habitApi.invaldtoken
+       constants.invalidtoken
       );
     expect(response.status).to.be.eq(constants.requestFail);
   });
