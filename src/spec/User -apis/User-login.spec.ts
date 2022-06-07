@@ -1,6 +1,7 @@
 import app from "../appfile.spec";
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
+import constants from "../constants";
 
 chai.should();
 chai.use(chaiHttp);
@@ -8,32 +9,32 @@ chai.use(chaiHttp);
 describe("User-Login", () => {
     it("User Login with Valid Credentials", async () => {
         const response = await chai.request(app)
-            .post("/api/v1/user/userlogin")
+            .post(constants.userApi.userLoginurl)
             .send({
                 "userEmail": "punit.tewani.sa@gmail.com",
                 "userPassword": "Punit@92655"
             });
-        expect(response).to.have.status(200);
+        expect(response).to.have.status(constants.successCode);
     });
     it("User Login without Email ", async () => {
         const response = await chai.request(app)
-            .post("/api/v1/user/userlogin")
+            .post(constants.userApi.userLoginurl)
             .send({
                 "userPassword": "Punit@92655"
             });
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(constants.requestFail);
     });
     it("User Login without Password ", async () => {
         const response = await chai.request(app)
-            .post("/api/v1/user/userlogin")
+            .post(constants.userApi.userLoginurl)
             .send({
                 "userPassword": "Punit@92655"
             });
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(constants.requestFail);
     });
     it("User Login with Invalid Credentials", async () => {
         const response = await chai.request(app)
-            .post("/api/v1/user/userlogin")
+            .post(constants.userApi.userLoginurl)
             .send({
                 "userEmail": "punit.tewani.sa@gmail.com",
                 "userPassword": "punit@92655"
@@ -42,7 +43,7 @@ describe("User-Login", () => {
     });
     it("Check output is in JSON", async () => {
         const response = await chai.request(app)
-            .post("/api/v1/user/userlogin")
+            .post(constants.userApi.userLoginurl)
             .send({
                 "userEmail": "punit.tewani.sa@gmail.com",
                 "userPassword": "punit@92655"
@@ -60,7 +61,7 @@ describe("User-Login", () => {
     });
     it("Check data in response", async () => {
         const response = await chai.request(app)
-            .post("/api/v1/user/userlogin")
+            .post(constants.userApi.userLoginurl)
             .send({
                 "userEmail": "punit.tewani.sa@gmail.com",
                 "userPassword": "punit@92655"

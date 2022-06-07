@@ -1,6 +1,7 @@
 import app from "../appfile.spec";
 import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
+import constants from "../constants";
 
 chai.should();
 chai.use(chaiHttp);
@@ -8,14 +9,14 @@ chai.use(chaiHttp);
 describe("Get-Userinfo", () => {
     it("Getting User-Info with Auth-Token", async () => {
         const response = await chai.request(app)
-            .get("/api/v1/user/fetchuser")
-            .set("authtoken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU");
-        expect(response).to.have.status(200);
+            .get(constants.userApi.fetchUserdetailsurl)
+            .set("authtoken", constants.token);
+        expect(response).to.have.status(constants.successCode);
     });
     it("Getting User-Info without Auth-Token", async () => {
         const response = await chai.request(app)
-            .get("/api/v1/user/fetchuser")
+            .get(constants.userApi.fetchUserdetailsurl)
             .set({ authToken: "" });
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(constants.requestFail);
     });
 });

@@ -31,8 +31,7 @@ describe("Add Habit", async () => {
             .post(constants.habitApi.addHabiturl)
             .set(
                 "authtoken",
-                constants.invalidtoken
-        
+                constants.invalidtoken        
             )
             .send({
                 "title":"Habit as 1450",

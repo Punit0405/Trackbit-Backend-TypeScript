@@ -10,14 +10,14 @@ describe.skip("Fetch Todo", async () => {
     it("Successfully Fetch todo", async () => {
         const response = await chai.request(app)
             .get(constants.todoApi.fetchTodourl)
-            .set("authtoken", constants.todoApi.token);
+            .set("authtoken", constants.token);
         expect(response.status).to.be.eq(constants.successCode);
     });
 
     it("Fetching todo with invalid token", async () => {
         const response = await chai.request(app)
             .get(constants.todoApi.fetchTodourl)
-            .set("authtoken", constants.todoApi.invaldtoken);
+            .set("authtoken", constants.invalidtoken);
         expect(response.status).to.be.eq(constants.requestFail);
     });
 
