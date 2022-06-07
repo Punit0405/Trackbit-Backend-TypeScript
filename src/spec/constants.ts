@@ -10,8 +10,7 @@ export default class Constants {
         actualdeletehabitId: "629b29f3b25c4830210b5ed2",
         deletehabitId: "629a023eed78fcd51d91e887",
         invalidHabitId: "629a023eed78fcd51d91e885547",
-        anotherUserHabitId:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWVlNjhkZTZjNmUwMzZlZTQwMWEwMyIsImVtYWlsIjoidGV3YW5pcHVuaXRrdW1hckBnbWFpbC5jb20iLCJpYXQiOjE2NTQ1ODA5ODV9.o7oGa-eW7wghSliCtD5apOsvPtE2ZHhAImfoM96PfYI",
+        anotherUserHabitId:"",
         updateHabitId: "629b29d814a122df7332f1a1",
         challangeHabitId: "629af2f118e237aea678f156",
 
@@ -26,6 +25,20 @@ export default class Constants {
         deleteTodoOfOthers: "/629eeb10697fc63489c3b658"
 
     };
+
+    public static readonly dailyApi = {
+      adddailyturl: "/api/v1/daily/adddaily",
+      updatedailyurl: "/api/v1/daily/updatedaily/",
+      deletedailyurl: "/api/v1/daily/deletedaily/",
+      fetchdailyurl: "/api/v1/dailyc/fetchdaily",
+      actualdailyId: "629f2b81178168afe20a6d39",
+      deletedailyId: "629f2bc2178168afe20a6f75",
+      invalidailyId: "629af2f118e237aea678f16980c",
+      anotherUserdailyId:'',
+      updatedailyId: "629f2bc2178168afe20a6f75",
+      challangedailyId: "629af2f118e237aea678f16e",
+
+  };
     public static readonly successCode = 200;
     public static readonly requestFail = 400;
     public static readonly validationFail = 422;
