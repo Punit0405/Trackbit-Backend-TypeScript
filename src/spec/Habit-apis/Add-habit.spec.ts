@@ -109,4 +109,5 @@ it("Adding Habit with all the parameters without title and description with toke
             "tags":["Smoking0","Health0"],
             "reminder": "14:50:00"
         });
+    expect(response.status).to.be.eq(constants.validationFail);
 });
