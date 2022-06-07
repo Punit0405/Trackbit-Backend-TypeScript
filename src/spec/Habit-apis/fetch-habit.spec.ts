@@ -13,7 +13,7 @@ describe("Fetch Habit", async () => {
             .get(constants.habitApi.fetchHabiturl)
             .set(
                 "authtoken",
-                constants.habitApi.token
+                constants.token
             );
         expect(response.status).to.be.eq(200);
     });
@@ -29,7 +29,7 @@ describe("Fetch Habit", async () => {
             .get(constants.habitApi.fetchHabiturl)
             .set(
                 "authtoken",
-                constants.habitApi.invaldtoken
+                constants.invalidtoken
             );
         expect(response.status).to.be.eq(400);
     });

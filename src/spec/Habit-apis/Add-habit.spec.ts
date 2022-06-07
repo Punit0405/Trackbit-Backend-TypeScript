@@ -13,7 +13,7 @@ describe("Add Habit", async () => {
             .post(constants.habitApi.addHabiturl)
             .set(
                 "authtoken",
-                constants.habitApi.token
+                constants.token
             )
             .send({
                 "title":"Habit as 1450",
@@ -31,7 +31,7 @@ describe("Add Habit", async () => {
             .post(constants.habitApi.addHabiturl)
             .set(
                 "authtoken",
-                constants.habitApi.invaldtoken
+                constants.invalidtoken
         
             )
             .send({
@@ -58,56 +58,55 @@ describe("Add Habit", async () => {
             });
         expect(response.status).to.be.eq(constants.requestFail);
     });
-    it("Adding Habit with all the parameters but title less than 6 characters with token", async () => {
-        const response = await chai
-            .request(app)
-            .post(constants.habitApi.addHabiturl)
-            .set(
-                "authtoken",
-                constants.habitApi.token
-            )
-            .send({
-                "title":"Habi",
-                "description":"Leave Smoking in 2100 Days",
-                "habitType":[true,false],
-                "duration":[false,true,false],
-                "tags":["Smoking0","Health0"],
-                "reminder": "14:50:00"
-            });
-        expect(response.status).to.be.eq(constants.validationFail);
-    });
-    it("Adding Habit with all the parameters but description less than 10 characters with token", async () => {
-        const response = await chai
-            .request(app)
-            .post(constants.habitApi.addHabiturl)
-            .set(
-                "authtoken",
-                constants.habitApi.token
-            )
-            .send({
-                "title":"Habibfhb hgbyubuy",
-                "description":"Leave",
-                "habitType":[true,false],
-                "duration":[false,true,false],
-                "tags":["Smoking0","Health0"],
-                "reminder": "14:50:00"
-            });
-        expect(response.status).to.be.eq(constants.validationFail);
-    });
-    it("Adding Habit with all the parameters without title and description with token", async () => {
-        const response = await chai
-            .request(app)
-            .post(constants.habitApi.addHabiturl)
-            .set(
-                "authtoken",
-                constants.habitApi.token
-            )
-            .send({
-                "habitType":[true,false],
-                "duration":[false,true,false],
-                "tags":["Smoking0","Health0"],
-                "reminder": "14:50:00"
-            });
-        expect(response.status).to.be.eq(constants.validationFail);
-    });
+});
+it("Adding Habit with all the parameters but title less than 6 characters with token", async () => {
+    const response = await chai
+        .request(app)
+        .post(constants.habitApi.addHabiturl)
+        .set(
+            "authtoken",
+            constants.token
+        )
+        .send({
+            "title":"Habi",
+            "description":"Leave Smoking in 2100 Days",
+            "habitType":[true,false],
+            "duration":[false,true,false],
+            "tags":["Smoking0","Health0"],
+            "reminder": "14:50:00"
+        });
+    expect(response.status).to.be.eq(constants.validationFail);
+});
+it("Adding Habit with all the parameters but description less than 10 characters with token", async () => {
+    const response = await chai
+        .request(app)
+        .post(constants.habitApi.addHabiturl)
+        .set(
+            "authtoken",
+            constants.token
+        )
+        .send({
+            "title":"Habibfhb hgbyubuy",
+            "description":"Leave",
+            "habitType":[true,false],
+            "duration":[false,true,false],
+            "tags":["Smoking0","Health0"],
+            "reminder": "14:50:00"
+        });
+    expect(response.status).to.be.eq(constants.validationFail);
+});
+it("Adding Habit with all the parameters without title and description with token", async () => {
+    const response = await chai
+        .request(app)
+        .post(constants.habitApi.addHabiturl)
+        .set(
+            "authtoken",
+            constants.token
+        )
+        .send({
+            "habitType":[true,false],
+            "duration":[false,true,false],
+            "tags":["Smoking0","Health0"],
+            "reminder": "14:50:00"
+        });
 });
