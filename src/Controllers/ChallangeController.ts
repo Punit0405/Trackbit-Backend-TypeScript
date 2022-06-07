@@ -369,7 +369,7 @@ class ChallangeClass {
         try {
             await Challange.findByIdAndUpdate(challageId, {
                 $pull: { habits: id },
-            }),
+            });
             await Habit.findByIdAndDelete(id);
 
             return res
@@ -520,7 +520,7 @@ class ChallangeClass {
         try {
             await Challange.findByIdAndUpdate(challageId, {
                 $pull: { todos: id },
-            }),
+            });
             await Todo.findByIdAndDelete(id);
 
             return res
@@ -674,7 +674,7 @@ class ChallangeClass {
         try {
             await Challange.findByIdAndUpdate(challageId, {
                 $pull: { dailies: id },
-            }),
+            });
             await Daily.findByIdAndDelete(id);
 
             return res
@@ -838,7 +838,7 @@ class ChallangeClass {
             }
             data.forEach((daily: any) => {
                 if (!daily.type) {
-                    (daily.completed = false), daily.save();
+                    (daily.completed = false); daily.save();
                 } else {
                     daily.completedParticipants = [];
                     daily.save();

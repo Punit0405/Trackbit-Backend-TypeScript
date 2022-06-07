@@ -5,15 +5,17 @@ export default class Constants {
         invaldtoken:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOThdhdyyukiiolhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU",
         addHabiturl: "/api/v1/habit/addhabit",
-        updateHabiturl: "",
-        deleteHabiturl: "/api/v1/habit/deletehabit",
-        fetchHabiturl: "",
-        actualdeletehabitId: "",
-        deletehabitId: "",
-        invalidHabitId: "",
-        anotherUserHabitId: "",
-        updateHabitId: "",
-        challangeHabitId: "",
+        updateHabiturl: "/api/v1/habit/updatehabit/",
+        deleteHabiturl: "/api/v1/habit/deletehabit/",
+        fetchHabiturl: "/api/v1/habit/fetchhabit",
+        actualdeletehabitId: "629b29f3b25c4830210b5ed2",
+        deletehabitId: "629a023eed78fcd51d91e887",
+        invalidHabitId: "629a023eed78fcd51d91e885547",
+        anotherUserHabitId:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWVlNjhkZTZjNmUwMzZlZTQwMWEwMyIsImVtYWlsIjoidGV3YW5pcHVuaXRrdW1hckBnbWFpbC5jb20iLCJpYXQiOjE2NTQ1ODA5ODV9.o7oGa-eW7wghSliCtD5apOsvPtE2ZHhAImfoM96PfYI",
+        updateHabitId: "629b29d814a122df7332f1a1",
+        challangeHabitId: "629af2f118e237aea678f156",
+
     };
     public static readonly todoApi = {
         token:
@@ -21,13 +23,13 @@ export default class Constants {
         invaldtoken:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOThdhdyyukiiolhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU",
         fetchTodourl: "/api/v1/todo/fetchtodo",
-        deleteTodourl:"/api/v1/todo/deletetodo",
-        deleteTodoId:"/629ee88f66ac7b6b35bc69be",
-        deleteTodoInvalidId:"/629af2f118e237aea678f1ds",
-        deleteTodoNotFound:"/629af2f118e237aea678f16c",
-        deleteTodotypefalse:"/629af2f118e237aea678f162",
-        deleteTodoOfOthers:"/629eeb10697fc63489c3b658"
-        
+        deleteTodourl: "/api/v1/todo/deletetodo",
+        deleteTodoId: "/629ee88f66ac7b6b35bc69be",
+        deleteTodoInvalidId: "/629af2f118e237aea678f1ds",
+        deleteTodoNotFound: "/629af2f118e237aea678f16c",
+        deleteTodotypefalse: "/629af2f118e237aea678f162",
+        deleteTodoOfOthers: "/629eeb10697fc63489c3b658"
+
     };
     public static readonly successCode = 200;
     public static readonly requestFail = 400;
@@ -37,3 +39,4 @@ export default class Constants {
     public static readonly internalServerErr = 500;
     public static readonly redirectCode = 301;
 }
+

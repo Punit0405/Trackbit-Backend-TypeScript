@@ -4,7 +4,7 @@ import Logger from "../Logger/Logger";
 const logger = new Logger().logger;
 class DBConnection{
     constructor(){
-        try {
+       
             mongoose.connect(process.env.DATABASE_URI as string, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
@@ -13,9 +13,7 @@ class DBConnection{
             }).catch((error)=>{
                 console.log(error);
             });
-        } catch (error) {
-            console.log(error);
-        }
+       
       
      
     }

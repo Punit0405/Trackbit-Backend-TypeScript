@@ -5,16 +5,15 @@ import chaiHttp from "chai-http";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("User-Registraion", () => {
+describe("User-Registraion", () => {
     it("New User Register with All parameters", async () => {
         const response = await chai.request(app).post("/api/v1/user/userregister").send({
             "name":"Punit Tewani",
-            "email":"keta.sggdgegetetfdffbfgingiiaradgmoing.sa@gmail.com",
+            "email":"hhuthuhtuthrehuin.sa@gmail.com",
             "password":"Punit@92655",
             "confirmpassword":"Punit@92655"
             
         });
-        console.log(response.body);
         expect(response.status).to.be.eq(200);
 
 

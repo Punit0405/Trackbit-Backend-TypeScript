@@ -6,78 +6,112 @@ import constants from "../constants";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("Update Habit", async () => {
-    it("Habit update successfully", async () => {
-        const response = await chai
-            .request(app)
-            .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
-            .set(
-                "authtoken",
-                constants.habitApi.token
-            )
-            .send({
-                title: "Sahbjnkml,;fa",
-                description: "iasfdssffedweeweffeeffewfewfew",
-                tags: ["Drinkning", "Health", "Hello"],
-                reminder: "23:10",
-            });
-        expect(response.status).to.be.eq(200);
-    });
-    it("Updating Habit with Invalid token", async () => {
-        const response = await chai
-            .request(app)
-            .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
-            .set(
-                "authtoken",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDI1MzkyN30.Nf6jijOqCE1jB_zDSqLjLWVWCVhN6_kJ1kuW_1-KFco"
-            )
-            .send({
-                description: "iasfdssffedweeweffeeffewfewfew",
-                tags: ["Drinkning", "Health", "Hello"],
-                reminder: "23:10",
-            });
-        expect(response.status).to.be.eq(400);
-    });
-    it("Update without token", async () => {
-        const response = await chai
-            .request(app)
-            .put("/api/v1/habit/updatehabit/6299e9744b4ec8009f5c4272")
-            .send({
-                description: "iasfdssffedweeweffeeffewfewfew",
-                tags: ["Drinkning", "Health", "Hello"],
-                reminder: "23:10",
-            });
-        expect(response.status).to.be.eq(400);
-    });
-    it("Habit of incorrect account", async () => {
-        const response = await chai
-            .request(app)
-            .put("/api/v1/habit/updatehabit/6299e9744b4ec8009f5c4212")
-            .set(
-                "authtoken",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDI1MzkyN30.Nf6jijOqCE1jB_zDSpLjLWVWCVhN6_kJ1kuW_1-KFco"
-            )
-            .send({
-                title: "Sahbjnkml,;fa",
-                tags: ["Drinkning", "Health", "Hello"],
-                reminder: "23:10",
-            });
-        expect(response.status).to.be.eq(422);
-    });
-    it("Updating habit with incorrect habit id", async () => {
-        const response = await chai
-            .request(app)
-            .put("/api/v1/habit/updatehabit/151165")
-            .set(
-                "authtoken",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDI1MzkyN30.Nf6jijOqCE1jB_zDSpLjLWVWCVhN6_kJ1kuW_1-KFco"
-            )
-            .send({
-                title: "Sahbjnkml,;fa",
-                tags: ["Drinkning", "Health", "Hello"],
-                reminder: "23:10",
-            });
+describe("Update Habit", async () => {
+  it("Habit update successfully", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
+      .set(
+        "authtoken",
+       constants.habitApi.token
+      )
+      .send({
+        title: "Sahbjnkml,;fa",
+        description: "iasfdssffedweeweffeeffewfewfew",
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
+    expect(response.status).to.be.eq(constants.successCode);
+  });
+  it("Habit update with title of less than 6", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
+      .set(
+        "authtoken",
+       constants.habitApi.token
+      )
+      .send({
+        title: "Sah",
+        description: "iasfdssffedweeweffeeffewfewfew",
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
+    expect(response.status).to.be.eq(constants.validationFail);
+  });
+  it("Habit update with title lesethan 6 characters ", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
+      .set(
+        "authtoken",
+       constants.habitApi.token
+      )
+      .send({
+        title: "Sahbjnkml,;fa",
+        description: "ias",
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
+    expect(response.status).to.be.eq(constants.validationFail);
+  });
+  it("Updating Habit with Invalid token", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
+      .set(
+        "authtoken",
+        constants.habitApi.invaldtoken
+      )
+      .send({
+        description: "iasfdssffedweeweffeeffewfewfew",
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
+    expect(response.status).to.be.eq(constants.requestFail);
+  });
+  it("Update without token", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.updateHabitId)
+      .send({
+        description: "iasfdssffedweeweffeeffewfewfew",
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
+    expect(response.status).to.be.eq(constants.requestFail);
+  });
+  it("Habit of incorrect account", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.anotherUserHabitId)
+      .set(
+        "authtoken",
+        constants.habitApi.token
+      )
+      .send({
+        title: "Sahbjnkml,;fa",
+        description:'jbg iubguuteu gyuwgtegtyhw oghtwgh',
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
+    expect(response.status).to.be.eq(constants.requestFail);
+  });
+  it("Updating habit with incorrect habit id", async () => {
+    const response = await chai
+      .request(app)
+      .put(constants.habitApi.updateHabiturl + constants.habitApi.invalidHabitId)
+      .set(
+        "authtoken",
+        constants.habitApi.token
+      )
+      .send({
+        title: "Sahbjnkml,;fa",
+        description:"djfi guiruigeuihguietpghp",
+        tags: ["Drinkning", "Health", "Hello"],
+        reminder: "23:10",
+      });
 
-        expect(response.status).to.be.eq(422);
-    });
+    expect(response.status).to.be.eq(constants.requestFail);
+  });
 });
