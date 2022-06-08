@@ -33,8 +33,4 @@ describe("Fetch daily", async () => {
             .get(constants.dailyApi.fetchdailyurl);           
         expect(response.status).to.be.eq(constants.unauthorise);
     });
- 
- 
-
-
 });
