@@ -6,7 +6,7 @@ import constants from "../constants";
 chai.should();
 chai.use(chaiHttp);
 
-describe.skip("Fetch Todo", async () => {
+describe("Fetch Todo", async () => {
     it("Successfully Fetch todo", async () => {
         const response = await chai.request(app)
             .get(constants.todoApi.fetchTodourl)

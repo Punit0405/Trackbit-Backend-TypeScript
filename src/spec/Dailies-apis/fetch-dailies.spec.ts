@@ -15,7 +15,7 @@ describe("Fetch daily", async () => {
                 "authtoken",
                 constants.token
             );
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.successCode);
     });
     it("Fetching daily  with invalidtoken", async () => {
         const response = await chai
@@ -30,8 +30,7 @@ describe("Fetch daily", async () => {
     it("Fetching daily  without token", async () => {
         const response = await chai
             .request(app)
-            .get(constants.dailyApi.fetchdailyurl);
-           
+            .get(constants.dailyApi.fetchdailyurl);           
         expect(response.status).to.be.eq(constants.unauthorise);
     });
  
