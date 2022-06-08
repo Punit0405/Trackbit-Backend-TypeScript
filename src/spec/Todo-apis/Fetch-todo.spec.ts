@@ -13,6 +13,11 @@ describe.skip("Fetch Todo", async () => {
             .set("authtoken", constants.token);
         expect(response.status).to.be.eq(constants.successCode);
     });
+    it("Successfully Fetch without token todo", async () => {
+        const response = await chai.request(app)
+            .get(constants.todoApi.fetchTodourl)
+        expect(response.status).to.be.eq(constants.unauthorise);
+    });
 
     it("Fetching todo with invalid token", async () => {
         const response = await chai.request(app)

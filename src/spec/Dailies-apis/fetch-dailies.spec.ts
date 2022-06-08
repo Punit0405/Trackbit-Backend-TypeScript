@@ -32,7 +32,7 @@ describe("Fetch daily", async () => {
             .request(app)
             .get(constants.dailyApi.fetchdailyurl)
            
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
  
  

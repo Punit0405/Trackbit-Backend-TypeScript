@@ -86,6 +86,6 @@ describe("Update Daily", async () => {
         "tags":["Vegetables","Home"],
         "checklists":["Vegetables","Lemons","Apples"]
     });
-    expect(response.status).to.be.eq(constants.requestFail);
+    expect(response.status).to.be.eq(constants.unauthorise);
   });
 });

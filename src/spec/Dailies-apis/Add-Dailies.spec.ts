@@ -101,7 +101,7 @@ describe("Add Daily", async () => {
                 "checklists":["Rice","Pulse","Chocolates","Sugar"],
                 "reminder":"10:05"
             });
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
   
 

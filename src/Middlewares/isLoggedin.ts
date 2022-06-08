@@ -8,7 +8,7 @@ const isLoggedin = async (req:RequestUser,res:Response,next:NextFunction)=>{
 
     if(!req.headers.authtoken){
         
-        return res.status(400).json({status:false,data:"You are Not Loggedin"});
+        return res.status(401).json({status:false,data:"You are Not Loggedin"});
     }
     const authToken=req.headers.authtoken;
     try {

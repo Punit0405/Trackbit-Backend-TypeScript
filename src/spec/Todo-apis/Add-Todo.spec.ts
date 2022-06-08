@@ -55,7 +55,7 @@ describe("Add Todo", async () => {
                 "difficulty": [false, true, false],
                 "checklists": ["Rice", "Pulse", "Chocolates", "Sugar"]
             });
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
     it("Adding Habit without title and description all the parameters with token", async () => {
         const response = await chai

@@ -73,7 +73,7 @@ describe("Delete Habit", async () => {
         const response = await chai
             .request(app)
             .delete(constants.habitApi.deleteHabiturl + constants.habitApi.deletehabitId);
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
     it("Fetching Habit  with invalidtoken", async () => {
         const response = await chai

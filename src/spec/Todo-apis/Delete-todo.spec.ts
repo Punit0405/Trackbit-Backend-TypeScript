@@ -8,11 +8,22 @@ chai.use(chaiHttp);
 
 describe("Delete Todo", async () => {
 
-    it.skip("Successfully Delete Todo", async () => {
+    it("Successfully Delete Todo", async () => {
         const response = await chai.request(app)
             .delete(constants.todoApi.deleteTodourl + constants.todoApi.deleteTodoId)
             .set("authtoken", constants.token);
         expect(response.status).to.be.eq(constants.successCode);
+    });
+    it("Successfully with invalid token  Delete Todo", async () => {
+        const response = await chai.request(app)
+            .delete(constants.todoApi.deleteTodourl + constants.todoApi.deleteTodoId)
+            .set("authtoken", constants.invalidtoken);
+        expect(response.status).to.be.eq(constants.requestFail);
+    });
+    it("Successfully without token Delete Todo", async () => {
+        const response = await chai.request(app)
+            .delete(constants.todoApi.deleteTodourl + constants.todoApi.deleteTodoId)
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
 
 

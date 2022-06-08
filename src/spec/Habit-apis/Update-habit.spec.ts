@@ -79,7 +79,7 @@ describe("Update Habit", async () => {
                 tags: ["Drinkning", "Health", "Hello"],
                 reminder: "23:10",
             });
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
     it("Habit of incorrect account", async () => {
         const response = await chai

@@ -21,7 +21,7 @@ describe("Fetch Habit", async () => {
         const response = await chai
             .request(app)
             .get(constants.habitApi.fetchHabiturl);
-        expect(response.status).to.be.eq(400);
+        expect(response.status).to.be.eq(401);
     });
     it("Fetching Habit  with  Invalidtoken", async () => {
         const response = await chai

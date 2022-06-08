@@ -49,7 +49,7 @@ describe("Add Habit", async () => {
                 tags: ["Smoking0", "Health0"],
                 reminder: "14:50:00",
             });
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
     it("Adding Habit with all the parameters but title less than 6 characters with token", async () => {
         const response = await chai
