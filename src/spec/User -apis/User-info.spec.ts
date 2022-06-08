@@ -17,6 +17,6 @@ describe("Get-Userinfo", () => {
         const response = await chai.request(app)
             .get(constants.userApi.fetchUserdetailsurl)
             .set({ authToken: "" });
-        expect(response).to.have.status(constants.requestFail);
+        expect(response).to.have.status(constants.unauthorise);
     });
 });

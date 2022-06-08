@@ -14,6 +14,6 @@ describe("Get User Levels", () => {
     });
     it("Get Levels For User without token", async () => {
         const response = await chai.request(app).get(constants.userApi.getUserlevelurl);
-        expect(response.status).to.be.eq(constants.requestFail);
+        expect(response.status).to.be.eq(constants.unauthorise);
     });
 });

@@ -1,4 +1,6 @@
+// {"userId":ObjectId('629ee68de6c6e036ee401a03')}
 export default class Constants {
+
     public static readonly token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU";
     public static readonly invalidtoken =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOThdhdyyukiiolhZTY4NDFjYWEzMGFhOWFjODVhNyIsImVtYWlsIjoicHVuaXQudGV3YW5pLnNhQGdtYWlsLmNvbSIsImlhdCI6MTY1NDIzODg2OH0.C2tX0ZwOBbPWhQK_AsfOlijhtXkUdV8JYMS8AflXmFU";
@@ -7,11 +9,11 @@ export default class Constants {
         updateHabiturl: "/api/v1/habit/updatehabit/",
         deleteHabiturl: "/api/v1/habit/deletehabit/",
         fetchHabiturl: "/api/v1/habit/fetchhabit",
-        actualdeletehabitId: "629b29f3b25c4830210b5ed2",
+        actualdeletehabitId: "629b2a7e005c9a9bd675d006",
         deletehabitId: "629a023eed78fcd51d91e887",
         invalidHabitId: "629a023eed78fcd51d91e885547",
-        anotherUserHabitId:"",
-        updateHabitId: "629b29d814a122df7332f1a1",
+        anotherUserHabitId:"629ee730609daa4f13689047",
+        updateHabitId: "629edecdd35b61e04d1bec69",
         challangeHabitId: "629af2f118e237aea678f156",
 
     };
@@ -19,7 +21,7 @@ export default class Constants {
         addTodourl:"/api/v1/todo/addtodo",
         fetchTodourl: "/api/v1/todo/fetchtodo",
         deleteTodourl: "/api/v1/todo/deletetodo",
-        deleteTodoId: "/629ee88f66ac7b6b35bc69be",
+        deleteTodoId: "/629ee9c76568ba621dfb90d3",
         deleteTodoInvalidId: "/629af2f118e237aea678f1ds",
         deleteTodoNotFound: "/629af2f118e237aea678f16c",
         deleteTodotypefalse: "/629af2f118e237aea678f162",
@@ -38,11 +40,11 @@ export default class Constants {
         adddailyturl: "/api/v1/daily/adddaily",
         updatedailyurl: "/api/v1/daily/updatedaily/",
         deletedailyurl: "/api/v1/daily/deletedaily/",
-        fetchdailyurl: "/api/v1/dailyc/fetchdaily",
-        actualdailyId: "629f2b81178168afe20a6d39",
+        fetchdailyurl: "/api/v1/daily/fetchdaily",
+        actualdailyId: "629f2b82178168afe20a6d3b",
         deletedailyId: "629f2bc2178168afe20a6f75",
         invalidailyId: "629af2f118e237aea678f16980c",
-        anotherUserdailyId:"",
+        anotherUserdailyId:"629f2b83178168afe20a6d3d",
         updatedailyId: "629f2bc2178168afe20a6f75",
         challangedailyId: "629af2f118e237aea678f16e",
 
