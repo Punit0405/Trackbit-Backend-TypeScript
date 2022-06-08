@@ -34,7 +34,7 @@ describe("Update Challanges", async () => {
             });
         expect(response.status).to.be.eq(constants.notFound);
     });
-    it("Update Challanges with Id not exist", async () => {
+    it("Update Challanges of others account", async () => {
         const response = await chai.request(app).put(constants.challangeApi.updatechallangeurl + constants.challangeApi.updatechallangeNotOfAccount)
             .set("authtoken", constants.token)
             .send({
