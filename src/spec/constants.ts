@@ -47,6 +47,11 @@ export default class Constants {
         challangedailyId: "629af2f118e237aea678f16e",
 
     };
+
+    public static readonly challangeApi={
+        addchallangeurl:"/api/v1/challange/addchallange",
+        
+    };
     public static readonly successCode = 200;
     public static readonly requestFail = 400;
     public static readonly validationFail = 422;

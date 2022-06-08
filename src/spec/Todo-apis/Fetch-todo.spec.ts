@@ -15,7 +15,7 @@ describe.skip("Fetch Todo", async () => {
     });
     it("Successfully Fetch without token todo", async () => {
         const response = await chai.request(app)
-            .get(constants.todoApi.fetchTodourl)
+            .get(constants.todoApi.fetchTodourl);
         expect(response.status).to.be.eq(constants.unauthorise);
     });
 

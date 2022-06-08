@@ -30,7 +30,7 @@ describe("Fetch daily", async () => {
     it("Fetching daily  without token", async () => {
         const response = await chai
             .request(app)
-            .get(constants.dailyApi.fetchdailyurl)
+            .get(constants.dailyApi.fetchdailyurl);
            
         expect(response.status).to.be.eq(constants.unauthorise);
     });

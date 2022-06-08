@@ -22,7 +22,7 @@ describe("Delete Todo", async () => {
     });
     it("Successfully without token Delete Todo", async () => {
         const response = await chai.request(app)
-            .delete(constants.todoApi.deleteTodourl + constants.todoApi.deleteTodoId)
+            .delete(constants.todoApi.deleteTodourl + constants.todoApi.deleteTodoId);
         expect(response.status).to.be.eq(constants.unauthorise);
     });
 
