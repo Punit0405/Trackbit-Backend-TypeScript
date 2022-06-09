@@ -12,13 +12,13 @@ export default class Constants {
         actualdeletehabitId: "629edec5d35b61e04d1bec07",
         deletehabitId: "629a023eed78fcd51d91e887",
         invalidHabitId: "629a023eed78fcd51d91e885547",
-        anotherUserHabitId:"629ee730609daa4f13689047",
+        anotherUserHabitId: "629ee730609daa4f13689047",
         updateHabitId: "629edecdd35b61e04d1bec69",
         challangeHabitId: "629af2f118e237aea678f156",
 
     };
     public static readonly todoApi = {
-        addTodourl:"/api/v1/todo/addtodo",
+        addTodourl: "/api/v1/todo/addtodo",
         fetchTodourl: "/api/v1/todo/fetchtodo",
         deleteTodourl: "/api/v1/todo/deletetodo",
         completeTodourl: "/api/v1/todo/completetodo",
@@ -50,11 +50,21 @@ export default class Constants {
         completeDailyId: "629f2ba7178168afe20a6e7b",
         completeChalangeDailyId: "629af2f118e237aea678f16c",
         invalidailyId: "629af2f118e237aea678f16980c",
-        anotherUserdailyId:"629f2b83178168afe20a6d3d",
+        anotherUserdailyId: "629f2b83178168afe20a6d3d",
         updatedailyId: "629f2bc2178168afe20a6f75",
         challangedailyId: "629af2f118e237aea678f16e",
 
     };
+
+    public static readonly challangeApi = {
+        addchallangeurl: "/api/v1/challange/addchallange",
+        updatechallangeurl: "/api/v1/challange/updatechallange/",
+        updatechallangeId: "629af2f118e237aea678f155",
+        updatechallangeInvalidId: "629af2f118e237aea678f15",
+        updatechallangeNotFound: "6299b5ffe6ef7eec2039a2c2",
+        updatechallangeNotOfAccount:"62a0424c659cde11573be99b"
+    };
+
     public static readonly successCode = 200;
     public static readonly requestFail = 400;
     public static readonly validationFail = 422;
