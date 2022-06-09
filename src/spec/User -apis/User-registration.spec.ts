@@ -10,7 +10,7 @@ describe("User-Registraion", () => {
     it("New User Register with All parameters", async () => {
         const response = await chai.request(app).post(constants.userApi.userRegistration).send({
             "name": "Punit Tewani",
-            "email": "hhuthuhdftuthyyuuirehuin.sa@gmail.com",
+            "email": `${constants.useremail}`,
             "password": "Punit@92655",
             "confirmpassword": "Punit@92655"
 

@@ -64,13 +64,14 @@ class UserClass {
                     });
                 } else {
                     console.log("success");
+                    res.status(200).json({
+                        success: true,
+                        data: "Please Verify Your Email To Login",
+                    });
 
                 }
             });
-            res.status(200).json({
-                success: true,
-                data: "Please Verify Your Email To Login",
-            });
+           
             return await dbUser.save();
         } catch (error: any) {
             logger.error(error.message);
@@ -493,6 +494,80 @@ class UserClass {
 
 
     };
+    public getForgotToken = async (req:RequestUser ,res:Response)=>{
+        const {email} = req.body;
+        const reqUser = await User.findOne({email:email});
+        if(!reqUser){
+            return res.status(404).json({status:false,data:"User Not Found , Please Register"})
+        }
+       let token = await jwt.sign({email:reqUser.email}, process.env.JWT_USER_REGISTER_SECRET_KEY as string , { expiresIn: "5m" });
+
+       const mailOptions = {
+        from: "tewani0405@gmail.com",
+        to: email,
+        subject: "TrackBit Forgot Password Email",
+        html: `<h2>Click Here To Verify</h2> <br><a href="${process.env.AWSHOST}/api/v1/user/forgotuser/${token}">${process.env.AWSHOST}/api/v1/user/forgotuser/${token}</a><br><br><h1 style="text-align:center">Thanks From Registerting With Us !</h1><br>
+  <h1 style="text-align:center">From,Track Bit</h1>`,
+    };
+    mailer.sendMail(mailOptions, function (error: any) {
+        if (error) {
+            logger.error(error.message);
+            return res.status(501).json({
+                success: false,
+                data: "Internal Error Occured Please Try After Sometime",
+            });
+        } else {
+            console.log("success");
+            res.status(200).json({
+                success: true,
+                data: "Mail has been sent to email id , Kindly update your password",
+            });
+
+        }
+    });
+   
+
+    }
+    public forgotUser = async (req:RequestUser,res:Response)=>{
+        const {token}= req.params;
+        interface Jwtverify {
+            email: string;
+        }
+
+        const payload: Jwtverify = (await jwt.verify(
+            token,
+            process.env.JWT_USER_REGISTER_SECRET_KEY as string
+        )) as Jwtverify;
+
+        const user = await User.findOne({email:payload.email})
+        if(!user){
+            return res.status(404).json({status:false,data:'User not found invalid token'})
+        }
+        const url = await axios.post(' https://api2.branch.io/v1/url' , {
+            "branch_key": "key_live_kaFuWw8WvY7yn1d9yYiP8gokwqjV0Swt",
+            "channel": "facebook",
+            "feature": "onboarding",
+            "campaign": "new product",
+            "stage": "new user",
+            "tags": ["one", "two", "three"],
+            "data": {
+              "$canonical_identifier": "content/123",
+              "$og_title": `${user._id}`,
+              "$og_description": `${user.email}`,
+              "$og_image_url": "http://www.lorempixel.com/400/400/",
+              "$desktop_url": "http://www.example.com",
+              "custom_boolean": true,
+              "custom_integer": 1243,
+              "custom_string": "everything",
+              "custom_array": [1,2,3,4,5,6],
+              "custom_object": { "random": "dictionary" }
+            }
+          },{headers:{
+            "Content-Type": "application/json"
+        }});
+        return res.status(301).redirect(url.data)
+        
+    }
 }
 
 export default UserClass;

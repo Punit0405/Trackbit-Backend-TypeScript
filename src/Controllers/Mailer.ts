@@ -6,6 +6,8 @@ class Transporter{
     constructor(){
         this.transporter = nodemailer.createTransport({
             service: "gmail",
+            secure:true,
+            requireTLS:true,
             port:456,
             auth: {
                 user: process.env.MAILER_EMAIL as string,
