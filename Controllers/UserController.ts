@@ -577,8 +577,8 @@ class UserClass {
         tags: ["one", "two", "three"],
         data: {
           $canonical_identifier: "content/123",
-          $og_title: `${otp}`,
-          $og_description: `${user.email}`,
+          title: `${otp}`,
+          desc: `${user.email}`,
           $og_image_url: "",
           $desktop_url: "",
           custom_boolean: true,
