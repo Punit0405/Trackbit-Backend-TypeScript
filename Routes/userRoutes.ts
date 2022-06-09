@@ -57,7 +57,7 @@ class UserRoutes {
       .route("/getforgotpasswordtoken")
       .post(UserController.getForgotToken);
     this.router.route("/forgotuser/:token").get(UserController.forgotUser);
-    this.router.route("updatepassword").post(forgotValidator.validatePasswords,UserController.updatePassword)
+    this.router.route("/updatepassword").post(forgotValidator.validatePasswords,UserController.updatePassword)
   }
 }
 export default UserRoutes;
