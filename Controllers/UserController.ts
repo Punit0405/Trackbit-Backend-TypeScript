@@ -79,6 +79,7 @@ class UserClass {
           });
         } else {
           console.log("success");
+          console.log(token)
         }
       });
       res.status(200).json({
@@ -504,10 +505,10 @@ class UserClass {
         .status(404)
         .json({ status: false, data: "User Not Found , Please Register" });
     }
-    let token = await jwt.sign(
-      { email: reqUser.email },
+    const token = await jwt.sign(
+      { email: email },
       process.env.JWT_USER_REGISTER_SECRET_KEY as string,
-      { expiresIn: "5m" }
+      { expiresIn: "10m" }
     );
 
     const mailOptions = {
@@ -526,6 +527,7 @@ class UserClass {
         });
       } else {
         console.log("success");
+        console.log(token)
         res.status(200).json({
           success: true,
           data: "Mail has been sent to email id , Kindly update your password",
@@ -535,21 +537,24 @@ class UserClass {
   };
   public forgotUser = async (req: RequestUser, res: Response) => {
     const { token } = req.params;
+   
     interface Jwtverify {
       email: string;
+      
     }
 
     const payload: Jwtverify = (await jwt.verify(
       token,
       process.env.JWT_USER_REGISTER_SECRET_KEY as string
     )) as Jwtverify;
-
+   
     const user = await User.findOne({ email: payload.email });
     if (!user) {
       return res
         .status(404)
         .json({ status: false, data: "User not found invalid token" });
     }
+    console.log(user)
     const otp = await otpGenerator.generate(6, {
       digits: true,
       upperCaseAlphabets: false,
@@ -574,8 +579,8 @@ class UserClass {
           $canonical_identifier: "content/123",
           $og_title: `${otp}`,
           $og_description: `${user.email}`,
-          $og_image_url: "http://www.lorempixel.com/400/400/",
-          $desktop_url: "http://www.example.com",
+          $og_image_url: "",
+          $desktop_url: "",
           custom_boolean: true,
           custom_integer: 1243,
           custom_string: "everything",
@@ -590,7 +595,7 @@ class UserClass {
       }
     );
 
-    res.status(301).redirect(url.data);
+    res.status(301).redirect(url.data.url as string);
     return dbOtp.save();
   };
   public updatePassword = async (req: RequestUser, res: Response) => {
