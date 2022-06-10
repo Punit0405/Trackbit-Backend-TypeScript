@@ -644,6 +644,7 @@ class UserClass {
     });
     await User.findByIdAndUpdate(req.user.id , {$set:{appliedChallanges:[]}});
     })
+    await Challange.deleteMany({userId:req.user.id});
     return res.status(200).json({status:true,data:"User Reset Successfully"})      
   }
 }
