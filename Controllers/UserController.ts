@@ -10,6 +10,10 @@ import RequestUser from "../Middlewares/RequestInterface";
 import Logger from "../Logger/Logger";
 import otpGenerator from "otp-generator";
 import Forgot from "../Models/Forgot";
+import Habit from "../Models/Habit";
+import Daily from "../Models/Daily";
+import Todo from "../Models/Todo";
+import Challange from "../Models/Challange";
 
 const logger = new Logger().logger;
 
@@ -358,6 +362,7 @@ class UserClass {
         email: payload.email,
         name: payload.name,
         password: databasePassword,
+        email_verified:true,
         photoUrl: payload.picture.data.url,
         accessToken: accessToken,
       });
@@ -620,6 +625,23 @@ class UserClass {
     return res.status(200).json({status:true,data:'Password Updated Successfully'})
     
   };
+  public resetAccount = async (req:RequestUser,res:Response) =>{
+    const loggedinUser = await User.findById(req.user.id);
+    if(!loggedinUser){
+      return res.status(404).json({status:false,data:"User Doesnot Exists"});
+
+    }
+      await Habit.deleteMany({userId:req.user.id});
+      await Todo.deleteMany({userId:req.user.id});
+      await Daily.deleteMany({userId:req.user.id});
+    loggedinUser.appliedChallanges.forEach(async (challange)=>{
+      await Challange.findByIdAndUpdate(challange, {
+        $pull: { participants: req.user.id },
+    });
+    await User.findByIdAndUpdate(req.user.id , {$set:{appliedChallanges:[]}});
+    })
+      
+  }
 }
 
 export default UserClass;

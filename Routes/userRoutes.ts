@@ -43,6 +43,9 @@ class UserRoutes {
     this.router
       .route("/fetchappliedchallanges")
       .get(isLoggedin, UserController.fetchAppliedChallanges);
+    this.router
+      .route("/resetuser")
+      .get(isLoggedin, UserController.resetAccount);
 
     // Route For Increasing User Experience
     this.router
@@ -57,7 +60,9 @@ class UserRoutes {
       .route("/getforgotpasswordtoken")
       .post(UserController.getForgotToken);
     this.router.route("/forgotuser/:token").get(UserController.forgotUser);
-    this.router.route("/updatepassword").post(forgotValidator.validatePasswords,UserController.updatePassword)
+    this.router
+      .route("/updatepassword")
+      .post(forgotValidator.validatePasswords, UserController.updatePassword);
   }
 }
 export default UserRoutes;
