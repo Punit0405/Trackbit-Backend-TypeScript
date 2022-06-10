@@ -630,7 +630,11 @@ class UserClass {
     if(!loggedinUser){
       return res.status(404).json({status:false,data:"User Doesnot Exists"});
 
-    }
+    } 
+    loggedinUser.level=1;
+    loggedinUser.health=50;
+    loggedinUser.experience=0;
+    await loggedinUser.save();    
       await Habit.deleteMany({userId:req.user.id});
       await Todo.deleteMany({userId:req.user.id});
       await Daily.deleteMany({userId:req.user.id});
@@ -640,7 +644,7 @@ class UserClass {
     });
     await User.findByIdAndUpdate(req.user.id , {$set:{appliedChallanges:[]}});
     })
-      
+    return res.status(200).json({status:true,data:"User Reset Successfully"})      
   }
 }
 
