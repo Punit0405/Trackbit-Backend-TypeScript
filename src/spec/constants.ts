@@ -53,10 +53,13 @@ export default class Constants {
     public static readonly challangeApi = {
         addchallangeurl: "/api/v1/challange/addchallange",
         updatechallangeurl: "/api/v1/challange/updatechallange/",
+        deletechallangeurl:"/api/v1/challange/deletechallange/",
         updatechallangeId: "629af2f118e237aea678f155",
         updatechallangeInvalidId: "629af2f118e237aea678f15",
         updatechallangeNotFound: "6299b5ffe6ef7eec2039a2c2",
-        updatechallangeNotOfAccount:"62a0424c659cde11573be99b"
+        updatechallangeNotOfAccount: "62a0424c659cde11573be99b",
+        challangeId: "629af2f118e237aea678f155",
+        habitId: "629af2f118e237aea678f156",
     };
 
     public static readonly successCode = 200;

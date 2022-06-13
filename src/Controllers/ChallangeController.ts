@@ -16,7 +16,7 @@ class ChallangeClass {
     public addChallange = async (req: RequestUser, res: Response) => {
 
         const { title, description, habits, todos, dailies, experience } =
-      req.body;
+            req.body;
         const newchallange = new Challange({
             title: title,
             description: description,
@@ -53,12 +53,12 @@ class ChallangeClass {
                     tags: todo.tags,
                     reminderTime: todo.reminderTime,
                 });
-                todo.checklists.forEach((checklist:any) => {
+                todo.checklists.forEach((checklist: any) => {
                     const checklistObject = {
-                        checklist:checklist
+                        checklist: checklist
                     };
                     newTodo.checklists.push(checklistObject);
-                    
+
                 });
                 newchallange.todos.push(newTodo._id);
                 await newTodo.save();
@@ -103,7 +103,7 @@ class ChallangeClass {
         }
         return res.status(200).json({ status: true, data: challanges });
 
-        
+
 
     };
     public joinChallange = async (req: RequestUser, res: Response) => {
@@ -133,11 +133,11 @@ class ChallangeClass {
         }
         if (
             loggedinUser.appliedChallanges.includes(
-        challangeId as unknown as mongoose.Types.ObjectId
+                challangeId as unknown as mongoose.Types.ObjectId
             ) &&
-      challange.participants.includes(
-        req.user.id as unknown as mongoose.Types.ObjectId
-      )
+            challange.participants.includes(
+                req.user.id as unknown as mongoose.Types.ObjectId
+            )
         ) {
             return res.status(400).json({
                 status: false,
@@ -153,7 +153,7 @@ class ChallangeClass {
         await challange.save();
         return await loggedinUser.save();
 
-        
+
 
     };
     public leaveChallange = async (req: RequestUser, res: Response) => {
@@ -192,7 +192,7 @@ class ChallangeClass {
             .status(200)
             .json({ status: true, data: "Challenge left successfully" });
 
-  
+
 
     };
     public updateChallange = async (req: RequestUser, res: Response) => {
@@ -235,7 +235,7 @@ class ChallangeClass {
         await challange.save();
         return res.status(200).json({ status: true, data: challange });
 
-   
+
 
     };
     public updateChallangeHabit = async (req: RequestUser, res: Response) => {
@@ -284,9 +284,9 @@ class ChallangeClass {
                 .json({ status: false, data: "Habit not found for this challange" });
         }
 
-        
+
         const { title, description, habitType, duration, tags, reminder } =
-        req.body;
+            req.body;
         const habit = await Habit.findById(id);
         if (!habit) {
             return res
@@ -314,7 +314,7 @@ class ChallangeClass {
         }
         await habit.save();
         return res.status(200).json({ status: true, data: habit });
-        
+
 
 
 
@@ -341,7 +341,6 @@ class ChallangeClass {
                 .status(400)
                 .json({ status: false, data: "Please Enter a valid habit id" });
         }
-
         if (!parameterValidator(challageId)) {
             return res
                 .status(400)
@@ -380,8 +379,6 @@ class ChallangeClass {
                 .status(500)
                 .json({ status: false, data: "Some Internal Server Occured" });
         }
-
-  
 
     };
 
@@ -470,7 +467,7 @@ class ChallangeClass {
                 .json({ status: false, data: "Some Internal Server Occured" });
         }
 
-    
+
 
     };
     public deleteChallangeTodo = async (req: RequestUser, res: Response) => {
@@ -532,7 +529,7 @@ class ChallangeClass {
                 .json({ status: false, data: "Some Internal Server Occured" });
         }
 
- 
+
 
     };
     public updateChallangeDaily = async (req: RequestUser, res: Response) => {
@@ -622,7 +619,7 @@ class ChallangeClass {
                 .json({ status: false, data: "Some Internal Server Occured" });
         }
 
-   
+
     };
 
     public deleteChallangeDaily = async (req: RequestUser, res: Response) => {
@@ -686,7 +683,7 @@ class ChallangeClass {
                 .json({ status: false, data: "Some Internal Server Occured" });
         }
 
-   
+
 
     };
 
@@ -718,7 +715,7 @@ class ChallangeClass {
             .status(200)
             .json({ status: true, data: challange.participants });
 
-   
+
 
     };
     public fetchChallangeForall = async (req: RequestUser, res: Response) => {
@@ -735,7 +732,7 @@ class ChallangeClass {
         }
         return res.status(200).json({ status: true, data: challanges });
 
-  
+
 
     };
     public deleteChallange = async (req: RequestUser, res: Response) => {
@@ -785,7 +782,7 @@ class ChallangeClass {
 
         //  await Challange.findByIdAndDelete(challangeId);
 
-    
+
 
     };
 
@@ -803,7 +800,7 @@ class ChallangeClass {
             .status(200)
             .json({ status: true, data: loggedinUser?.appliedChallanges });
 
-   
+
 
     };
 
@@ -827,7 +824,7 @@ class ChallangeClass {
         } else {
             return res.status(200).json({ status: true, data: "Not Joined" });
         }
-    
+
 
     };
 
