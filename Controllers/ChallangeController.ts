@@ -105,14 +105,11 @@ class ChallangeClass {
         if (challanges.length === 0) {
             return res
                 .status(404)
-                .json({ status: true, data: "You Dont Have Any Challanges Yet" });
+                .json({ status: true, data: [] });
         }
         return res.status(200).json({ status: true, data: challanges });
 
-        return res
-            .status(500)
-            .json({ status: false, data: "Some Internal Error Occured" });
-
+    
     };
     public joinChallange = async (req: RequestUser, res: Response) => {
 
@@ -745,7 +742,7 @@ class ChallangeClass {
         if (challanges.length === 0) {
             return res
                 .status(404)
-                .json({ status: true, data: "No Challange Posted yet" });
+                .json({ status: true, data: [] });
         }
         return res.status(200).json({ status: true, data: challanges });
 
