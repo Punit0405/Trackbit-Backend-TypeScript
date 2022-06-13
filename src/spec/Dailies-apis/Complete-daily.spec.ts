@@ -22,7 +22,7 @@ describe("Complete Daily", async () => {
     });
     it("Complete User's daily with token ", async () => {
         const response = await chai.request(app)
-            .get(constants.dailyApi.completedailyurl + constants.dailyApi.completeChalangeDailyId)
+            .get(constants.dailyApi.completedailyurl + constants.dailyApi.completeChalangeDailyId);
         expect(response.status).to.be.eq(constants.unauthorise);
     });
 
@@ -34,7 +34,7 @@ describe("Complete Daily", async () => {
     });
     it("Complete User's daily without token ", async () => {
         const response = await chai.request(app)
-            .get(constants.dailyApi.completedailyurl + constants.dailyApi.completeDailyId)
+            .get(constants.dailyApi.completedailyurl + constants.dailyApi.completeDailyId);
             
         expect(response.status).to.be.eq(constants.unauthorise);
     });
