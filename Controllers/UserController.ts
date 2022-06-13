@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { NextFunction, Response } from "express";
 import User from "../Models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -626,6 +626,10 @@ class UserClass {
     
   };
   public resetAccount = async (req:RequestUser,res:Response) =>{
+  
+    return res.status(200).json({status:true,data:"User Reset Successfully"})      
+  }
+  public accountReset= async (req:RequestUser ,res:Response , next:NextFunction) => {
     const loggedinUser = await User.findById(req.user.id);
     if(!loggedinUser){
       return res.status(404).json({status:false,data:"User Doesnot Exists"});
@@ -642,10 +646,16 @@ class UserClass {
       await Challange.findByIdAndUpdate(challange, {
         $pull: { participants: req.user.id },
     });
-    await User.findByIdAndUpdate(req.user.id , {$set:{appliedChallanges:[]}});
+    await User.findByIdAndUpdate(req.user.id , {$unset:{appliedChallanges:""}});
     })
     await Challange.deleteMany({userId:req.user.id});
-    return res.status(200).json({status:true,data:"User Reset Successfully"})      
+    next();
+    
+  }
+  public deleteAccount = async (req:RequestUser , res:Response) =>{
+      await User.findByIdAndDelete(req.user.id);
+      return res.status(200).json({status:true,data:"User Deleted Successfully"})
+
   }
 }
 

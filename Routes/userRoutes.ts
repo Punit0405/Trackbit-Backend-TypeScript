@@ -45,7 +45,10 @@ class UserRoutes {
       .get(isLoggedin, UserController.fetchAppliedChallanges);
     this.router
       .route("/resetuser")
-      .get(isLoggedin, UserController.resetAccount);
+      .get(isLoggedin, UserController.accountReset,UserController.resetAccount);
+    this.router
+      .route("/deleteuser")
+      .get(isLoggedin, UserController.accountReset,UserController.deleteAccount);
 
     // Route For Increasing User Experience
     this.router
