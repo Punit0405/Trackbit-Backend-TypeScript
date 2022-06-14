@@ -1,6 +1,7 @@
 import {  Response ,NextFunction} from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import RequestUser from "./RequestInterface";
+import User from "../Models/User";
 
 const isLoggedin = async (req:RequestUser,res:Response,next:NextFunction)=>{
 
@@ -17,6 +18,10 @@ const isLoggedin = async (req:RequestUser,res:Response,next:NextFunction)=>{
             return res.status(401).json({status:false,data:"Not a valid User"});
         }
         req.user=loggedUser;
+        const loggedinUser = await User.findById(req.user.id);
+        if(!loggedinUser){
+            return res.status(404).json({status:false,data:"User Doesn't exists anymore"})
+        }
         next();
     } catch (error) {
         

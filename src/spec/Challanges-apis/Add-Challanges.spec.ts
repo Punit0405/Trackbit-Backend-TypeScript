@@ -38,6 +38,19 @@ describe("Add Challanges", async () => {
             });
         expect(response.status).to.be.eq(constants.successCode);
     });
+    it("Add Challanges Successfully without habits ,todos , dailies", async () => {
+        const response = await chai.request(app).post(constants.challangeApi.addchallangeurl)
+            .set("authtoken", constants.token)
+            .send({
+                "title": "Challange Added on 11 May 2022",
+                "description": "Challange Added for flutter team",
+                "experience": 10,
+            
+               
+               
+            });
+        expect(response.status).to.be.eq(constants.successCode);
+    });
     it("Add Challanges without token", async () => {
         const response = await chai.request(app).post(constants.challangeApi.addchallangeurl)
             .send({

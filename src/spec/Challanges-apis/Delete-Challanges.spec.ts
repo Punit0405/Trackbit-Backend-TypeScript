@@ -14,5 +14,16 @@ describe("Delete Challanges", async () => {
             .set("authtoken", constants.token);
         expect(response.status).to.be.eq(constants.successCode);
     });
+    it("Delete Challange Successfully", async () => {
+        const response = await chai.request(app)
+            .delete(constants.challangeApi.deletechallangeurl + constants.challangeApi.updatechallangeId)
+            .set("authtoken", constants.invalidtoken);
+        expect(response.status).to.be.eq(constants.requestFail);
+    });
+    it("Delete Challange without token Successfully", async () => {
+        const response = await chai.request(app)
+            .delete(constants.challangeApi.deletechallangeurl + constants.challangeApi.updatechallangeId)
+        expect(response.status).to.be.eq(constants.unauthorise);
+    });
 
 });
