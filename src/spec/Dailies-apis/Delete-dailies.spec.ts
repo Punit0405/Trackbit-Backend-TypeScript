@@ -14,7 +14,6 @@ describe("Delete Daily", async () => {
                 constants.dailyApi.deletedailyurl + constants.dailyApi.actualdailyId
             )
             .set("authtoken", constants.token);
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.successCode);
     });
     it("Deleting non existing Daily  with token", async () => {
@@ -24,7 +23,6 @@ describe("Delete Daily", async () => {
                 constants.dailyApi.deletedailyurl + constants.dailyApi.actualdailyId
             )
             .set("authtoken", constants.token);
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.notFound);
     });
     it("Deleting Danother user daily daily  with token", async () => {
@@ -34,7 +32,6 @@ describe("Delete Daily", async () => {
                 constants.dailyApi.deletedailyurl + constants.dailyApi.anotherUserdailyId
             )
             .set("authtoken", constants.token);
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.requestFail);
     });
     it("Deleting challagne Daily  with token", async () => {
@@ -44,7 +41,6 @@ describe("Delete Daily", async () => {
                 constants.dailyApi.deletedailyurl + constants.dailyApi.challangedailyId
             )
             .set("authtoken", constants.token);
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.requestFail);
     });
     it("Deleting invalid daily  with token", async () => {
@@ -54,7 +50,6 @@ describe("Delete Daily", async () => {
                 constants.dailyApi.deletedailyurl + constants.dailyApi.invalidailyId
             )
             .set("authtoken", constants.token);
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.requestFail);
     });
     it("Deleting Daily  with invalidtoken", async () => {
@@ -64,7 +59,6 @@ describe("Delete Daily", async () => {
                 constants.dailyApi.deletedailyurl + constants.dailyApi.actualdailyId
             )
             .set("authtoken", constants.invalidtoken);
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.requestFail);
     });
     it("Deleting Daily  without token", async () => {
@@ -73,7 +67,6 @@ describe("Delete Daily", async () => {
             .delete(
                 constants.dailyApi.deletedailyurl + constants.dailyApi.actualdailyId
             );
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.unauthorise);
     });
 

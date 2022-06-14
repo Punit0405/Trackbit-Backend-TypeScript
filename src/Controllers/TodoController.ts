@@ -10,7 +10,6 @@ class TodoClass {
 
 
         const { title, description, checklists, difficulty, reminderDate, dueDate, tags, reminderTime } = req.body;
-        console.log(req.body);
         const newTodo = new Todo({
             title: title,
             description: description,
@@ -233,7 +232,7 @@ class TodoClass {
                         checklist.checked = true;
                     }
                 });
-                console.log(todo);
+       
                 todo.save();
 
                 return res

@@ -7,7 +7,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe("Update Challanges", async () => {
-    it.skip("Update Challanges Successfully", async () => {
+    it("Update Challanges Successfully", async () => {
         const response = await chai.request(app).put(constants.challangeApi.updatechallangeurl + constants.challangeApi.updatechallangeId)
             .set("authtoken", constants.token)
             .send({

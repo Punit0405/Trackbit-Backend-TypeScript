@@ -7,7 +7,6 @@ import parameterValidator from "../Validations/parameterValidator";
 import Challange from "../Models/Challange";
 class DailyClass {
     public addDaily = async (req: RequestUser, res: Response) => {
-        console.log(req.body);
 
         const {
             title,
@@ -190,7 +189,6 @@ class DailyClass {
             if (daily.userId.toString() === req.user.id) {
                 daily.completed = true;
                 await daily.save();
-                console.log(daily);
                 return res
                     .status(200)
                     .json({ status: true, data: "Daily Completed Successfully" });

@@ -16,7 +16,6 @@ describe("Delete Habit", async () => {
                 "authtoken",
                 constants.token
             );
-        console.log(response.body);
         expect(response.status).to.be.eq(constants.successCode);
     });
     it("Deleting Habit with invalid habitid with token", async () => {

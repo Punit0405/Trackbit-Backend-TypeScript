@@ -130,7 +130,7 @@ class UserClass {
 
         const { email } = req.body;
         if (!email) {
-            return res.status(404).json({ status: false, data: "Please Provide Email Iconsole.log" });
+            return res.status(404).json({ status: false, data: "Please Provide Email Id" });
         }
         const user = await User.findOne({ email: email });
         if (!user) {
@@ -163,14 +163,15 @@ class UserClass {
                     });
                 } else {
                     console.log("success");
+                    res.status(200).json({
+                        success: true,
+                        data: "Email sent successfully, Please Verify within 10 minutes.",
+                    });
 
                 }
 
             });
-            return res.status(200).json({
-                success: true,
-                data: "Email sent successfully, Please Verify within 10 minutes.",
-            });
+          
         } catch (error: any) {
             logger.error(error.message);
 
@@ -517,7 +518,7 @@ class UserClass {
                     data: "Internal Error Occured Please Try After Sometime",
                 });
             } else {
-                console.log("success");
+           
                 res.status(200).json({
                     success: true,
                     data: "Mail has been sent to email id , Kindly update your password",

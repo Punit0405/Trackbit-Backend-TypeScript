@@ -8,11 +8,10 @@ chai.use(chaiHttp);
 
 describe("Delete Challanges", async () => {
     
-    it.skip("Delete Challange Successfully", async () => {
+    it("Delete Challange Successfully", async () => {
         const response = await chai.request(app)
-            .delete(constants.challangeApi.deletechallangeurl + constants.challangeApi.challangeId)
+            .delete(constants.challangeApi.deletechallangeurl + constants.challangeApi.actualdeletechallangeId)
             .set("authtoken", constants.token);
-        console.log(response);
         expect(response.status).to.be.eq(constants.successCode);
     });
 
