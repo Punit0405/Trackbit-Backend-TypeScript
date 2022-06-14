@@ -25,7 +25,6 @@ describe("Complete Todo", async () => {
             .get(constants.todoApi.completeTodourl + constants.todoApi.completeChallangeTodoId);
         expect(response.status).to.be.eq(constants.unauthorise);
     });
-
     it("Complete User's challagnetodo with token ", async () => {
         const response = await chai.request(app)
             .get(constants.todoApi.completeTodourl + constants.todoApi.completeTodoId)
@@ -34,8 +33,7 @@ describe("Complete Todo", async () => {
     });
     it("Complete User's todo without token ", async () => {
         const response = await chai.request(app)
-            .get(constants.todoApi.completeTodourl + constants.todoApi.completeTodoId);
-            
+            .get(constants.todoApi.completeTodourl + constants.todoApi.completeTodoId);     
         expect(response.status).to.be.eq(constants.unauthorise);
     });
     it("Complete User's todo with invalidtoken ", async () => {
