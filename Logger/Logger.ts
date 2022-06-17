@@ -8,7 +8,7 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 const timezoned = () => {
     return new Date().toLocaleString("en-US", {
         timeZone: "Asia/Kolkata"
-    });
+    })
 };
 
 class Logger {
