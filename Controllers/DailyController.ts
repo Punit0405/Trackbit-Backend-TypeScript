@@ -132,6 +132,7 @@ class DailyClass {
                     data: "Daily doesn't Exists for this Account",
                 });
         }
+        await Daily.findByIdAndUpdate(id,{$unset:{checklists}})
 
         if (title) {
             daily.title = title;
@@ -140,7 +141,14 @@ class DailyClass {
             daily.description = description;
         }
         if (checklists) {
-            daily.checklists = checklists;
+            checklists.forEach((checklist:any) => {
+                const checklistObject = {
+                    checklist:checklist,
+                    checked:false
+                }
+                daily.checklists.push(checklistObject)
+                
+            });
         }
         if (startDate) {
             daily.startDate = startDate;

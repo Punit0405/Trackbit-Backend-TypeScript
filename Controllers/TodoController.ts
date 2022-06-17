@@ -106,11 +106,12 @@ class TodoClass{
         if(!todo){
             return res.status(404).json({status:false,data:"Todo not found"});
         }
-               
+        
         if(todo.userId.toString()!==req.user.id){
-    
+            
             return res.status(400).json({status:false,data:"Todo doesn't Exists for this Account"});
         }
+        await Todo.findByIdAndUpdate(id,{$unset:{checklists}})
              
     
         if(title){
@@ -120,7 +121,15 @@ class TodoClass{
             todo.description=description;
         }
         if(checklists){
-            todo.checklists=checklists;
+            
+            checklists.forEach((checklist:any) => {
+                const checklistObject = {
+                    checklist:checklist,
+                    checked:false
+                }
+                todo.checklists.push(checklistObject)
+                
+            });
         }
         if(dueDate){
             todo.dueDate=dueDate;
