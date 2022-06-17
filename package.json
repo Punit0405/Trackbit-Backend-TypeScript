@@ -5,9 +5,11 @@
   "main": "index.ts",
   "scripts": {
     "build": "webpack",
-    "start": "nodemon index.ts",
+    "start": "nodemon src/index.ts",
     "start:dev": "concurrently -k \"nodemon --inspect ./build/index.js \" \"tsc -w \"",
-    "test": "ts-mocha -p tsconfig.json './spec/**/*spec.ts' --exit "
+    "coverage": "nyc --reporter=lcov npm run test",
+    "sonar": "sonar-scanner -Dsonar.login=admin -Dsonar.password=Punit@92655 -Dproject.settings=file.properties",
+    "test": "ts-mocha -p tsconfig.json './src/spec/**/*spec.ts' --timeout 10000 --exit "
   },
   "keywords": [
     "trackbit",
@@ -63,6 +65,8 @@
     "nodemon": "^2.0.15",
     "npm": "^8.12.1",
     "otp-generator": "^4.0.0",
+    "nyc": "^15.1.0",
+    "sonarqube-scanner": "^2.8.1",
     "supertest": "^6.2.3",
     "ts-node": "^10.7.0",
     "webpack": "^5.72.0",
