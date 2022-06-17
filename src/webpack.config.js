@@ -6,7 +6,7 @@ module.exports = {
   
     output: {
         filename: "TrackBit.api.js",
-        path: path.resolve(__dirname,"Tb-backend")
+        path: path.resolve(__dirname,"../Tb-backend")
     },
     module: {
         rules: [
