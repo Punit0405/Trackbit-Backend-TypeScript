@@ -92,7 +92,7 @@ class TodoClass {
     public updateTodo = async (req: RequestUser, res: Response) => {
 
         const { id } = req.params;
-        if (!id) {
+        if (!id) {http://localhost:5000
 
             return res.status(404).json({ status: false, data: "Please provide habit id" });
         }
