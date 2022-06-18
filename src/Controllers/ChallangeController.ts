@@ -10,7 +10,7 @@ import RequestUser from "../Middlewares/RequestInterface";
 import HabitInterface from "../interfaces/HabitInterface";
 import TodoInterface from "../interfaces/TodoInterface";
 import DailyInterface from "../interfaces/DailyInterface";
-import parameterValidator from "../Validations/parameterValidator";
+import parameterValidator from "../Validations/parameterValidator"
 
 class ChallangeClass {
     public addChallange = async (req: RequestUser, res: Response) => {
