@@ -37,7 +37,7 @@ class App {
                 subject: "Error Occured In Trackbit",
                 text : err.stack
             };
-            mailer.sendMail(mailOptions,(err)=>{
+            mailer.sendMail(mailOptions,(err:any)=>{
                 if(err){
                     logger.error("Cannot Sent Email");
                 }

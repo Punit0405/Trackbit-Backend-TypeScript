@@ -1,12 +1,12 @@
 var path= require("path");
 
 module.exports = {
-    entry: ["./index.ts"],
+    entry: "./index.ts",
     mode: "production",
   
     output: {
         filename: "TrackBit.api.js",
-        path: path.resolve(__dirname,"../Tb-backend")
+        path: path.resolve(__dirname,"Tb-backend")
     },
     module: {
         rules: [

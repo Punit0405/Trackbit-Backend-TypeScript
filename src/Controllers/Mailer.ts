@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 class Transporter{
-    public transporter:nodemailer.Transporter;
+    public transporter:any;
 
     constructor(){
         this.transporter = nodemailer.createTransport({
