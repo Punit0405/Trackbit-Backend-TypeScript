@@ -1,0 +1,46 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Tb
+
+on:
+  push:
+    branches:  ['*']
+  pull_request:
+    branches:  ['*']
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [ 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: create env file
+      run: |
+        touch .env
+        echo PORT=${{ secrets.PORT }} >> .env
+        echo JWT_USER_REGISTER_SECRET_KEY=${{ secrets.JWT_USER_REGISTER_SECRET_KEY }} >> .env 
+        echo DATABASE_URI=${{ secrets.DATABASE_URI }} >> .env 
+        echo JWT_USER_LOGIN_SECRET_KEY=${{ secrets.JWT_USER_LOGIN_SECRET_KEY }} >> .env 
+        echo BRANCH_KEY=${{ secrets.BRANCH_KEY }} >> .env 
+        echo MAILER_EMAIL=${{ secrets.MAILER_EMAIL }} >> .env 
+        echo MAILER_PASSWORD=${{ secrets.MAILER_PASSWORD }} >> .env 
+        echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env 
+        echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env 
+        echo AWSHOST=${{ secrets.AWSHOST }} >> .env
+    - run: npm ci
+    - run: sudo pm2 restart Trackbit
+  
+    
