@@ -195,7 +195,7 @@ class UserClass {
     public userLogin = async (req: RequestUser, res: Response) => {
 
 
-        const { userEmail, userPassword } = req.body;
+        const { userEmail, userPassword , deviceToken } = req.body;
         if (!userEmail) {
             return res
                 .status(400)
@@ -206,6 +206,10 @@ class UserClass {
                 .status(400)
                 .json({ status: false, data: "Password ID is Not Provided" });
         }
+        if(!deviceToken){
+          return res.status(400).json({status:false,data:'Please Provide device token'})
+        }
+        
         const user = await User.findOne({ email: userEmail });
         if (!user) {
             return res
@@ -226,6 +230,8 @@ class UserClass {
                 loginData,
                 process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
+            user.deviceTokens.push(deviceToken);
+            await user.save();
 
             return res
                 .status(200)

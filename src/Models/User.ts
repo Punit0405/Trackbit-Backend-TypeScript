@@ -48,6 +48,9 @@ const userSchema = new Schema<UserInterface>({
     accessToken:{
         type: String
     },
+    deviceTokens:{
+        type:[String]
+    },
     appliedChallanges:{
         type:[Schema.Types.ObjectId],
         ref:"Challange"
