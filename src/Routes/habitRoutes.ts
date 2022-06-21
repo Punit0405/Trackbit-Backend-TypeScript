@@ -3,8 +3,10 @@ import HabitClass from "../Controllers/HabitController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import HabitValidator from "../Validations/habitValidator";
 import cron from 'node-cron';
+import DailyClass from "../Controllers/DailyController";
 
 const HabitController = new HabitClass();
+const DailyController = new DailyClass();
 const validator = new HabitValidator();
 
 class HabitRouter {
@@ -14,6 +16,7 @@ class HabitRouter {
         this.routes();
         cron.schedule("* * * * *",()=>{
             HabitController.habitNotification();
+            DailyController.dailyNotification();
             console.log("fetched");
 
         })

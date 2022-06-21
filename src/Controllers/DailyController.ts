@@ -5,6 +5,9 @@ import DailyInterface from "../interfaces/DailyInterface";
 import RequestUser from "../Middlewares/RequestInterface";
 import parameterValidator from "../Validations/parameterValidator";
 import Challange from "../Models/Challange";
+import NotificationClass from "./NotificationController";
+
+const Notifier = new NotificationClass();
 class DailyClass {
     public addDaily = async (req: RequestUser, res: Response) => {
 
@@ -27,7 +30,7 @@ class DailyClass {
             userId: req.user.id,
             startDate: startDate,
             tags: tags,
-            reminder:reminder,
+            reminder: reminder.split(" ")[0],
             difficulty:difficulty
         });
         checklists.forEach((checklist:any) => {
@@ -314,5 +317,70 @@ class DailyClass {
             .status(200)
             .json({ status: true, data: "Checklist Checked" });
     }
+
+    public dailyNotification = async () =>{
+        const daily = await Daily.find({type:false}).populate({path:'userId'});
+        const challangedaily = await Daily.find({type:true}).populate({path:"challangeId",populate:{
+            path:"participants"
+        }});
+        
+        if(daily.length === 0 && challangedaily.length === 0){
+            return 0;
+        }
+
+        const notificationDaily:any[] = [];
+        const notifiChallangeDaily:any[]=[];
+        daily.forEach((daily)=>{
+            const date=new Date();
+            const hour = date.getHours();
+            const minutes = date.getMinutes();
+            const dailyHour = Number(daily.reminder.split(":")[0]);
+            const dailyMinutes = Number(daily.reminder.split(":")[1]);
+            if(dailyHour === hour && dailyMinutes === minutes){
+                notificationDaily.push(daily)
+
+            }
+        });
+        challangedaily.forEach((daily)=>{
+            const date=new Date();
+            const hour = date.getHours();
+            const minutes = date.getMinutes();
+            const dailyHour = Number(daily.reminder.split(":")[0]);
+            const dailyMinutes = Number(daily.reminder.split(":")[1]);
+            if(dailyHour === hour && dailyMinutes === minutes){
+                notifiChallangeDaily.push(daily)
+
+            }
+
+        })
+        if(notificationDaily.length === 0 && notifiChallangeDaily.length === 0){
+            return 0;
+        }
+        notificationDaily.forEach((daily)=>{
+
+            const registration_ids :string []= [];
+            registration_ids.push(daily.userId.deviceToken);
+            Notifier.sendNotification(registration_ids,daily.userId._id,"Its Time To Follow Your Routine",daily.title)
+            
+
+            
+
+        });
+        notifiChallangeDaily.forEach((daily)=>{
+            const registration_ids:string[] =[];
+            if(daily.challangeId.participants.length === 0){
+                return 0;
+            }
+           
+            daily.challangeId.participants.forEach((participant:any)=>{
+                registration_ids.push(participant.deviceToken);          
+                Notifier.sendNotification(registration_ids,participant.toString,"Its Time To Follow Your challange Routine",daily.title)
+            })
+
+        })
+
+
+    }
 }
+
 export default DailyClass;

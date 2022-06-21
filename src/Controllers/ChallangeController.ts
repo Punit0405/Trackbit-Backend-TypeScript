@@ -34,7 +34,7 @@ class ChallangeClass {
                     tags: habit.tags,
                     type: true,
                     challangeId: newchallange._id,
-                    reminder: habit.reminder,
+                    reminder: habit.reminder.split(" ")[0],
                 });
                 newchallange.habits.push(newHabit._id);
                 await newHabit.save();
@@ -75,7 +75,7 @@ class ChallangeClass {
                     days: daily.days,
                     type: true,
                     tags: daily.tags,
-                    reminder: daily.reminder,
+                    reminder: daily.reminder.split(" ")[0],
                 });
                 daily.checklists.forEach((checklist:any) => {
                     const checklistObject = {
