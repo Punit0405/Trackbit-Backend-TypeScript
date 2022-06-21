@@ -14,6 +14,7 @@ class HabitRouter {
         this.routes();
         cron.schedule("* * * * *",()=>{
             HabitController.habitNotification();
+            console.log("fetched");
 
         })
     }

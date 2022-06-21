@@ -15,7 +15,7 @@ const todoSchema = new Schema<TodoInterface>({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
-    challagneId:{
+    challangeId:{
         type:Schema.Types.ObjectId,
         ref:"Challange"
     },

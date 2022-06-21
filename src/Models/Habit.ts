@@ -19,7 +19,7 @@ const habitSchema = new Schema<HabitInterface>({
         type:Boolean,
         required:true
     },
-    challagneId:{
+    challangeId:{
         type:Schema.Types.ObjectId,
         ref:"Challange"
     },

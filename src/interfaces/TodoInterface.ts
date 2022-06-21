@@ -3,7 +3,7 @@ interface TodoInterface {
     title:string,
     description:string,
     userId:Types.ObjectId,
-    challagneId:Types.ObjectId,
+    challangeId:Types.ObjectId,
     checklists:[{checklist:string,checkedParticipants?:[Types.ObjectId],checked?:boolean}],
     dueDate:Date
     reminderDate:Date,

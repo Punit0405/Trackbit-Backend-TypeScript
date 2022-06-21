@@ -194,7 +194,7 @@ class TodoClass {
                     .json({ status: false, data: "You don't own this todo." });
             }
         }
-        const challange = await Challange.findById(todo.challagneId);
+        const challange = await Challange.findById(todo.challangeId);
         if (!challange?.participants.includes(req.user.id)) {
             return res
                 .status(401)
@@ -244,7 +244,7 @@ class TodoClass {
                     .json({ status: false, data: "You don't own this todo." });
             }
         }
-        const challange = await Challange.findById(todo.challagneId);
+        const challange = await Challange.findById(todo.challangeId);
         if (!challange?.participants.includes(req.user.id)) {
             return res
                 .status(401)

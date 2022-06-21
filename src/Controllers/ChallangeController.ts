@@ -33,7 +33,7 @@ class ChallangeClass {
                     duration: habit.duration,
                     tags: habit.tags,
                     type: true,
-                    challagneId: newchallange._id,
+                    challangeId: newchallange._id,
                     reminder: habit.reminder,
                 });
                 newchallange.habits.push(newHabit._id);
@@ -49,7 +49,7 @@ class ChallangeClass {
                     dueDate: todo.dueDate,
                     type: true,
                     reminderDate: todo.reminderDate,
-                    challagneId: newchallange._id,
+                    challangeId: newchallange._id,
                     tags: todo.tags,
                     reminderTime: todo.reminderTime,
                 });
@@ -71,7 +71,7 @@ class ChallangeClass {
                     title: daily.title,
                     description: daily.description,
                     startDate: daily.startDate,
-                    challagneId: newchallange._id,
+                    challangeId: newchallange._id,
                     days: daily.days,
                     type: true,
                     tags: daily.tags,

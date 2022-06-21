@@ -21,7 +21,7 @@ class HabitClass {
             difficulty: difficulty,
             tags: tags,
             type: false,
-            reminder: reminder,
+            reminder: reminder.split(" ")[0],
             userId: req.user.id,
         });
         const user = await User.findById(req.user.id);
@@ -166,8 +166,17 @@ class HabitClass {
 
     };
     public habitNotification = async () =>{
-        const habits = await Habit.find({type:false}).populate({path:'User'});
+        const habits = await Habit.find({type:false}).populate({path:'userId'});
+        const challangeHabit = await Habit.find({type:true}).populate({path:"challangeId",populate:{
+            path:"participants"
+        }});
+        
+        if(habits.length === 0 && challangeHabit.length === 0){
+            return 0;
+        }
+
         const notificationHabits:any[] = [];
+        const notifiChallangeHabits:any[]=[];
         habits.forEach((habit)=>{
             const date=new Date();
             const hour = date.getHours();
@@ -179,25 +188,44 @@ class HabitClass {
 
             }
         });
+        challangeHabit.forEach((habit)=>{
+            const date=new Date();
+            const hour = date.getHours();
+            const minutes = date.getMinutes();
+            const habitHour = Number(habit.reminder.split(":")[0]);
+            const habitMinutes = Number(habit.reminder.split(":")[1]);
+            if(habitHour === hour && habitMinutes === minutes){
+                notifiChallangeHabits.push(habit)
+
+            }
+
+        })
+        if(notificationHabits.length === 0 && notifiChallangeHabits.length === 0){
+            return 0;
+        }
         notificationHabits.forEach((habit)=>{
 
-            const registration_ids :string []= []
+            const registration_ids :string []= [];
             registration_ids.push(habit.userId.deviceToken);
-            Notifier.sendNotification(registration_ids,"Its Time To Follow Your Habit",habit.userId,habit.title)
-            // const hour : number = Number(habit.reminder.split(":")[0]);
-            // const minute : number = Number(habit.reminder.split(":")[1]);
-            // const cronString = `${minute} ${hour} * * *`;
-            // const notificationSender =cron.schedule(cronString,()=>{
-            //     event.emit('SENT');
-            // });
-            // event.on('SENT', () => {
-            //     console.log('SENT');
-            //     notificationSender.stop();
-            // });
+            Notifier.sendNotification(registration_ids,habit.userId._id,"Its Time To Follow Your Habit",habit.title)
+            
 
             
 
+        });
+        notifiChallangeHabits.forEach((habit)=>{
+            const registration_ids:string[] =[];
+            if(habit.challangeId.participants.length === 0){
+                return 0;
+            }
+           
+            habit.challangeId.participants.forEach((participant:any)=>{
+                registration_ids.push(participant.deviceToken);          
+                Notifier.sendNotification(registration_ids,participant.toString,"Its Time To Follow Your challange Habit",habit.title)
+            })
+
         })
+
 
     }
 }

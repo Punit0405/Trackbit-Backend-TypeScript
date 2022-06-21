@@ -27,7 +27,7 @@ const dailySchema = new Schema<DailyInterface>({
         type:Boolean,
         required:true
     },
-    challagneId:{
+    challangeId:{
         type:Schema.Types.ObjectId,
         ref:"Challange"
     },

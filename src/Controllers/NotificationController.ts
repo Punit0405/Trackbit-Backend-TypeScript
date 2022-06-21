@@ -1,7 +1,6 @@
 import axios from "axios";
 class NotificationClass {
-    public sendNotification = async (registrationids:string[],userId:string , title:string,body:string) => {
-        console.log(userId)
+    public sendNotification = async (registrationids:string[],userId:string , title:string,body:string) =>{
         axios.post("https://fcm.googleapis.com/fcm/send",{
             "registration_ids": registrationids,
             "notification": {
@@ -16,8 +15,9 @@ class NotificationClass {
               "Authorization":`key=${process.env.FCM_SERVER_KEY}`
           
             }
-          })
-        
+          }).then(()=>{
+            console.log("sent")
+          })      
            
           
 

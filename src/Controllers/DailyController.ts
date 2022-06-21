@@ -226,7 +226,7 @@ class DailyClass {
                     .json({ status: false, data: "You don't own this daily." });
             }
         }
-        const challange = await Challange.findById(daily.challagneId);
+        const challange = await Challange.findById(daily.challangeId);
         if (!challange?.participants.includes(req.user.id)) {
             return res
                 .status(401)
@@ -287,7 +287,7 @@ class DailyClass {
                     .json({ status: false, data: "You don't own this todo." });
             }
         }
-        const challange = await Challange.findById(daily.challagneId);
+        const challange = await Challange.findById(daily.challangeId);
         if (!challange?.participants.includes(req.user.id)) {
             return res
                 .status(401)
