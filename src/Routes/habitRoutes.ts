@@ -2,6 +2,7 @@ import express from "express";
 import HabitClass from "../Controllers/HabitController";
 import isLoggedin from "../Middlewares/isLoggedin";
 import HabitValidator from "../Validations/habitValidator";
+import cron from 'node-cron';
 
 const HabitController = new HabitClass();
 const validator = new HabitValidator();
@@ -11,6 +12,10 @@ class HabitRouter {
     constructor() {
         this.router = express.Router();
         this.routes();
+        cron.schedule("* * * * *",()=>{
+            HabitController.habitNotification();
+
+        })
     }
     private routes() {
     //Route for Adding Habbit

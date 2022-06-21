@@ -230,8 +230,9 @@ class UserClass {
                 loginData,
                 process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
-            user.deviceTokens.push(deviceToken);
+            user.deviceToken=deviceToken
             await user.save();
+            
 
             return res
                 .status(200)

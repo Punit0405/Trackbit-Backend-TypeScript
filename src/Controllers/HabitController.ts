@@ -4,6 +4,10 @@ import { Response } from "express";
 import RequestUser from "../Middlewares/RequestInterface";
 import HabitInterface from "../interfaces/HabitInterface";
 import parameterValidator from "../Validations/parameterValidator";
+import NotificationClass from "./NotificationController";
+const EventEmitter = require('events');
+const event = new EventEmitter()
+const Notifier = new NotificationClass();
 class HabitClass {
     public addHabit = async (req: RequestUser, res: Response) => {
 
@@ -20,16 +24,26 @@ class HabitClass {
             reminder: reminder,
             userId: req.user.id,
         });
+        const user = await User.findById(req.user.id);
+        if(!user){
+            return res.status(404).json({status:false,data:"User not found"})
+        }
+        const time = reminder.split(':') 
+        let cronString = `${time[1]} ${time[0]} * * *`;
+        const registration_ids :string[] = [];
+        if(user.deviceToken){
+            registration_ids.push(user.deviceToken);
+
+        }
+
         res.status(200).json({ status: true, data: "Habit Added Sucessfully" });
         return await newHabit.save();
 
     };
-    public fetchHabits = async (req: RequestUser, res: Response) => {
-
-        let habits = await Habit.find({ userId: req.user.id }).select("-userId");
-
+    public fetchHabitsFunction = async (userId:string)=>{
+        let habits = await Habit.find({ userId: userId }).select("-userId");
         const challangeHabits: any[] = [];
-        const loggedinUser = await User.findById(req.user.id).populate({
+        const loggedinUser = await User.findById(userId).populate({
             path: "appliedChallanges",
             populate: [
                 {
@@ -42,9 +56,7 @@ class HabitClass {
             ],
         });
         if (!loggedinUser) {
-            return res
-                .status(401)
-                .json({ status: false, data: "Loggedin User Not exists" });
+            return "User Not Exists"
         }
         loggedinUser.appliedChallanges.map((challange: any) => {
             challange.habits.map((habit: HabitInterface) => {
@@ -53,6 +65,13 @@ class HabitClass {
         });
 
         habits = habits.concat(challangeHabits);
+        return habits;
+
+    };
+    public fetchHabits = async (req: RequestUser, res: Response) => {
+       const habits = await this.fetchHabitsFunction(req.user.id);         
+       console.log(habits);
+       
 
         return res.status(200).json({ status: true, data: habits });
 
@@ -146,5 +165,40 @@ class HabitClass {
         return res.status(200).json({ status: true, data: habit });
 
     };
+    public habitNotification = async () =>{
+        const habits = await Habit.find({type:false}).populate({path:'User'});
+        const notificationHabits:any[] = [];
+        habits.forEach((habit)=>{
+            const date=new Date();
+            const hour = date.getHours();
+            const minutes = date.getMinutes();
+            const habitHour = Number(habit.reminder.split(":")[0]);
+            const habitMinutes = Number(habit.reminder.split(":")[1]);
+            if(habitHour === hour && habitMinutes === minutes){
+                notificationHabits.push(habit)
+
+            }
+        });
+        notificationHabits.forEach((habit)=>{
+
+            const registration_ids :string []= []
+            registration_ids.push(habit.userId.deviceToken);
+            Notifier.sendNotification(registration_ids,"Its Time To Follow Your Habit",habit.userId,habit.title)
+            // const hour : number = Number(habit.reminder.split(":")[0]);
+            // const minute : number = Number(habit.reminder.split(":")[1]);
+            // const cronString = `${minute} ${hour} * * *`;
+            // const notificationSender =cron.schedule(cronString,()=>{
+            //     event.emit('SENT');
+            // });
+            // event.on('SENT', () => {
+            //     console.log('SENT');
+            //     notificationSender.stop();
+            // });
+
+            
+
+        })
+
+    }
 }
 export default HabitClass;

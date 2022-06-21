@@ -1,6 +1,7 @@
 import "express-async-errors";
 import express from "express";
 import "dotenv/config";
+import cron from 'node-cron';
 import userRouter from "./Routes/userRoutes";
 import Dbconnection from "./DBConnection/connect";
 import habitRouter from "./Routes/habitRoutes";
@@ -45,10 +46,15 @@ class App {
             next();
 
         });
+        cron.schedule("* * * * *",()=>{
+            
+        })
+        
 
         this.app.listen(process.env.PORT, () => {
             logger.info(`Server is running of port ${process.env.PORT}`);
         });
+        
     }
 
     private middlewares(): void {

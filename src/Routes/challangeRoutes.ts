@@ -12,7 +12,7 @@ class ChallangeRouter {
     constructor() {
         this.router = express.Router();
         this.routes();
-        cron.schedule("56 09 * * *", () => {
+        cron.schedule("0 0 * * *", () => {
             ChallangeController.emptyArray();
             console.log("done");
         });

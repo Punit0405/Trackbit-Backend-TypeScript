@@ -9,7 +9,7 @@ interface UserInterface {
     health:number,
     email_verified:boolean,
     healthResetCount:number,
-    deviceTokens:[string],
+    deviceToken:string,
     idToken:string,
     accessToken:string,
     appliedChallanges:[Types.ObjectId],
