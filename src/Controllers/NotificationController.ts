@@ -13,7 +13,7 @@ class NotificationClass {
         },{
             headers:{
               "Content-type":"application/json",
-              "Authorization":"key=AAAAoVOloIo:APA91bFwd-yDN4wJTGbuuKbXJg4c4w4rDGlKRqbLnhfY1oVuqS6NgJN35ryIMyWGQoZYQWrgKfnhkH63QQHqlA47t073AznMUIF_tEN4bLWm6_2KaIMNvQfU83MUNKP1Ip1FOf2fyIZB"
+              "Authorization":`key=${process.env.FCM_SERVER_KEY}`
           
             }
           })
