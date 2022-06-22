@@ -70,7 +70,7 @@ class HabitClass {
     };
     public fetchHabits = async (req: RequestUser, res: Response) => {
        const habits = await this.fetchHabitsFunction(req.user.id);         
-       console.log(habits);
+      
        
 
         return res.status(200).json({ status: true, data: habits });

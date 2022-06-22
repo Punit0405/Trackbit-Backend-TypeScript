@@ -356,6 +356,7 @@ class DailyClass {
         if(notificationDaily.length === 0 && notifiChallangeDaily.length === 0){
             return 0;
         }
+        console.log(notificationDaily , "Dailies ")
         notificationDaily.forEach((daily)=>{
 
             const registration_ids :string []= [];
