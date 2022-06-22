@@ -324,6 +324,7 @@ class DailyClass {
         const challangedaily = await Daily.find({type:true}).populate({path:"challangeId",populate:{
             path:"participants"
         }});
+        console.log(daily,"first fetching from database")
         
         if(daily.length === 0 && challangedaily.length === 0){
             return 0;
@@ -338,7 +339,12 @@ class DailyClass {
             const minutes = date.getMinutes();
             const dailyHour = Number(daily.reminder.split(":")[0]);
             const dailyMinutes = Number(daily.reminder.split(":")[1]);
+            console.log(dailyHour , "dailyHour")
+            console.log(dailyMinutes , "dailyMinutes")
+            console.log(hour , "hour")
+            console.log(minutes , "minutes")
             if(dailyHour === hour && dailyMinutes === minutes){
+                console.log("add hua")
                 notificationDaily.push(daily)
 
             }

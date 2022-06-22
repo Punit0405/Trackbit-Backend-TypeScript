@@ -4,7 +4,9 @@ import isLoggedin from "../Middlewares/isLoggedin";
 import HabitValidator from "../Validations/habitValidator";
 import cron from 'node-cron';
 import DailyClass from "../Controllers/DailyController";
-
+import { loggers } from "winston";
+import Logger from "../Logger/Logger";
+const logger = new Logger().logger
 const HabitController = new HabitClass();
 const DailyController = new DailyClass();
 const validator = new HabitValidator();
@@ -15,9 +17,17 @@ class HabitRouter {
         this.router = express.Router();
         this.routes();
         cron.schedule("* * * * *",()=>{
-            HabitController.habitNotification();
+            try{
+                HabitController.habitNotification();
             DailyController.dailyNotification();
             console.log("fetched");
+
+            }
+            catch(error){
+                logger.error(error)
+                
+            }
+            
 
         })
     }
