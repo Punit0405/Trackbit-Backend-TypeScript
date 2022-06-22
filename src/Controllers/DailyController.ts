@@ -319,6 +319,7 @@ class DailyClass {
     }
 
     public dailyNotification = async () =>{
+        console.log("run")
         const daily = await Daily.find({type:false}).populate({path:'userId'});
         const challangedaily = await Daily.find({type:true}).populate({path:"challangeId",populate:{
             path:"participants"
@@ -327,6 +328,7 @@ class DailyClass {
         if(daily.length === 0 && challangedaily.length === 0){
             return 0;
         }
+        console.log("run after 1st if")
 
         const notificationDaily:any[] = [];
         const notifiChallangeDaily:any[]=[];
@@ -341,6 +343,7 @@ class DailyClass {
 
             }
         });
+        console.log(notificationDaily, "dailies")
         challangedaily.forEach((daily)=>{
             const date=new Date();
             const hour = date.getHours();
@@ -356,7 +359,7 @@ class DailyClass {
         if(notificationDaily.length === 0 && notifiChallangeDaily.length === 0){
             return 0;
         }
-        console.log(notificationDaily , "Dailies ")
+     
         notificationDaily.forEach((daily)=>{
 
             const registration_ids :string []= [];
