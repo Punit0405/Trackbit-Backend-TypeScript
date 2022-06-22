@@ -40,6 +40,7 @@ jobs:
         echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env 
         echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env 
         echo AWSHOST=${{ secrets.AWSHOST }} >> .env
+        echo FCM_SERVER_KEY=${{ secrets.FCM_SERVER_KEY }} >> .env
     - run: npm ci
     - run: sudo pm2 restart Trackbit
   
