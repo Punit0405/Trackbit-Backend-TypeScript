@@ -165,7 +165,7 @@ class DailyClass {
             daily.tags = tags;
         }
         if (reminder) {
-            daily.reminder = reminder;
+            daily.reminder = reminder.split(" ")[0];
         }
         await daily.save();
         return res.status(200).json({ status: true, data: daily });
