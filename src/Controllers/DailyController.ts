@@ -339,6 +339,7 @@ class DailyClass {
             const minutes = date.getMinutes();
             const dailyHour = Number(daily.reminder.split(":")[0]);
             const dailyMinutes = Number(daily.reminder.split(":")[1]);
+            console.log(date,"Date")
             console.log(dailyHour , "dailyHour")
             console.log(dailyMinutes , "dailyMinutes")
             console.log(hour , "hour")
