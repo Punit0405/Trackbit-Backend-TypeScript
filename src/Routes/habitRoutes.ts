@@ -22,7 +22,7 @@ class HabitRouter {
             try{
             HabitController.habitNotification();
             DailyController.dailyNotification();
-            TodoController.todoNotification();
+            TodoController.todoNotification()
             }
             catch(error){
                 logger.error(error)
