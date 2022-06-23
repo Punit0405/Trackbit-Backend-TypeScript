@@ -5,6 +5,9 @@ import TodoInterface from "../interfaces/TodoInterface";
 import RequestUser from "../Middlewares/RequestInterface";
 import parameterValidator from "../Validations/parameterValidator";
 import Challange from "../Models/Challange";
+import NotificationClass from "./NotificationController";
+
+const Notifier = new NotificationClass();
 class TodoClass {
     public addTodo = async (req: RequestUser, res: Response) => {
 
@@ -271,6 +274,96 @@ class TodoClass {
             .status(200)
             .json({ status: true, data: "Checklist Checked" });
     };
+    public todoNotification = async () =>{
+        const todos = await Todo.find({type:false}).populate({path:'userId'});
+        const challaneTodo = await Todo.find({type:true}).populate({path:"challangeId",populate:{
+            path:"participants"
+        }});
+        
+        if(todos.length === 0 && challaneTodo.length === 0){
+            return 0;
+        }
+
+        const daySortedTodo:any[] = [];
+        const notificationTodos:any[] = [];
+        const daySortedChallangeDaily:any[]=[];
+        const notifiChallangeTodos:any[]=[];
+        const fulldate = new Date();
+        const date = fulldate.getDate();
+        const month = fulldate.getMonth();
+        const year = fulldate.getFullYear();
+        let todayDateTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+        const hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
+        const minutes = Number(todayDateTime.split(" ")[1].split(":")[1]); 
+        todos.forEach((todo:any)=>{
+            if(todo.reminderDate.getDate() === date && todo.reminderDate.getMonth() === month && todo.reminderDate.getFullYear() === year){
+                daySortedTodo.push(todo);
+                
+            }
+
+            
+        });
+        challaneTodo.forEach((todo:any)=>{
+            if(todo.reminderDate.getDate() === date && todo.reminderDate.getMonth() === month && todo.reminderDate.getFullYear() === year){
+                daySortedChallangeDaily.push(todo);
+                
+            }
+
+            
+        });
+        daySortedTodo.forEach((todo:any) => {
+            const todoHour = Number(todo.reminder.split(":")[0]);
+            const todoMinutes = Number(todo.reminder.split(":")[1]);
+      
+            if (todoHour === hour && todoMinutes === minutes) {
+                notificationTodos.push(todo);
+            }
+          });
+          daySortedChallangeDaily.forEach((todo:any) => {
+            const todoHour = Number(todo.reminder.split(":")[0]);
+            const todoMinutes = Number(todo.reminder.split(":")[1]);
+            if (todoHour === hour && todoMinutes === minutes) {
+                notifiChallangeTodos.push(todo);
+            }
+          });
+
+
+
+
+
+
+
+        notificationTodos.forEach((todo:any) => {
+            const registration_ids: string[] = [];
+            registration_ids.push(todo.userId.deviceToken);
+            Notifier.sendNotification(
+              registration_ids,
+              todo.userId._id,
+              "Reminder For Your Todo Task",
+              todo.title
+            );
+          });
+          notifiChallangeTodos.forEach((todo:any) => {
+            const registration_ids: string[] = [];
+            if (todo.challangeId.participants.length === 0) {
+              return 0;
+            }
+      
+            todo.challangeId.participants.forEach((participant: any) => {
+              registration_ids.push(participant.deviceToken);
+              Notifier.sendNotification(
+                registration_ids,
+                participant.toString,
+                "Reminder For Your challange Todo Task",
+                todo.title
+              );
+            });
+          });
+        
+       
+
+
+    }
 
 }
 export default TodoClass;

@@ -177,10 +177,11 @@ class HabitClass {
 
         const notificationHabits:any[] = [];
         const notifiChallangeHabits:any[]=[];
+        let todayDateTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+         const hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
+         const minutes = Number(todayDateTime.split(" ")[1].split(":")[1]); 
         habits.forEach((habit)=>{
-            const date=new Date();
-            const hour = date.getHours();
-            const minutes = date.getMinutes();
+            
             const habitHour = Number(habit.reminder.split(":")[0]);
             const habitMinutes = Number(habit.reminder.split(":")[1]);
             if(habitHour === hour && habitMinutes === minutes){
@@ -189,9 +190,7 @@ class HabitClass {
             }
         });
         challangeHabit.forEach((habit)=>{
-            const date=new Date();
-            const hour = date.getHours();
-            const minutes = date.getMinutes();
+          
             const habitHour = Number(habit.reminder.split(":")[0]);
             const habitMinutes = Number(habit.reminder.split(":")[1]);
             if(habitHour === hour && habitMinutes === minutes){

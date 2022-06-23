@@ -16,7 +16,7 @@ class NotificationClass {
           
             }
           }).then(()=>{
-            console.log("sent")
+            console.log("sent");
           })      
            
           
