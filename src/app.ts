@@ -10,12 +10,14 @@ import DailyRouter from "./Routes/dailyRoutes";
 import TodoRouter from "./Routes/todoRoutes";
 import homeRoutes from "./Validations/route";
 import Logger from "./Logger/Logger";
+import NotificationRouter from "./Routes/notificationRoutes";
 import mailer from "./Controllers/Mailer";
 
 const userRoutes = new userRouter().router;
 const habitRoutes = new habitRouter().router;
 const checkRoutes = new homeRoutes().router;
 const todoRoutes = new TodoRouter().router;
+const notificationRoutes = new NotificationRouter().router;
 
 const dailyRoutes = new DailyRouter().router;
 const challangeRoutes = new ChallangeRouter().router;
@@ -67,6 +69,7 @@ class App {
         this.app.use("/api/v1/todo", todoRoutes);
         this.app.use("/api/v1/daily", dailyRoutes);
         this.app.use("/api/v1/challange", challangeRoutes);
+        this.app.use("/api/v1/notification", notificationRoutes);
         this.app.use("/", checkRoutes);
     }
 }

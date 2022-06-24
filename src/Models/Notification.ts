@@ -7,15 +7,13 @@ const notificationSchema = new Schema<NotificationInterface>({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
-    habitNotifications:{
-        type:[String]
+    title:{
+        type:String
     },
-    todoNotifications:{
-        type:[String]
+    body:{
+        type:String
     },
-    dailyNotifications:{
-        type:[String]
-    }
+   
     
   
 
