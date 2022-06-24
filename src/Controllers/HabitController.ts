@@ -127,7 +127,7 @@ class HabitClass {
             habit.tags = tags;
         }
         if (reminder) {
-            habit.reminder = reminder;
+            habit.reminder = reminder.split(" ")[0];
         }
         await habit.save();
         return res.status(200).json({ status: true, data: habit });

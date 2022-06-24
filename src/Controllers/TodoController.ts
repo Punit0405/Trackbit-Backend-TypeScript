@@ -139,7 +139,7 @@ class TodoClass {
 
         }
         if (reminderTime) {
-            todo.reminderTime = reminderTime;
+            todo.reminderTime = reminderTime.split(" ")[0];
         }
         await todo.save();
         return res.status(200).json({ status: true, data: todo });
