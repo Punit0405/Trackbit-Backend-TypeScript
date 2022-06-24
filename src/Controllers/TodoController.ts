@@ -294,8 +294,12 @@ class TodoClass {
             const month = fulldate.getMonth();
             const year = fulldate.getFullYear();
             let todayDateTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
-            const hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
+            let hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
             const minutes = Number(todayDateTime.split(" ")[1].split(":")[1]); 
+            if(todayDateTime.split(" ")[2] === "PM"){
+                hour = hour + 12;
+          
+              }
             if(daySortedTodo.length === 0 && daySortedChallangeDaily.length === 0){
                 return 0;
             }

@@ -323,7 +323,7 @@ class DailyClass {
         timeZone: "Asia/Kolkata",
       });
       let hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
-      if(todayDateTime.split(" ")[2]){
+      if(todayDateTime.split(" ")[2] === "PM"){
         hour = hour + 12;
   
       }
@@ -388,6 +388,7 @@ class DailyClass {
       daySortedDaily.forEach((daily:any) => {
         const dailyHour = Number(daily.reminder.split(":")[0]);
         const dailyMinutes = Number(daily.reminder.split(":")[1]);
+       
        
         
   

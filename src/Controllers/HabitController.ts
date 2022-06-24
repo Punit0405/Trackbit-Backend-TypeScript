@@ -179,8 +179,13 @@ class HabitClass {
         const notificationHabits:any[] = [];
         const notifiChallangeHabits:any[]=[];
         let todayDateTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
-         const hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
+         let hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
          const minutes = Number(todayDateTime.split(" ")[1].split(":")[1]); 
+         if(todayDateTime.split(" ")[2] === "PM"){
+            hour = hour + 12;
+      
+          }
+
         habits.forEach((habit)=>{
             
             const habitHour = Number(habit.reminder.split(":")[0]);
