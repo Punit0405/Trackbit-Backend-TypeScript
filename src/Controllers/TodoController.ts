@@ -311,9 +311,7 @@ class TodoClass {
           }
         }
       }
-      if (daySortedTodo.length === 0 && daySortedChallangeDaily.length === 0) {
-        return 0;
-      }
+      
       todos.forEach((todo: any) => {
         if (
           todo.reminderDate.getDate() === date &&
@@ -333,9 +331,14 @@ class TodoClass {
           daySortedChallangeDaily.push(todo);
         }
       });
+      if (daySortedTodo.length === 0 && daySortedChallangeDaily.length === 0) {
+        return 0;
+      }
       daySortedTodo.forEach((todo: any) => {
         const todoHour = Number(todo.reminderTime.split(":")[0]);
         const todoMinutes = Number(todo.reminderTime.split(":")[1]);
+       
+
 
         if (todoHour === hour && todoMinutes === minutes) {
           notificationTodos.push(todo);
