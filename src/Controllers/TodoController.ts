@@ -334,16 +334,16 @@ class TodoClass {
         }
       });
       daySortedTodo.forEach((todo: any) => {
-        const todoHour = Number(todo.reminder.split(":")[0]);
-        const todoMinutes = Number(todo.reminder.split(":")[1]);
+        const todoHour = Number(todo.reminderTime.split(":")[0]);
+        const todoMinutes = Number(todo.reminderTime.split(":")[1]);
 
         if (todoHour === hour && todoMinutes === minutes) {
           notificationTodos.push(todo);
         }
       });
       daySortedChallangeDaily.forEach((todo: any) => {
-        const todoHour = Number(todo.reminder.split(":")[0]);
-        const todoMinutes = Number(todo.reminder.split(":")[1]);
+        const todoHour = Number(todo.reminderTime.split(":")[0]);
+        const todoMinutes = Number(todo.reminderTime.split(":")[1]);
         if (todoHour === hour && todoMinutes === minutes) {
           notifiChallangeTodos.push(todo);
         }
