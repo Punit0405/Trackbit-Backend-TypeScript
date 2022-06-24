@@ -22,7 +22,8 @@ class HabitRouter {
             try{
             HabitController.habitNotification();
             DailyController.dailyNotification();
-            TodoController.todoNotification()
+            TodoController.todoNotification();
+            console.log("fetched")
             }
             catch(error){
                 logger.error(error)

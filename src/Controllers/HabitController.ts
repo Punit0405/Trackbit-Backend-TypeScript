@@ -166,7 +166,8 @@ class HabitClass {
 
     };
     public habitNotification = async () =>{
-        const habits = await Habit.find({type:false}).populate({path:'userId'});
+        try {
+            const habits = await Habit.find({type:false}).populate({path:'userId'});
         const challangeHabit = await Habit.find({type:true}).populate({path:"challangeId",populate:{
             path:"participants"
         }});
@@ -225,6 +226,11 @@ class HabitClass {
 
         })
 
+            
+        } catch (error) {
+            console.log("Some Internal server error occure")
+        }
+        
 
     }
 }
