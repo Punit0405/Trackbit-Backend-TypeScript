@@ -310,11 +310,11 @@ class DailyClass {
           path: "participants",
         },
       });
-  
+
       if (daily.length === 0 && challangedaily.length === 0) {
         return 0;
       }
-  
+
       const notificationDaily: any[] = [];
       const notifiChallangeDaily: any[] = [];
       const daySortedDaily: any = [];
@@ -323,16 +323,19 @@ class DailyClass {
         timeZone: "Asia/Kolkata",
       });
       let hour = Number(todayDateTime.split(" ")[1].split(":")[0]);
-      if(todayDateTime.split(" ")[2] === "PM"){
-        hour = hour + 12;
-  
+      if (todayDateTime.split(" ")[2] === "PM") {
+        if (hour != 12) {
+          hour = hour + 12;
+          if (hour === 24) {
+            hour = 0;
+          }
+        }
       }
-  
-    
+
       const minutes = Number(todayDateTime.split(" ")[1].split(":")[1]);
       const day = new Date().toString().split(" ")[0];
-  
-      daily.forEach((daily:any) => {
+
+      daily.forEach((daily: any) => {
         switch (day) {
           case "Mon":
             {
@@ -385,21 +388,15 @@ class DailyClass {
             break;
         }
       });
-      daySortedDaily.forEach((daily:any) => {
+      daySortedDaily.forEach((daily: any) => {
         const dailyHour = Number(daily.reminder.split(":")[0]);
         const dailyMinutes = Number(daily.reminder.split(":")[1]);
-       
-       
-        
-  
+
         if (dailyHour === hour && dailyMinutes === minutes) {
-          
           notificationDaily.push(daily);
-          
-          
         }
       });
-      challangedaily.forEach((daily:any) => {
+      challangedaily.forEach((daily: any) => {
         switch (day) {
           case "Mon":
             {
@@ -452,7 +449,7 @@ class DailyClass {
             break;
         }
       });
-      daySortedChallangeDaily.forEach((daily:any) => {
+      daySortedChallangeDaily.forEach((daily: any) => {
         const dailyHour = Number(daily.reminder.split(":")[0]);
         const dailyMinutes = Number(daily.reminder.split(":")[1]);
         if (dailyHour === hour && dailyMinutes === minutes) {
@@ -462,8 +459,8 @@ class DailyClass {
       if (notificationDaily.length === 0 && notifiChallangeDaily.length === 0) {
         return 0;
       }
-  
-      notificationDaily.forEach((daily:any) => {
+
+      notificationDaily.forEach((daily: any) => {
         const registration_ids: string[] = [];
         registration_ids.push(daily.userId.deviceToken);
         Notifier.sendNotification(
@@ -473,12 +470,12 @@ class DailyClass {
           daily.title
         );
       });
-      notifiChallangeDaily.forEach((daily:any) => {
+      notifiChallangeDaily.forEach((daily: any) => {
         const registration_ids: string[] = [];
         if (daily.challangeId.participants.length === 0) {
           return 0;
         }
-  
+
         daily.challangeId.participants.forEach((participant: any) => {
           registration_ids.push(participant.deviceToken);
           Notifier.sendNotification(
@@ -489,11 +486,9 @@ class DailyClass {
           );
         });
       });
-      
     } catch (error) {
       console.log("some internal server error");
     }
-    
   };
 }
 
