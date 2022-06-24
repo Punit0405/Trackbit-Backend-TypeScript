@@ -28,7 +28,7 @@ class TodoClass {
       reminderDate: reminderDate,
       tags: tags,
       type: false,
-      reminderTime: reminderTime,
+      reminderTime: reminderTime.split(" ")[0],
       difficulty: difficulty,
     });
     checklists.forEach((checklist: any) => {
