@@ -65,13 +65,13 @@ class UserClass {
                 if (error) {
                     logger.error(error.message);
                     return res.status(501).json({
-                        success: false,
+                        status: false,
                         data: "Internal Error Occured Please Try After Sometime",
                     });
                 } else {
                     console.log("success");
                     res.status(200).json({
-                        success: true,
+                        status: true,
                         data: "Please Verify Your Email To Login",
                     });
 
@@ -164,13 +164,13 @@ class UserClass {
                 if (error) {
                     logger.error(error.message);
                     return res.status(501).json({
-                        success: false,
+                        status: false,
                         data: "Internal Error Occured Please Try After Sometime",
                     });
                 } else {
                     console.log("success");
                     res.status(200).json({
-                        success: true,
+                        status: true,
                         data: "Email sent successfully, Please Verify within 10 minutes.",
                     });
 
