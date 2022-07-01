@@ -192,10 +192,22 @@ class UserClass {
 
     };
 
+    public getDeviceToken = async(req:RequestUser , res:Response)=>{
+      let deviceToken = req.body.deviceToken;
+      const loggedinUser = await User.findById(req.user.id);
+      if(!loggedinUser){
+        return res.status(400).json({status:false, data:"Please Provide Device token"});
+      }
+      loggedinUser.deviceToken = deviceToken;
+      loggedinUser.save();
+      return res.status(200).json({status:true, data:"Token Updated Sucessfully"})
+
+    }
+
     public userLogin = async (req: RequestUser, res: Response) => {
 
 
-        const { userEmail, userPassword , deviceToken } = req.body;
+        const { userEmail, userPassword  } = req.body;
         if (!userEmail) {
             return res
                 .status(400)
@@ -206,9 +218,7 @@ class UserClass {
                 .status(400)
                 .json({ status: false, data: "Password ID is Not Provided" });
         }
-        if(!deviceToken){
-          return res.status(400).json({status:false,data:'Please Provide device token'})
-        }
+       
         
         const user = await User.findOne({ email: userEmail });
         if (!user) {
@@ -230,7 +240,6 @@ class UserClass {
                 loginData,
                 process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
-            user.deviceToken=deviceToken
             await user.save();
             
 

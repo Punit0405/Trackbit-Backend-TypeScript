@@ -68,8 +68,12 @@ class UserRoutes {
       .post(UserController.getForgotToken);
     this.router.route("/forgotuser/:token").get(UserController.forgotUser);
     this.router
+    .route("/getdevicetoken").post(isLoggedin,UserController.getDeviceToken);
+    
+    this.router
       .route("/updatepassword")
       .post(forgotValidator.validatePasswords, UserController.updatePassword);
+      
   }
 }
 export default UserRoutes;
