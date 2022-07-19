@@ -207,7 +207,7 @@ class UserClass {
     public userLogin = async (req: RequestUser, res: Response) => {
 
 
-        const { userEmail, userPassword  } = req.body;
+        const { userEmail, userPassword ,deviceToken  } = req.body;
         if (!userEmail) {
             return res
                 .status(400)
@@ -240,6 +240,7 @@ class UserClass {
                 loginData,
                 process.env.JWT_USER_LOGIN_SECRET_KEY as string
             );
+            user.deviceToken=deviceToken;
             await user.save();
             
 
